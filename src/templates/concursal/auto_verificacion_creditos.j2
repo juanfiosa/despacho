@@ -1,0 +1,47 @@
+{#
+  Auto de resolución sobre créditos verificados/inadmisibles (art. 36 Ley 24522)
+  Input: AutoVerificacionCreditosInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol, pesos %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: El informe individual presentado por la síndico
+{{ sindico_nombre }} sobre los pedidos de verificación de créditos
+formulados por los acreedores en el presente
+{% if partes %}proceso concursal de {{ partes_por_rol(partes, "concursado") }}{% else %}proceso concursal{% endif %},
+a los efectos previstos por el art. 36 de la Ley 24522.-
+
+CONSIDERANDO: Que examinado el informe individual del síndico y los
+antecedentes de cada pedido de verificación, corresponde resolver
+sobre los créditos conforme las recomendaciones de la sindicatura y las
+constancias de autos.-
+
+SE RESUELVE:
+
+I. VERIFICAR {{ creditos_verificados }} ({{ creditos_verificados | numero_letras }})
+crédito{{ "s" if creditos_verificados != 1 else "" }}{% if monto_total_verificado %} por un monto total de {{ pesos(monto_total_verificado) }}{% endif %}
+{% if con_privilegio_especial %}, de los cuales {{ con_privilegio_especial }}
+({{ con_privilegio_especial | numero_letras }}) con privilegio especial{% endif %}
+{% if con_privilegio_general %} y {{ con_privilegio_general }}
+({{ con_privilegio_general | numero_letras }}) con privilegio general{% endif %}
+(art. 36 Ley 24522).-
+{% if creditos_inadmisibles %}
+
+II. DECLARAR INADMISIBLES {{ creditos_inadmisibles }}
+({{ creditos_inadmisibles | numero_letras }}) crédito{{ "s" if creditos_inadmisibles != 1 else "" }}
+(art. 36 Ley 24522).-
+{% endif %}
+
+{{ "III" if creditos_inadmisibles else "II" }}. Notifíquese a los interesados
+y publíquese en el Boletín Oficial (art. 36 LCQ). OFÍCIESE.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

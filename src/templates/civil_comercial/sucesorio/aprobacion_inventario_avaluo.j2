@@ -1,0 +1,28 @@
+{#
+  Decreto de aprobación de inventario y avalúo pericial (art. 2341 CCyCN)
+  Input: AprobacionInventarioAvaluoInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import pesos %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+{% if con_impugnacion %}
+Vistas las actuaciones y resuelta la impugnación formulada al inventario
+y avalúo: {{ resolucion_impugnacion }}.-
+
+{% endif %}
+APRUÉBASE el inventario y avalúo de los bienes hereditarios del causante
+{{ causante_nombre }} practicado por el/la perito tasador/a {{ perito_nombre }}
+{% if monto_total_avaluo %}por un monto total de {{ pesos(monto_total_avaluo) }}{% endif %}
+{% if bienes_descripcion %}({{ bienes_descripcion }}){% endif %}
+(art. 2341 CCyCN; art. 655 y ss. CPCC Córdoba).-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

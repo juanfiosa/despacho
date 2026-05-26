@@ -1,0 +1,34 @@
+{#
+  Decreto de traslado de demanda al organismo demandado (art. 13 CPCA Ley 7182)
+  Input: TrasladoDemandaCAInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol, plazo %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+Córdoba, atento la presentación que antecede:
+
+CÓRRESE TRASLADO de la demanda contencioso administrativa a
+{{ organismo_demandado }} por el plazo de {{ plazo(plazo_contestacion_dias) }},
+para que comparezca a estar a derecho y contestarla, bajo apercibimiento de
+ser declarado rebelde (art. 13 CPCA Ley 7182).-
+{% if domicilio_notificacion %}
+
+Notifíquese al organismo demandado en el domicilio de {{ domicilio_notificacion }}.-
+{% endif %}
+{% if con_remision_expediente %}
+
+Asimismo, REQUIÉRASE a {{ organismo_demandado }} la remisión del expediente
+administrativo original que diera origen a la presente acción, dentro del
+mismo plazo y bajo igual apercibimiento (art. 14 CPCA).-
+{% endif %}
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

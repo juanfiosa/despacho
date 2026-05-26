@@ -1,0 +1,27 @@
+{#
+  Decreto de designación del síndico concursal (arts. 14/88 Ley 24522)
+  Input: DesignacionSindicoInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import plazo %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+DESÍGNASE síndico titular en el presente
+{% if tipo_proceso == "quiebra" %}proceso de quiebra{% else %}concurso preventivo{% endif %}
+al/a la{% if sindico_matricula %} Contador/a Público/a{% endif %}
+{{ sindico_nombre }}{% if sindico_matricula %}, matrícula N.° {{ sindico_matricula }}{% endif %},
+quien deberá aceptar el cargo dentro del plazo de {{ plazo(plazo_aceptacion_dias) }},
+bajo apercibimiento de designarse nuevo síndico (art.
+{% if tipo_proceso == "quiebra" %}88{% else %}14{% endif %} Ley 24522).-
+
+Notifíquese al síndico designado en su domicilio profesional.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

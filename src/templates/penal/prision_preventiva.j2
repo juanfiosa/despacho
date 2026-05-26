@@ -1,0 +1,54 @@
+{#
+  Auto de prisión preventiva (art. 281 CPP Ley 8123, Córdoba)
+  Input: PrisionPreventivaInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: Las actuaciones labradas en esta causa, la situación procesal
+de {{ partes_por_rol(partes, "imputado") }},{% if fiscal_nombre %} el requerimiento del Sr. Fiscal
+{{ fiscal_nombre }},{% endif %}{% if defensor_nombre %} las manifestaciones de la defensa a cargo del
+Dr./a {{ defensor_nombre }},{% endif %} y lo normado por los arts. 281 y ss. del
+Código de Procedimiento Penal de la Provincia de Córdoba (Ley 8123).-
+
+CONSIDERANDO: I. Que a los fines del dictado de la prisión preventiva, el
+art. 281 CPP exige: a) semiplena prueba sobre la existencia del hecho y la
+participación del imputado; b) que la escala penal del delito imputado supere
+el mínimo necesario para una condena de ejecución condicional; y c) la
+existencia de
+{% if causal == "peligro_fuga" %}peligro de fuga (art. 281 inc. 1 CPP)
+{% elif causal == "entorpecimiento" %}peligro de entorpecimiento en la investigación (art. 281 inc. 2 CPP)
+{% else %}peligro de fuga y peligro de entorpecimiento en la investigación (art. 281 incs. 1 y 2 CPP){% endif %}.-
+{% if descripcion_hecho %}
+
+II. Que los hechos investigados se refieren a: {{ descripcion_hecho }}.-
+{% endif %}
+
+{% set romano = namespace(n=2 if descripcion_hecho else 1) %}
+{{ "II" if not descripcion_hecho else "III" }}. Que la calificación legal
+provisional es la de {{ calificacion_legal }},{% if escala_minima_pena %} cuya
+escala penal mínima es de {{ escala_minima_pena }},{% endif %} lo que excluye
+la posibilidad de ejecución condicional de la pena y satisface el requisito
+objetivo del art. 281 CPP.-
+
+SE RESUELVE:
+
+I. DICTAR la PRISIÓN PREVENTIVA de {{ partes_por_rol(partes, "imputado") }},
+en la presente causa caratulada "{{ identificacion.caratula }}", en virtud de
+la calificación provisional de {{ calificacion_legal }}, por
+{% if causal == "peligro_fuga" %}existir peligro de fuga (art. 281 inc. 1 CPP)
+{% elif causal == "entorpecimiento" %}existir peligro de entorpecimiento en la investigación (art. 281 inc. 2 CPP)
+{% else %}existir peligro de fuga y de entorpecimiento en la investigación (art. 281 CPP){% endif %}.-
+
+II. Comuníquese al establecimiento penitenciario que corresponda. OFÍCIESE.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

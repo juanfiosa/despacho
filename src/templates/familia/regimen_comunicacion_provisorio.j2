@@ -1,0 +1,38 @@
+{#
+  Decreto de régimen de comunicación provisorio (art. 555 CCyCN / CPF Ley 10305)
+  Input: RegimenComunicacionProvisorioInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+Atento el estado de las actuaciones, FÍJASE con carácter PROVISORIO el
+siguiente régimen de comunicación y contacto entre
+{{ partes_por_rol(partes, "demandado") }} y el/los menor/es de autos:
+
+{{ descripcion_regimen }}
+{% if lugar_entrega %}
+
+El lugar de entrega y reintegro del/los menor/es será: {{ lugar_entrega }}.-
+{% endif %}
+{% if con_supervision %}
+
+El régimen se cumplirá bajo supervisión del equipo técnico interdisciplinario
+del Juzgado, quien elaborará informe de seguimiento.-
+{% endif %}
+
+El presente régimen tendrá vigencia
+{% if vigencia == "hasta_sentencia" %}hasta que recaiga sentencia definitiva en autos
+{% elif vigencia == "hasta_nueva_resolucion" %}hasta nueva resolución judicial
+{% else %}por el plazo que se fije en resolución posterior{% endif %}
+(art. 555 CCyCN; CPF Ley 10305).-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

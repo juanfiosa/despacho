@@ -1,0 +1,35 @@
+{#
+  Intimación de pago de cuotas alimentarias adeudadas (art. 553 CCyCN / CPF Ley 10305)
+  Input: IntimacionPagoCuotasAlimentariasInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol, pesos, plazo %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+ÍNTIMASE a {{ partes_por_rol(partes, "demandado") }} a abonar a
+{{ partes_por_rol(partes, "actor") }} la suma de
+{{ pesos(monto_total_adeudado) }}, correspondiente a
+{{ cuotas_adeudadas }} ({{ cuotas_adeudadas | numero_letras }})
+cuota{{ "s" if cuotas_adeudadas > 1 else "" }} alimentaria{{ "s" if cuotas_adeudadas > 1 else "" }}
+adeudada{{ "s" if cuotas_adeudadas > 1 else "" }}, dentro del plazo de
+{{ plazo(plazo_dias) }},
+{% if apercibimiento_art553 %}bajo apercibimiento de las consecuencias
+previstas por el art. 553 del Código Civil y Comercial de la Nación
+(intereses, medidas compulsivas, comunicación al registro de deudores
+alimentarios morosos){% endif %}.-
+{% if con_embargo %}
+
+Trábese EMBARGO PREVENTIVO sobre bienes del alimentante hasta cubrir el
+importe adeudado más intereses y costas. Procédase al diligenciamiento de
+la medida cautelar.-
+{% endif %}
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

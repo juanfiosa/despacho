@@ -1,0 +1,24 @@
+{#
+  Decreto de notificación a SENAF (Ley 9944, Córdoba)
+  Input: NotificacionSENAFInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import plazo %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+NOTIFÍQUESE a {{ organismo_notificar }} sobre {{ objeto_notificacion }}
+en la presente causa referida al niño/niña/adolescente {{ nombre_nnya }}{% if plazo_respuesta_dias %},
+con el requerimiento de que informe lo pertinente dentro del plazo de
+{{ plazo(plazo_respuesta_dias) }}{% endif %} (Ley 9944; Ley 26061).-
+
+OFÍCIESE.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

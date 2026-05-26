@@ -1,0 +1,48 @@
+{#
+  Auto de suspensión del juicio a prueba / probation (art. 76 bis CP; art. 360 CPP)
+  Input: SuspensionJuicioPruebaInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: La solicitud de suspensión del juicio a prueba formulada en
+la causa seguida por {{ calificacion_legal }},{% if fiscal_nombre %} con la
+conformidad del Sr. Fiscal {{ fiscal_nombre }},{% endif %}{% if defensor_nombre %}
+a propuesta de la defensa a cargo del Dr./a {{ defensor_nombre }},{% endif %}
+y lo previsto por los arts. 76 bis y ss. del Código Penal y el art. 360
+del CPP Ley 8123.-
+
+CONSIDERANDO: Que el imputado ha ofrecido reparar el daño en la medida
+de lo posible{% if reparacion_danio %}: {{ reparacion_danio }}{% endif %}, y ha aceptado
+las reglas de conducta que en este acto se fijan, todo ello de conformidad
+con el art. 76 bis CP y con la conformidad fiscal requerida.-
+
+SE RESUELVE:
+
+I. SUSPENDER el JUICIO A PRUEBA seguido a {{ partes_por_rol(partes, "imputado") }}
+por el delito de {{ calificacion_legal }}, por el término de
+{{ plazo_suspension_meses }} ({{ plazo_suspension_meses | numero_letras }})
+meses, contados desde la presente resolución (art. 76 bis CP).-
+{% if reglas_conducta %}
+
+II. FIJAR las siguientes reglas de conducta de obligatorio cumplimiento:
+{% for r in reglas_conducta %}
+{{ loop.index + 1 }}. {{ r }}
+{% endfor %}
+{% endif %}
+
+{{ "III" if reglas_conducta else "II" }}. Adviértase al imputado que el
+incumplimiento de las reglas de conducta o la comisión de un nuevo delito
+durante el período de prueba dará lugar a la revocación del beneficio y a
+la continuación del proceso (art. 76 ter CP).-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

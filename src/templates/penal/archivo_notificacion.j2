@@ -1,0 +1,31 @@
+{#
+  Auto de archivo con notificación (art. 334 CPP Ley 8123, Córdoba)
+  Input: ArchivoNotificacionInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+Atento el estado de las actuaciones,
+{% if causal_archivo == "desestimacion_fiscal" %}no habiendo el Ministerio Público Fiscal ejercido la acción penal,
+{% elif causal_archivo == "extincion_accion" %}habiéndose extinguido la acción penal por operarse causal legal,
+{% elif causal_archivo == "sobreseimiento_previo" %}habiéndose dictado sobreseimiento en estas actuaciones,
+{% elif causal_archivo == "falta_merito" %}no existiendo mérito suficiente para formular requerimiento de elevación a juicio,
+{% else %}{{ causal_descripcion }},{% endif %}
+ARCHÍVENSE las presentes actuaciones.-
+
+Notifíquese a las partes y dese de baja el expediente en el registro de causas pendientes.-
+{% if notificar_querellante %}
+
+Notifíquese también al querellante particular en el domicilio constituido en autos.-
+{% endif %}
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

@@ -1,0 +1,28 @@
+{#
+  Decreto de traslado de contestación al actor (CPT Ley 7987, Córdoba)
+  Input: TrasladoContestacionLaboralInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol, plazo %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+ATENTO la contestación de demanda obrante en autos, CÓRRASE TRASLADO de la
+misma a {{ partes_por_rol(partes, "actor") }} por el plazo de
+{{ plazo(plazo_dias) }}, a los efectos que tome conocimiento y ejercite los
+derechos que le correspondan (CPT Ley 7987).-
+{% if con_reconvencion %}
+
+Asimismo, habiendo el demandado articulado RECONVENCIÓN, CÓRRASE TRASLADO
+de la misma al actor por el plazo de {{ plazo(plazo_reconvencion_dias) }},
+para que la conteste (art. 83 CPT).-
+{% endif %}
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

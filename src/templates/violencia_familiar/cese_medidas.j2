@@ -1,0 +1,43 @@
+{#
+  Auto de cese de medidas de protección (art. 26 Ley 9283, Córdoba)
+  Input: CeseMedidasVFInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: Las presentes actuaciones, a los efectos de resolver sobre
+el cese de las medidas de protección oportunamente dictadas (art. 26 Ley
+9283 Córdoba).-
+
+CONSIDERANDO: Que
+{% if motivo_cese == "superacion_riesgo" %}han cesado las circunstancias de riesgo que motivaron el dictado de las medidas de protección,
+{% elif motivo_cese == "pedido_victima" %}la víctima ha solicitado el levantamiento de las medidas de protección,
+{% elif motivo_cese == "acuerdo_partes" %}las partes han llegado a un acuerdo que hace innecesarias las medidas vigentes,
+{% elif motivo_cese == "vencimiento_plazo" %}las medidas han vencido en su plazo sin ser solicitada su prórroga,
+{% elif motivo_cese == "archivo_causa" %}se ha dispuesto el archivo de las actuaciones,
+{% else %}{{ motivo_descripcion }},{% endif %}
+resultando procedente disponer el cese de las medidas vigentes.-
+
+SE RESUELVE:
+
+I. DISPONER EL CESE de las medidas de protección
+{% if medidas_que_cesan %}dictadas en autos, en particular:
+{% for m in medidas_que_cesan %}
+- {{ m }}
+{% endfor %}
+{% else %}oportunamente dictadas en autos {% endif %}
+(art. 26 Ley 9283 Córdoba).-
+
+II. Notifíquese a las partes y comuníquese a la Policía de la Provincia de
+Córdoba el cese de las medidas. OFÍCIESE.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

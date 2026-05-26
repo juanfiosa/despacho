@@ -1,0 +1,31 @@
+{#
+  Decreto de citación de herederos y acreedores del causante (art. 2340 CCyCN)
+  Input: CitacionHerederosAcreedoresInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+CÍTASE a todos los que se crean con derecho a los bienes dejados por el
+causante {{ causante_nombre }} y a sus acreedores, para que dentro del plazo
+de {{ plazo_presentacion_dias }} ({{ plazo_presentacion_dias | numero_letras }})
+días se presenten en autos a hacer valer sus derechos (art. 2340 CCyCN).-
+{% if publicar_boletin_oficial %}
+
+PUBLÍQUESE el presente edicto en el Boletín Oficial de la Provincia de
+Córdoba durante {{ dias_edictos }} ({{ dias_edictos | numero_letras }}) días.
+OFÍCIESE.-
+{% endif %}
+{% if publicar_diario_local %}
+
+PUBLÍQUESE asimismo en un diario de amplia circulación local por igual plazo.-
+{% endif %}
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

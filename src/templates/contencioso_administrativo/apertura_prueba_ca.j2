@@ -1,0 +1,31 @@
+{#
+  Decreto de apertura a prueba en proceso contencioso administrativo (art. 47 CPCA)
+  Input: AperturaPruebaCAInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import fecha_larga, plazo %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+AUTOS A PRUEBA. Ábrase el período probatorio por el término de
+{{ plazo(plazo_dias) }}, que comenzará a correr a partir del
+{{ fecha_larga(fecha_inicio_prueba) }} (art. 47 CPCA Ley 7182).-
+{% if prueba_admitida %}
+
+Prueba admitida:
+{% for p in prueba_admitida %}
+- {{ p }}
+{% endfor %}
+{% endif %}
+
+Las partes deberán diligenciar la prueba ofrecida dentro del plazo señalado,
+bajo apercibimiento de tener por decaído el derecho no ejercido.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

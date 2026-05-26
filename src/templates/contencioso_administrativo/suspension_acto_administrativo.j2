@@ -1,0 +1,50 @@
+{#
+  Auto de suspensión cautelar del acto administrativo impugnado (art. 19 CPCA)
+  Input: SuspensionActoAdministrativoInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: La medida cautelar de suspensión del acto administrativo
+solicitada por {{ partes_por_rol(partes, "actor") }}, a fin de resolver
+conforme al art. 19 del CPCA Ley 7182.-
+
+CONSIDERANDO: I. Que el art. 19 del Código de Procedimiento Contencioso
+Administrativo autoriza la suspensión de los efectos del acto impugnado
+cuando concurren los requisitos de
+{% if causal_suspension == "verosimilitud_derecho_peligro_demora" %}verosimilitud del derecho invocado (fumus boni iuris) y peligro en la demora (periculum in mora)
+{% elif causal_suspension == "irreparabilidad_perjuicio" %}la irreparabilidad del perjuicio que podría ocasionar la ejecución del acto
+{% else %}la no afectación del interés público con la medida{% endif %}.-
+
+II. Que el acto impugnado — {{ acto_impugnado }}, dictado por {{ organismo_emisor }} —
+reúne en forma aparente los presupuestos que autorizan la medida solicitada.-
+{% if contracautela %}
+
+III. Que corresponde imponer al peticionante la contracautela de {{ contracautela }},
+a los efectos de garantizar los eventuales daños y perjuicios que la medida
+pudiera ocasionar al organismo demandado.-
+{% endif %}
+
+SE RESUELVE:
+
+I. SUSPENDER los efectos del {{ acto_impugnado }} dictado por {{ organismo_emisor }},
+hasta tanto recaiga sentencia definitiva en autos o se disponga su levantamiento
+(art. 19 CPCA Ley 7182).-
+{% if contracautela %}
+
+II. IMPONER al actor la contracautela de {{ contracautela }}, cuyo cumplimiento
+se verificará antes de comunicar la presente medida.-
+{% endif %}
+
+{{ "III" if contracautela else "II" }}. Notifíquese a {{ organismo_emisor }} mediante oficio. OFÍCIESE.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

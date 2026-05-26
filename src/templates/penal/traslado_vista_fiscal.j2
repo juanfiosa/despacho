@@ -1,0 +1,24 @@
+{#
+  Decreto de traslado / vista al fiscal (art. 334 CPP Ley 8123, Córdoba)
+  Input: TrasladoVistaFiscalInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import plazo %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+CÓRRESE VISTA al
+{% if tipo_vista == "fiscal_instruccion" %}Sr. Fiscal de Instrucción
+{% elif tipo_vista == "fiscal_camara" %}Sr. Fiscal de Cámara
+{% else %}Sr. Fiscal General{% endif %}
+interviniente sobre {{ objeto_vista }}, por el plazo de {{ plazo(plazo_dias) }},
+a los fines que estime corresponder (art. 334 CPP Ley 8123).-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

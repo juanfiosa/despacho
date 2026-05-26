@@ -1,0 +1,25 @@
+{#
+  Intimación de pago de liquidación aprobada (art. 132 CPT Ley 7987, Córdoba)
+  Input: IntimacionPagoLiquidacionInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol, pesos, plazo, desc_tasa %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+Aprobada que fuera la liquidación practicada en autos, ÍNTIMASE a
+{{ partes_por_rol(partes, "demandado") }} a abonar a
+{{ partes_por_rol(partes, "actor") }} la suma de
+{{ pesos(datos_economicos.capital) }}{% if incluye_intereses_moratorios %} más intereses moratorios que se calcularán conforme {{ desc_tasa(datos_economicos.tasa, datos_economicos.tasa_descripcion) }}{% endif %}{% if datos_economicos.costas %}, más costas reguladas{% endif %},
+en concepto de capital e intereses resultantes de la liquidación aprobada,
+dentro del plazo de {{ plazo(plazo_dias) }}, bajo apercibimiento de proceder
+al embargo de bienes suficientes de su propiedad (art. 132 CPT Ley 7987).-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

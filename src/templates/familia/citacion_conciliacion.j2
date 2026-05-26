@@ -1,0 +1,35 @@
+{#
+  Citación a audiencia de conciliación en proceso de familia (CPF Ley 10305)
+  Input: CitacionConciliacionFamiliaInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import fecha_larga %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+CÍTASE a las partes a AUDIENCIA DE CONCILIACIÓN en el presente proceso de
+{% if tipo_proceso == "alimentos" %}alimentos
+{% elif tipo_proceso == "comunicacion" %}régimen de comunicación
+{% elif tipo_proceso == "guarda" %}guarda y cuidado personal
+{% elif tipo_proceso == "divorcio" %}divorcio
+{% elif tipo_proceso == "liquidacion_bienes" %}liquidación de bienes
+{% else %}familia{% endif %},
+a celebrarse el día {{ fecha_larga(fecha_audiencia) }}, a las
+{{ hora_audiencia }} horas,{% if sala %} en la {{ sala }},{% endif %}
+con la presencia del/la magistrado/a a cargo (art. 58 y conc. CPF Ley 10305).-
+{% if con_equipo_tecnico %}
+
+Convócase asimismo al Equipo Técnico Interdisciplinario del Juzgado para
+su intervención en la audiencia.-
+{% endif %}
+
+Las partes deberán comparecer personalmente, con o sin asistencia letrada.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

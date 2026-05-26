@@ -1,0 +1,36 @@
+{#
+  Decreto de realización de bienes en quiebra (art. 203 Ley 24522)
+  Input: DecretoRealizacionBienesInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol, pesos, fecha_larga %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+PROCÉDASE a la REALIZACIÓN de los bienes del fallido integrantes de la
+masa de quiebra{% if partes %} de {{ partes_por_rol(partes, "fallido") }}{% endif %},
+a saber: {{ descripcion_bienes }},
+mediante la modalidad de
+{% if modalidad_realizacion == "subasta_judicial" %}SUBASTA JUDICIAL
+{% elif modalidad_realizacion == "venta_directa" %}VENTA DIRECTA (art. 213 LCQ)
+{% elif modalidad_realizacion == "licitacion" %}LICITACIÓN
+{% elif modalidad_realizacion == "fondo_comercio" %}VENTA COMO FONDO DE COMERCIO (art. 204 LCQ)
+{% else %}CONCURSO DE PRECIOS{% endif %}
+(art. 203 Ley 24522).-
+{% if modalidad_realizacion == "subasta_judicial" %}
+
+DESÍGNASE martillero a{% if martillero_nombre %} {{ martillero_nombre }}, quien deberá aceptar el cargo y{% else %}l que resulte de la lista oficial, quien deberá{% endif %}
+fijar fecha de remate dentro del plazo de ley.{% if base_subasta %} Base de subasta: {{ pesos(base_subasta) }}.{% endif %}
+{% if fecha_subasta %}La subasta se celebrará el {{ fecha_larga(fecha_subasta) }}.{% endif %}
+{% endif %}
+
+Procédase a la publicación de edictos y notificaciones de acuerdo con la Ley 24522. OFÍCIESE.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

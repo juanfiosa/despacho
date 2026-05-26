@@ -1,0 +1,30 @@
+{#
+  Decreto de admisión de partes civiles en causa penal (art. 96 CPP Ley 8123)
+  Input: AdmisionPartesCivilesInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol, plazo %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+ATENTO la presentación formulada, ADMÍTASE la constitución de
+{% if tipo_parte_civil == "actor_civil" %}ACTOR CIVIL
+{% elif tipo_parte_civil == "tercero_civilmente_demandado" %}TERCERO CIVILMENTE DEMANDADO
+{% else %}ACTOR CIVIL y TERCERO CIVILMENTE DEMANDADO{% endif %}
+en la persona de {{ nombre_parte_civil }}{% if calificacion_provisional %}, en la causa
+seguida por {{ calificacion_provisional }}{% endif %}, en las condiciones de los
+arts. 96 y ss. del Código de Procedimiento Penal (Ley 8123, Córdoba).-
+{% if plazo_contestacion_dias %}
+
+Córrase traslado de la constitución de parte civil al imputado por el plazo
+de {{ plazo(plazo_contestacion_dias) }}.-
+{% endif %}
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

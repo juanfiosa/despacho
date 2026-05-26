@@ -1,0 +1,31 @@
+{#
+  Auto de aprobación de liquidación laboral (art. 132 CPT Ley 7987, Córdoba)
+  Input: AutoLiquidacionAprobadaInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol, pesos, fecha_larga %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+APRUÉBASE la liquidación practicada por el
+{% if aprobada_por == "perito_contador" %}perito contador
+{% elif aprobada_por == "actuario" %}actuario
+{% else %}secretaría del tribunal{% endif %}
+al día {{ fecha_larga(fecha_liquidacion) }}, ascendente a la suma de
+{{ pesos(monto_liquidado) }} en concepto de capital, intereses y costas
+(art. 132 CPT Ley 7987 Córdoba).-
+{% if observaciones_liquidacion %}
+
+Observaciones: {{ observaciones_liquidacion }}.-
+{% endif %}
+
+Procédase a la intimación de pago al condenado en los términos del art. 132 CPT.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

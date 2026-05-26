@@ -1,0 +1,35 @@
+{#
+  Decreto de régimen de visitas supervisadas (Ley 9944 / art. 555 CCyCN)
+  Input: DecretoVisitasSupervisadasInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+FÍJASE régimen de visitas supervisadas para {{ nombre_nnya }} en los
+siguientes términos:
+
+{{ descripcion_regimen }}
+
+Las visitas se llevarán a cabo en
+{% if lugar_visitas == "sede_juzgado" %}la sede de este Juzgado
+{% elif lugar_visitas == "hogar_alternativo" %}el hogar alternativo donde se encuentra alojado/a el/la NNyA
+{% elif lugar_visitas == "externo_supervisado" %}lugar externo bajo supervisión
+{% else %}el lugar que se determine{% endif %}.
+{% if supervisor %}
+Supervisión a cargo de: {{ supervisor }}.-
+{% endif %}
+
+El régimen tendrá vigencia
+{% if vigencia == "hasta_nueva_resolucion" %}hasta nueva resolución judicial
+{% else %}por el plazo que se determine en resolución posterior{% endif %}
+(Ley 9944; art. 555 CCyCN).-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

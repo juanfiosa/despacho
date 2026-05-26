@@ -1,0 +1,44 @@
+{#
+  Decreto de exclusión del hogar (art. 519 CCyCN / art. 6 CPF Ley 10305)
+  Input: ExclusionHogarInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: Lo solicitado en autos y lo previsto por el art. 519 del
+Código Civil y Comercial de la Nación y el art. 6 del Código de Familia
+de la Provincia de Córdoba (Ley 10305).-
+
+CONSIDERANDO: Que resulta procedente disponer la exclusión del hogar en
+los términos de las normas citadas, a fin de preservar la integridad y
+seguridad de los ocupantes del inmueble familiar.-
+
+SE RESUELVE:
+
+I. ORDENAR la EXCLUSIÓN DEL HOGAR de {{ domicilio_exclusion }} a
+{{ partes_por_rol(partes, "demandado") }}, quien deberá retirarse del
+inmueble dentro de las {{ plazo_cumplimiento_horas }}
+({{ plazo_cumplimiento_horas | numero_letras }}) horas de notificado/a
+el presente (art. 519 CCyCN).-
+{% if con_auxilio_policial %}
+
+II. AUTORIZAR el auxilio de la fuerza pública para el diligenciamiento de
+la presente medida en caso de resistencia. OFÍCIESE a la Policía de la
+Provincia de Córdoba.-
+{% endif %}
+{% if con_prohibicion_acercamiento %}
+
+{{ "III" if con_auxilio_policial else "II" }}. PROHIBIR a {{ partes_por_rol(partes, "demandado") }} acercarse al
+domicilio de {{ domicilio_exclusion }}{% if distancia_metros %} a una distancia menor de {{ distancia_metros }} metros{% endif %}.-
+{% endif %}
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

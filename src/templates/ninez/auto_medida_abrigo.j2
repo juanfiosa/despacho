@@ -1,0 +1,43 @@
+{#
+  Auto de medida de abrigo (art. 48 Ley 9944, Córdoba)
+  Input: AutoMedidaAbrigoInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: La situación del niño/niña/adolescente {{ nombre_nnya }}{% if edad_nnya %},
+de {{ edad_nnya }} años de edad{% endif %}, a los fines de resolver sobre la
+medida de abrigo (art. 48 Ley Provincial 9944).-
+
+CONSIDERANDO: Que de las actuaciones surge {{ motivo_abrigo }}, situación
+que compromete la integridad y el ejercicio efectivo de los derechos de
+{{ nombre_nnya }}, resultando urgente el dictado de una medida de abrigo
+de conformidad con el art. 48 de la Ley 9944 de la Provincia de Córdoba.-
+
+SE RESUELVE:
+
+I. DISPONER MEDIDA DE ABRIGO respecto de {{ nombre_nnya }}, consistente en
+su inclusión transitoria en
+{% if modalidad_abrigo == "familia_alternativa" %}{% if establecimiento %}la familia alternativa "{{ establecimiento }}"{% else %}una familia alternativa a designar{% endif %}
+{% elif modalidad_abrigo == "hogar_convivencial" %}{% if establecimiento %}el hogar convivencial "{{ establecimiento }}"{% else %}un hogar convivencial a designar{% endif %}
+{% elif modalidad_abrigo == "establecimiento_proteccion" %}{% if establecimiento %}el establecimiento de protección "{{ establecimiento }}"{% else %}un establecimiento de protección especializado a designar{% endif %}
+{% else %}{% if establecimiento %}{{ establecimiento }}{% else %}el dispositivo adecuado a determinar{% endif %}{% endif %},
+por el término de {{ plazo_dias }} ({{ plazo_dias }}) días, sin perjuicio de
+prórroga si las circunstancias así lo requieran (arts. 48 y 55 Ley 9944).-
+
+II. ORDENAR la intervención de la Secretaría de Niñez, Adolescencia y
+Familia (SENAF) a los efectos de la ejecución de la presente medida.
+OFÍCIESE.-
+
+III. Fíjase audiencia de seguimiento dentro de los treinta (30) días.
+Notifíquese a las partes.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

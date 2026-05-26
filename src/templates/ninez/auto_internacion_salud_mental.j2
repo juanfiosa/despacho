@@ -1,0 +1,43 @@
+{#
+  Auto de internación involuntaria en salud mental (art. 43 Ley 26657 / Ley 9944)
+  Input: AutoInternacionSaludMentalInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: Las actuaciones relativas a {{ nombre_nnya }}{% if edad_nnya %},
+de {{ edad_nnya }} años{% endif %}, a los efectos de resolver sobre la internación
+involuntaria por razones de salud mental (art. 43 Ley Nacional 26657;
+Ley Provincial 9944).-
+
+CONSIDERANDO: I. Que de las constancias de autos y{% if medico_interviniente %} del informe del
+Dr./a {{ medico_interviniente }}{% else %} de los informes médicos incorporados{% endif %}
+surge la necesidad de disponer la internación involuntaria de {{ nombre_nnya }}
+por razones de salud mental{% if diagnostico_provisional %}: {{ diagnostico_provisional }}{% endif %}.-
+
+II. Que la medida resulta procedente al amparo del art. 43 de la Ley
+Nacional de Salud Mental N.° 26657 y las disposiciones complementarias
+de la Ley Provincial 9944.-
+
+SE RESUELVE:
+
+I. DISPONER la INTERNACIÓN INVOLUNTARIA de {{ nombre_nnya }} en
+{{ establecimiento_salud }}, con el alcance y condiciones que establece
+el art. 43 Ley 26657.-
+
+II. FIJAR plazo de revisión judicial de la presente medida en
+{{ plazo_revision_dias }} ({{ plazo_revision_dias | numero_letras }}) días
+(art. 43 Ley 26657).-
+
+III. NOTIFÍQUESE a la Secretaría de Niñez, Adolescencia y Familia (SENAF)
+y al establecimiento de salud mental designado. OFÍCIESE.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

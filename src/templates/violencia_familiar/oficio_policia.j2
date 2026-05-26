@@ -1,0 +1,27 @@
+{#
+  Decreto de oficio a la Policía de la Provincia (Ley 9283, Córdoba)
+  Input: OficioPoliciaVFInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+LÍBRESE OFICIO a la
+{% if unidad_policial %}{{ unidad_policial }},{% else %}Policía de la Provincia de Córdoba,{% endif %}
+a los efectos de que proceda a
+{% if tipo_oficio == "custodia" %}realizar tareas de custodia y vigilancia en el domicilio de la víctima
+{% elif tipo_oficio == "verificacion_cumplimiento" %}verificar el cumplimiento de las medidas de protección dictadas en autos
+{% elif tipo_oficio == "traslado" %}acompañar a la víctima al domicilio conyugal a los efectos del retiro de sus pertenencias personales
+{% else %}{{ descripcion_instrucciones }}{% endif %},
+sito en {{ domicilio_intervencion }}.-
+
+Instrucciones: {{ descripcion_instrucciones }}.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

@@ -1,0 +1,25 @@
+{#
+  Decreto de intimación al organismo demandado a remitir el expediente administrativo
+  Input: IntimacionOrganismoDemandadoInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import plazo %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+ÍNTIMASE a {{ organismo_demandado }} a remitir a este Tribunal, dentro del
+plazo de {{ plazo(plazo_dias) }}, el expediente administrativo
+{% if numero_expediente_administrativo %}N.° {{ numero_expediente_administrativo }} {% endif %}que
+motivó la presente acción, bajo apercibimiento de {{ apercibimiento }}
+(CPCA Ley 7182, art. 14; CPCC art. 355 —aplicación supletoria—).-
+
+OFÍCIESE al efecto.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

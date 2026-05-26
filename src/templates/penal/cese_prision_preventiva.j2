@@ -1,0 +1,53 @@
+{#
+  Auto de cese / morigeración de prisión preventiva (art. 283 CPP Ley 8123)
+  Input: CesePrisionPreventivaInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: La situación procesal de {{ partes_por_rol(partes, "imputado") }},
+{% if defensor_nombre %}el pedido formulado por la defensa a cargo del Dr./a {{ defensor_nombre }},
+{% endif %}{% if fiscal_nombre %}el dictamen del Sr. Fiscal {{ fiscal_nombre }},
+{% endif %}y lo normado por el art. 283 y concordantes del CPP Ley 8123.-
+
+CONSIDERANDO: Que analizadas las presentes actuaciones, se advierte que
+{% if causal_cese == "variacion_circunstancias" %}han variado las circunstancias que dieron origen a la prisión preventiva,
+resultando procedente su cese conforme el art. 283 CPP
+{% elif causal_cese == "vencimiento_plazo" %}la medida privativa de libertad ha superado el plazo razonable previsto
+por el art. 283 CPP, operando su cese automático
+{% elif causal_cese == "sobreseimiento" %}habiendo recaído sobreseimiento en la causa, corresponde disponer el cese
+de la prisión preventiva
+{% elif causal_cese == "absolución" %}habiéndose dictado sentencia absolutoria, corresponde disponer la libertad
+inmediata del imputado
+{% elif causal_cese == "monto_pena" %}la pena que eventualmente pudiere imponerse admite condena de ejecución
+condicional, por lo que la privación de libertad resulta desproporcionada
+{% else %}{{ causal_descripcion }}{% endif %}.-
+
+SE RESUELVE:
+
+I. DISPONER el
+{% if modalidad == "excarcelacion" %}CESE de la prisión preventiva y la inmediata EXCARCELACIÓN
+{% elif modalidad == "exencion_prision" %}EXENCIÓN DE PRISIÓN
+{% elif modalidad == "morigeracion" %}CESE de la prisión preventiva con ARRESTO DOMICILIARIO (art. 283 CPP)
+{% else %}CESE AUTOMÁTICO de la prisión preventiva por vencimiento del plazo legal (art. 283 CPP){% endif %}
+de {{ partes_por_rol(partes, "imputado") }}.-
+{% if condiciones %}
+
+II. IMPONER las siguientes condiciones mientras dure el proceso:
+{% for c in condiciones %}
+- {{ c }}
+{% endfor %}
+{% endif %}
+
+{{ "III" if condiciones else "II" }}. Comuníquese al establecimiento penitenciario. OFÍCIESE.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

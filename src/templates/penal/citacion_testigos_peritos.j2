@@ -1,0 +1,32 @@
+{#
+  Decreto de citación de testigos y/o peritos al debate oral (arts. 374/221 CPP)
+  Input: CitacionTestigosPeritosInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import fecha_larga %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+CÍTASE a los
+{% if tipo_convocados == "testigos" %}testigos
+{% elif tipo_convocados == "peritos" %}peritos
+{% else %}testigos y peritos{% endif %}
+a comparecer al DEBATE ORAL Y PÚBLICO fijado para el día
+{{ fecha_larga(fecha_debate) }}, a las {{ hora_debate }} horas,
+bajo apercibimiento de {{ apercibimiento }} (arts. 374 y 221 CPP Ley 8123).-
+{% if lista_convocados %}
+
+Personas citadas:
+{% for persona in lista_convocados %}
+- {{ persona }}
+{% endfor %}
+{% endif %}
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

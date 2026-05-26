@@ -1,0 +1,40 @@
+{#
+  Auto de prórroga de medidas de protección (art. 26 Ley 9283, Córdoba)
+  Input: ProrrogaMedidasVFInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: Las presentes actuaciones caratuladas
+"{{ identificacion.caratula }}", a los efectos de resolver sobre la prórroga
+de las medidas de protección vigentes (art. 26 Ley 9283 de la Provincia
+de Córdoba).-
+
+CONSIDERANDO: Que {{ motivo_prorroga }}, resultando procedente la prórroga
+de las medidas oportunamente dictadas a fin de preservar la integridad
+física y psíquica de la/el damnificada/o.-
+
+SE RESUELVE:
+
+I. PRORROGAR por el término de {{ plazo_prorroga_dias }}
+({{ plazo_prorroga_dias }}) días corridos las medidas de protección
+oportunamente dispuestas en autos,{% if medidas_vigentes %} a saber:
+{% for m in medidas_vigentes %}
+- {{ m }}
+{% endfor %}{% endif %}
+las que se mantendrán vigentes mientras subsistan las circunstancias
+que las motivaron (art. 26 Ley 9283).-
+
+II. Notifíquese a las partes y a la Policía de la Provincia de Córdoba.
+OFÍCIESE.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

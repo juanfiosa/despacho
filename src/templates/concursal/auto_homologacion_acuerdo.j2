@@ -1,0 +1,44 @@
+{#
+  Auto de homologación del acuerdo preventivo (art. 52 Ley 24522)
+  Input: AutoHomologacionAcuerdoInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: Las actuaciones del presente concurso preventivo de
+{{ partes_por_rol(partes, "concursado") }}, habiéndose obtenido las
+conformidades requeridas por el art. 45 de la Ley 24522 para el acuerdo
+preventivo, a fin de resolver sobre su homologación (art. 52 LCQ).-
+
+CONSIDERANDO: I. Que el concursado ha presentado acuerdo
+{% if tipo_acuerdo == "por_categorias" %}por categorías{% else %}unificado{% endif %}
+con las conformidades exigidas por los arts. 45 y 46 de la Ley 24522.-
+
+II. Que el contenido del acuerdo no viola la ley ni el orden público,
+que ha sido obtenido sin dolo y no media abuso de derecho, por lo que
+resulta procedente su homologación conforme el art. 52 LCQ.-
+
+SE RESUELVE:
+
+I. HOMOLOGAR el acuerdo preventivo presentado por {{ partes_por_rol(partes, "concursado") }},
+cuyo contenido es el siguiente: {{ descripcion_acuerdo }},
+{% if plazo_cumplimiento_anos %}con plazo máximo de cumplimiento de
+{{ plazo_cumplimiento_anos }} ({{ plazo_cumplimiento_anos | numero_letras }}) años,{% endif %}
+conforme art. 52 Ley 24522.-
+
+II. El acuerdo homologado es obligatorio para todos los acreedores quirografarios
+de causa o título anterior a la presentación concursal, aunque no hayan
+participado en el procedimiento (art. 56 LCQ).-
+
+III. Notifíquese y publíquese conforme la ley. OFÍCIESE al Boletín Oficial.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

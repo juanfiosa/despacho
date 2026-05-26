@@ -1,0 +1,45 @@
+{#
+  Auto de atribución del hogar conyugal (art. 443 CCyCN / CPF Ley 10305)
+  Input: AtribucionHogarConyugalInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: Las actuaciones del presente proceso de familia, a los
+efectos de resolver sobre la atribución del hogar conyugal sito en
+{{ domicilio_hogar }}, conforme el art. 443 del Código Civil y Comercial
+de la Nación.-
+
+CONSIDERANDO: Que habiéndose verificado los presupuestos legales de la
+norma citada —en especial el fundamento de
+{% if fundamento == "hijos_menores" %}el cuidado de los hijos menores de edad
+{% elif fundamento == "enfermedad" %}razones de salud del cónyuge peticionante
+{% elif fundamento == "situacion_economica" %}la situación económica de las partes
+{% elif fundamento == "violencia" %}la situación de violencia en el grupo familiar
+{% else %}lo que surge de las actuaciones{% endif %}—,
+resulta procedente atribuir el uso del hogar conyugal en los términos
+solicitados (art. 443 CCyCN).-
+
+SE RESUELVE:
+
+I. ATRIBUIR, con carácter {{ "PROVISORIO" if caracter == "provisorio" else "DEFINITIVO" }},
+el uso del hogar conyugal sito en {{ domicilio_hogar }} a
+{{ partes_por_rol(partes, "actor") }} (art. 443 CCyCN).-
+{% if con_exclusion_otro_conyuge %}
+
+II. En consecuencia, ORDÉNASE la EXCLUSIÓN de {{ partes_por_rol(partes, "demandado") }}
+del referido inmueble, quien deberá retirarse dentro de las
+{{ plazo_exclusion_horas }} ({{ plazo_exclusion_horas | numero_letras }}) horas
+de notificado/a el presente.-
+{% endif %}
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

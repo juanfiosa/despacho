@@ -1,0 +1,36 @@
+{#
+  Decreto de citación a audiencia de seguimiento de medida NNyA (art. 52 Ley 9944)
+  Input: CitacionSeguimientoNNAInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import fecha_larga %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+CÍTASE a las partes y representantes a AUDIENCIA DE
+{% if tipo_audiencia == "seguimiento" %}SEGUIMIENTO DE MEDIDA
+{% elif tipo_audiencia == "revision_medida" %}REVISIÓN DE MEDIDA
+{% elif tipo_audiencia == "reintegracion" %}REINTEGRACIÓN FAMILIAR
+{% else %}SEGUIMIENTO{% endif %}
+relativa a {{ nombre_nnya }}, a celebrarse el día {{ fecha_larga(fecha_audiencia) }},
+a las {{ hora_audiencia }} horas (art. 52 Ley 9944 Córdoba).-
+{% if citar_senaf %}
+
+Cítase asimismo al representante de la Secretaría de Niñez, Adolescencia
+y Familia (SENAF) para que comparezca con informe de seguimiento actualizado.
+OFÍCIESE.-
+{% endif %}
+{% if citar_equipo_tecnico %}
+
+Convócase al Equipo Técnico Interdisciplinario del Juzgado para su
+intervención en la audiencia con informe de actualización.-
+{% endif %}
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

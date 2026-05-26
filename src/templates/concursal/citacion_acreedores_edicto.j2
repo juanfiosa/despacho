@@ -1,0 +1,28 @@
+{#
+  Decreto de citación de acreedores por edictos (arts. 27/200 Ley 24522)
+  Input: CitacionAcreedoresEdictoInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol, fecha_larga %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+PUBLÍQUENSE EDICTOS en el Boletín Oficial de la Provincia de Córdoba y en
+un diario de amplia circulación local, durante {{ dias_publicacion }}
+({{ dias_publicacion | numero_letras }}) días, citando a los acreedores de
+{{ partes_por_rol(partes, "concursado") }} a presentarse ante el síndico
+{% if sindico_nombre %}{{ sindico_nombre }},{% endif %}
+{% if sindico_domicilio %}con domicilio en {{ sindico_domicilio }},{% endif %}
+a verificar sus créditos antes del {{ fecha_larga(fecha_limite_verificacion) }}
+(art.{% if tipo_proceso == "quiebra" %} 200{% else %} 27{% endif %} Ley 24522).-
+
+OFÍCIESE al Boletín Oficial.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

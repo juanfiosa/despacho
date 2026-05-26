@@ -1,0 +1,38 @@
+{#
+  Auto de reintegro familiar del NNyA (Ley 9944, arts. 48 y ss., Córdoba)
+  Input: AutoReintegroFamiliarInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: Las actuaciones del presente expediente relativas a
+{{ nombre_nnya }}, a los efectos de resolver sobre el reintegro al grupo
+familiar (Ley 9944 Córdoba, art. 48 y conc.).-
+
+CONSIDERANDO: Que {{ motivo_reintegro }}, resultando procedente disponer
+el reintegro de {{ nombre_nnya }} a {{ grupo_familiar_reintegro }}.-
+
+SE RESUELVE:
+
+I. DISPONER el REINTEGRO de {{ nombre_nnya }} a {{ grupo_familiar_reintegro }},
+cesando la medida de abrigo oportunamente dispuesta (Ley 9944, art. 48).-
+{% if condiciones_reintegro %}
+
+II. El reintegro se efectúa con las siguientes condiciones de seguimiento:
+{% for c in condiciones_reintegro %}
+- {{ c }}
+{% endfor %}
+{% endif %}
+
+{{ "III" if condiciones_reintegro else "II" }}. NOTIFÍQUESE a la Secretaría de Niñez, Adolescencia y Familia (SENAF)
+y al establecimiento donde se encontraba alojado/a el/la NNyA. OFÍCIESE.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

@@ -1,0 +1,27 @@
+{#
+  Citación a audiencia preliminar en proceso contencioso administrativo (art. 46 CPCA)
+  Input: CitacionAudienciaPreliminarCAInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import fecha_larga %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+CÍTASE a las partes a la AUDIENCIA PRELIMINAR prevista por el art. 46 del
+Código de Procedimiento Contencioso Administrativo (Ley 7182), a celebrarse
+el día {{ fecha_larga(fecha_audiencia) }}, a las {{ hora_audiencia }} horas,
+{% if sala %}en la {{ sala }},{% endif %}
+a los efectos de {{ objeto_audiencia }}.-
+
+Las partes deberán concurrir personalmente o mediante apoderado con facultades
+suficientes para conciliar, bajo apercibimiento de las consecuencias previstas
+en el art. 46 CPCA.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

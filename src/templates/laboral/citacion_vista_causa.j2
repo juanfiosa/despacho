@@ -1,0 +1,36 @@
+{#
+  Decreto de citación a audiencia de vista de causa laboral (art. 83 CPT Ley 7987)
+  Input: CitacionVistaCausaInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import fecha_larga %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+CÍTASE a las partes a la AUDIENCIA DE VISTA DE CAUSA, a celebrarse el día
+{{ fecha_larga(fecha_audiencia) }}, a las {{ hora_audiencia }} horas,
+{% if sala %}en la Sala N.° {{ sala }},{% endif %}
+a los fines previstos por el art. 83 del Código de Procedimiento del Trabajo
+(Ley 7987 de la Provincia de Córdoba).-
+{% if con_peritos %}
+
+Cítase asimismo a los peritos designados en autos para que comparezcan
+en la misma audiencia a los efectos de ratificar su dictamen y responder
+a los cuestionarios de las partes.-
+{% endif %}
+{% if con_testigos %}
+
+Cítase también a los testigos ofrecidos para que presten declaración en
+la referida audiencia, bajo apercibimiento de ley.-
+{% endif %}
+
+Las partes deberán comparecer con patrocinio letrado.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

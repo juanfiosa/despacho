@@ -1,0 +1,48 @@
+{#
+  Auto de homologación de acuerdo conciliatorio laboral (art. 83 CPT Ley 7987)
+  Input: HomologacionAcuerdoLaboralInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol, pesos %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: El acuerdo conciliatorio celebrado en autos entre
+{{ partes_por_rol(partes, "actor") }} y {{ partes_por_rol(partes, "demandado") }},
+a los fines de su homologación (art. 83 CPT Ley 7987 Córdoba).-
+
+CONSIDERANDO: Que el acuerdo alcanzado por las partes resulta una solución
+razonable del conflicto laboral, no vulnera disposiciones de orden público
+laboral ni importa renuncia de derechos indisponibles del trabajador, por lo
+que corresponde homologarlo y conferirle fuerza de sentencia firme conforme
+art. 83 CPT.-
+
+SE RESUELVE:
+
+I. HOMOLOGAR el acuerdo conciliatorio celebrado entre las partes, cuyo
+contenido es el siguiente: {{ descripcion_acuerdo }}.-
+{% if monto_total %}
+
+Monto total acordado: {{ pesos(monto_total) }}.-
+{% endif %}
+
+II. El presente acuerdo queda aprobado como si fuera sentencia pasada en
+autoridad de cosa juzgada, confiriéndosele fuerza ejecutoria (art. 83 CPT).-
+{% if tipo_acuerdo == "total" %}
+
+III. En virtud del carácter total del acuerdo, DASE POR CONCLUIDO el
+presente proceso laboral. Archívese oportunamente.-
+{% else %}
+
+III. El proceso continuará respecto de los rubros no comprendidos en el
+presente acuerdo.-
+{% endif %}
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}
