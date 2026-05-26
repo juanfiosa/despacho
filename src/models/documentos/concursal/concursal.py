@@ -2,6 +2,7 @@
 Modelos de input para documentos del fuero Concursal (Ley 24522, Córdoba).
 Documentos cubiertos:
   - AutoAperturaConcursalInput → auto de apertura del concurso preventivo (art. 14 Ley 24522)
+  - AutoDeclaracionQuiebraInput → sentencia de quiebra (art. 88 Ley 24522)
 """
 
 from datetime import date
@@ -61,4 +62,52 @@ class AutoAperturaConcursalInput(ExpedienteBase):
                 raise ValueError(
                     f"'{nombre_a}' ({fecha_a}) debe ser anterior a '{nombre_b}' ({fecha_b})"
                 )
+        return self
+
+
+class AutoDeclaracionQuiebraInput(ExpedienteBase):
+    """
+    Sentencia de quiebra (art. 88 Ley 24522). Declara la quiebra, designa
+    síndico, fija período informativo y ordena medidas cautelares y de
+    publicidad.
+    """
+    # Síndico
+    sindico_nombre: str = Field(description="Nombre y apellido del síndico designado")
+    sindico_matricula: str | None = Field(default=None, description="Matrícula CPCE (opcional)")
+
+    # Fechas del período informativo (arts. 32, 35, 39)
+    fecha_limite_verificacion: date = Field(
+        description="Fecha límite para que los acreedores presenten sus créditos (art. 32)"
+    )
+    fecha_informe_individual: date = Field(
+        description="Fecha de presentación del informe individual del síndico (art. 35)"
+    )
+    fecha_informe_general: date = Field(
+        description="Fecha de presentación del informe general del síndico (art. 39)"
+    )
+
+    # Medidas típicas de la quiebra
+    clausura_establecimiento: bool = Field(
+        default=False,
+        description="Ordenar la clausura del establecimiento comercial (art. 88 inc. 5)",
+    )
+    inhabilitacion_fallido: bool = Field(
+        default=True,
+        description="Declarar la inhabilitación del fallido (art. 238 LCQ)",
+    )
+    tipo_quiebra: str = Field(
+        default="voluntaria",
+        description="Tipo de quiebra: 'voluntaria' (pedida por el propio deudor) o 'necesaria' (pedida por acreedor)",
+    )
+
+    @model_validator(mode="after")
+    def fechas_en_orden(self) -> "AutoDeclaracionQuiebraInput":
+        if self.fecha_limite_verificacion >= self.fecha_informe_individual:
+            raise ValueError(
+                "'fecha_limite_verificacion' debe ser anterior a 'fecha_informe_individual'"
+            )
+        if self.fecha_informe_individual >= self.fecha_informe_general:
+            raise ValueError(
+                "'fecha_informe_individual' debe ser anterior a 'fecha_informe_general'"
+            )
         return self

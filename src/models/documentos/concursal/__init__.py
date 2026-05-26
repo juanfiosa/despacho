@@ -1,3 +1,3 @@
-from .concursal import AutoAperturaConcursalInput
+from .concursal import AutoAperturaConcursalInput, AutoDeclaracionQuiebraInput
 
-__all__ = ["AutoAperturaConcursalInput"]
+__all__ = ["AutoAperturaConcursalInput", "AutoDeclaracionQuiebraInput"]

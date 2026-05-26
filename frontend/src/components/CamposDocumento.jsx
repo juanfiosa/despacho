@@ -229,6 +229,93 @@ export default function CamposDocumento({ tipo, valores, onChange }) {
         </Seccion>
       </>}
 
+      {/* ── Declaración de quiebra ── */}
+      {tipo === 'declaracion_quiebra' && <>
+        <Seccion titulo="Síndico designado">
+          <Grilla>
+            <Campo label="Nombre del síndico" placeholder="Contador/a Ana Torres"
+              value={valores.sindico_nombre || ''} onChange={v => set('sindico_nombre', v)} />
+            <Campo label="Matrícula (opcional)" placeholder="CPCE 4521"
+              value={valores.sindico_matricula || ''} onChange={v => set('sindico_matricula', v)} />
+          </Grilla>
+        </Seccion>
+        <Seccion titulo="Tipo de quiebra">
+          <SelectField label="Tipo" opciones={[
+            { value: 'voluntaria', label: 'Voluntaria (pedida por el deudor)' },
+            { value: 'necesaria',  label: 'Necesaria (pedida por acreedor)' },
+          ]} value={valores.tipo_quiebra || 'voluntaria'} onChange={v => set('tipo_quiebra', v)} />
+        </Seccion>
+        <Seccion titulo="Período informativo">
+          <Grilla>
+            <Campo label="Límite de verificación (art. 32)" type="date"
+              value={valores.fecha_limite_verificacion || ''} onChange={v => set('fecha_limite_verificacion', v)} />
+            <Campo label="Informe individual (art. 35)" type="date"
+              value={valores.fecha_informe_individual || ''} onChange={v => set('fecha_informe_individual', v)} />
+          </Grilla>
+          <Campo label="Informe general del síndico (art. 39)" type="date"
+            value={valores.fecha_informe_general || ''} onChange={v => set('fecha_informe_general', v)} />
+        </Seccion>
+        <Seccion titulo="Medidas adicionales">
+          <CheckField label="Clausura del establecimiento (art. 88 inc. 5)"
+            checked={valores.clausura_establecimiento === true} onChange={v => set('clausura_establecimiento', v)} />
+          <CheckField label="Inhabilitación del fallido (art. 238 LCQ)"
+            checked={valores.inhabilitacion_fallido !== false} onChange={v => set('inhabilitacion_fallido', v)} />
+        </Seccion>
+      </>}
+
+      {/* ── Fijación audiencia debate penal ── */}
+      {tipo === 'fijacion_debate' && <>
+        <Seccion titulo="Requerimiento">
+          <Campo label="Nombre del/la fiscal"
+            placeholder="Dr./Dra. Nombre Apellido"
+            value={valores.fiscal_nombre || ''} onChange={v => set('fiscal_nombre', v)} />
+          <Campo label="Calificación legal"
+            placeholder="estafa reiterada, art. 172 CP"
+            value={valores.calificacion_legal || ''} onChange={v => set('calificacion_legal', v)} />
+        </Seccion>
+        <Seccion titulo="Audiencia de debate">
+          <Grilla>
+            <Campo label="Fecha del debate" type="date"
+              value={valores.fecha_debate || ''} onChange={v => set('fecha_debate', v)} />
+            <Campo label="Hora (HH:MM)" placeholder="09:00"
+              value={valores.hora_debate || ''} onChange={v => set('hora_debate', v)} />
+          </Grilla>
+          <Grilla>
+            <Campo label="Sala / sede (opcional)" placeholder="Sala 3"
+              value={valores.sala || ''} onChange={v => set('sala', v)} />
+            <Campo label="Duración estimada (días, opcional)" type="number"
+              value={valores.dias_duracion_estimada || ''} onChange={v => set('dias_duracion_estimada', v)} />
+          </Grilla>
+        </Seccion>
+      </>}
+
+      {/* ── Control legalidad niñez ── */}
+      {tipo === 'control_legalidad_nna' && <>
+        <Seccion titulo="NNyA involucrado/a">
+          <Grilla>
+            <Campo label="Nombre completo del/la NNyA"
+              placeholder="Nombre y Apellido"
+              value={valores.nombre_nnya || ''} onChange={v => set('nombre_nnya', v)} />
+            <Campo label="Edad (años, opcional)" type="number"
+              value={valores.edad_nnya || ''} onChange={v => set('edad_nnya', v)} />
+          </Grilla>
+        </Seccion>
+        <Seccion titulo="Medida adoptada">
+          <Campo label="Organismo administrativo"
+            placeholder="la Secretaría de Niñez, Adolescencia y Familia"
+            value={valores.organismo_administrativo || ''} onChange={v => set('organismo_administrativo', v)} />
+          <Campo label="Descripción de la medida"
+            placeholder="inclusión transitoria en familia alternativa / hogar convivencial"
+            value={valores.medida_adoptada || ''} onChange={v => set('medida_adoptada', v)} />
+          <Grilla>
+            <Campo label="Fecha de la medida administrativa" type="date"
+              value={valores.fecha_medida_administrativa || ''} onChange={v => set('fecha_medida_administrativa', v)} />
+            <Campo label="Plazo de revisión (días corridos)" type="number" placeholder="30"
+              value={valores.plazo_revision_dias || ''} onChange={v => set('plazo_revision_dias', v)} />
+          </Grilla>
+        </Seccion>
+      </>}
+
       {/* ── Auto apertura prueba laboral ── */}
       {tipo === 'auto_apertura_laboral' && <>
         <Seccion titulo="Período probatorio">

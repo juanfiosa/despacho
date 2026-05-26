@@ -10,7 +10,7 @@ from fastapi.responses import Response
 
 from ...engine import render
 from ...generador import texto_a_docx
-from ...models.documentos.concursal import AutoAperturaConcursalInput
+from ...models.documentos.concursal import AutoAperturaConcursalInput, AutoDeclaracionQuiebraInput
 
 router = APIRouter(prefix="/concursal", tags=["Concursal"])
 
@@ -51,4 +51,35 @@ def apertura_concurso_docx(
         content=docx,
         media_type=_DOCX_MEDIA,
         headers={"Content-Disposition": 'attachment; filename="auto_apertura_concurso.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Sentencia de quiebra
+# ---------------------------------------------------------------------------
+
+@router.post("/declaracion-quiebra/preview", summary="Vista previa en texto")
+def declaracion_quiebra_preview(
+    body: AutoDeclaracionQuiebraInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/declaracion-quiebra/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def declaracion_quiebra_docx(
+    body: AutoDeclaracionQuiebraInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="sentencia_quiebra.docx"'},
     )

@@ -1,3 +1,3 @@
-from .penal import CitacionImputacionInput, AutoElevacionJuicioInput
+from .penal import CitacionImputacionInput, AutoElevacionJuicioInput, FijacionAudienciaDebateInput
 
-__all__ = ["CitacionImputacionInput", "AutoElevacionJuicioInput"]
+__all__ = ["CitacionImputacionInput", "AutoElevacionJuicioInput", "FijacionAudienciaDebateInput"]

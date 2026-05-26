@@ -626,9 +626,9 @@ _PENAL = Fuero(
                     descripcion="Se fija la fecha y hora del debate oral",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="decreto_tramite",
+                            tipo="fijacion_debate",
                             label="Decreto de fijación de audiencia de debate",
-                            descripcion="Fija fecha, hora y lugar del debate oral",
+                            descripcion="Fija fecha, hora y lugar del debate; cita a partes, testigos y peritos",
                             norma="Art. 374 CPP",
                         ),
                     ],
@@ -703,9 +703,9 @@ _NINEZ = Fuero(
                     descripcion="Control judicial de legalidad de las medidas administrativas",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="decreto_tramite",
-                            label="Decreto de control de legalidad",
-                            descripcion="Avoca el control de legalidad de la medida de protección excepcional",
+                            tipo="control_legalidad_nna",
+                            label="Auto de control de legalidad",
+                            descripcion="Declara la legalidad de la medida de protección excepcional y ordena informe de seguimiento",
                             norma="Art. 52 Ley 9944",
                         ),
                     ],
@@ -768,9 +768,9 @@ _CONCURSAL = Fuero(
                     descripcion="Sentencia que declara la quiebra",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="decreto_tramite",
+                            tipo="declaracion_quiebra",
                             label="Sentencia de quiebra",
-                            descripcion="Declara la quiebra, designa síndico y ordena medidas cautelares",
+                            descripcion="Declara la quiebra, designa síndico, fija período informativo y ordena inhabilitación",
                             norma="Art. 88 Ley 24522",
                         ),
                     ],

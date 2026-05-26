@@ -118,6 +118,10 @@ class TipoDocumento(str, Enum):
     AUTO_APERTURA_LABORAL = "auto_apertura_laboral"
     # Concursal
     AUTO_APERTURA_CONCURSO = "auto_apertura_concurso"
+    DECLARACION_QUIEBRA = "declaracion_quiebra"
     # Penal
     CITACION_IMPUTACION = "citacion_imputacion"
     AUTO_ELEVACION_JUICIO = "auto_elevacion_juicio"
+    FIJACION_DEBATE = "fijacion_debate"
+    # Niñez
+    CONTROL_LEGALIDAD_NNA = "control_legalidad_nna"

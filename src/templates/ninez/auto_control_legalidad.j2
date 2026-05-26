@@ -1,0 +1,61 @@
+{#
+  Auto de control de legalidad de medida de protección excepcional
+  (art. 52 Ley 9944, Córdoba)
+  Input: AutoControlLegalidadInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: La comunicación efectuada por {{ organismo_administrativo }}
+dando cuenta de la medida de protección excepcional de derechos adoptada con
+relación al/a la niño/a/adolescente {{ nombre_nnya }}
+{% if edad_nnya is not none %}, de {{ edad_nnya }} años de edad{% endif %},
+a fin de ejercer el control de legalidad previsto en el art. 52 de la
+Ley Provincial N.° 9944.-
+
+CONSIDERANDO: I. Que {{ organismo_administrativo }} ha comunicado a este
+Juzgado la adopción, con fecha {{ fecha_medida_administrativa.day }} de
+{{ fecha_medida_administrativa | nombre_mes }} de
+{{ fecha_medida_administrativa.year }}, de la siguiente medida de protección
+excepcional respecto del/de la NNyA {{ nombre_nnya }}:
+
+"{{ medida_adoptada }}".-
+
+II. Que conforme el art. 52 de la Ley 9944, la autoridad judicial ejerce el
+control de legalidad de las medidas de protección excepcional de derechos
+adoptadas por la autoridad administrativa competente, debiendo pronunciarse
+sobre su adecuación a derecho en el plazo de cinco (5) días hábiles.-
+
+III. Que analizada la comunicación remitida, la medida adoptada aparece como
+razonable y adecuada al principio de interés superior del niño establecido en
+el art. 3 de la Convención sobre los Derechos del Niño (rango constitucional,
+art. 75 inc. 22 CN) y en el art. 4 de la Ley 9944.-
+
+SE RESUELVE:
+
+I. DECLARAR LA LEGALIDAD de la medida de protección excepcional de derechos
+adoptada por {{ organismo_administrativo }} con fecha
+{{ fecha_medida_administrativa.day }} de
+{{ fecha_medida_administrativa | nombre_mes }} de
+{{ fecha_medida_administrativa.year }}, consistente en
+"{{ medida_adoptada }}", respecto del/de la NNyA {{ nombre_nnya }}
+(art. 52 Ley 9944).-
+
+II. REQUERIR a {{ organismo_administrativo }} un informe de seguimiento
+sobre la situación del/de la NNyA {{ nombre_nnya }} en el plazo de
+{{ plazo_revision_dias }} ({{ plazo_revision_dias | numero_letras }}) días
+corridos, a fin de evaluar la continuidad o cese de la medida (art. 55 Ley 9944).-
+
+III. Deberá garantizarse en todo momento el derecho del/de la NNyA a ser
+oído/a conforme su autonomía progresiva (art. 12 CDN / art. 4 Ley 9944).-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

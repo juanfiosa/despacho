@@ -47,9 +47,13 @@ const PATHS_PREVIEW = {
   auto_apertura_laboral:   '/laboral/apertura-prueba/preview',
   // Concursal
   auto_apertura_concurso:  '/concursal/apertura-concurso/preview',
+  declaracion_quiebra:     '/concursal/declaracion-quiebra/preview',
   // Penal
   citacion_imputacion:     '/penal/citacion-imputacion/preview',
   auto_elevacion_juicio:   '/penal/elevacion-juicio/preview',
+  fijacion_debate:         '/penal/fijacion-debate/preview',
+  // Niñez
+  control_legalidad_nna:   '/ninez/control-legalidad/preview',
 }
 const PATHS_DOCX = {
   // Ejecutivo
@@ -72,9 +76,13 @@ const PATHS_DOCX = {
   auto_apertura_laboral:   '/laboral/apertura-prueba/docx',
   // Concursal
   auto_apertura_concurso:  '/concursal/apertura-concurso/docx',
+  declaracion_quiebra:     '/concursal/declaracion-quiebra/docx',
   // Penal
   citacion_imputacion:     '/penal/citacion-imputacion/docx',
   auto_elevacion_juicio:   '/penal/elevacion-juicio/docx',
+  fijacion_debate:         '/penal/fijacion-debate/docx',
+  // Niñez
+  control_legalidad_nna:   '/ninez/control-legalidad/docx',
 }
 
 export async function previewDocumento(tipo, payload, fechaResolucion) {

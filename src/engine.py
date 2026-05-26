@@ -26,8 +26,9 @@ from .models.documentos.civil_comercial.cautelares import (
 from .models.documentos.violencia_familiar import MedidasUrgentesVFInput
 from .models.documentos.familia import AlimentosProvisioriosInput
 from .models.documentos.laboral import AutoAdmisionLaboralInput, AutoAperturaLaboralInput
-from .models.documentos.concursal import AutoAperturaConcursalInput
-from .models.documentos.penal import CitacionImputacionInput, AutoElevacionJuicioInput
+from .models.documentos.concursal import AutoAperturaConcursalInput, AutoDeclaracionQuiebraInput
+from .models.documentos.penal import CitacionImputacionInput, AutoElevacionJuicioInput, FijacionAudienciaDebateInput
+from .models.documentos.ninez import AutoControlLegalidadInput
 
 # ---------------------------------------------------------------------------
 # Filtros personalizados
@@ -93,9 +94,13 @@ _TEMPLATE_MAP: dict[type, str] = {
     AutoAperturaLaboralInput:    "laboral/auto_apertura_prueba.j2",
     # Concursal
     AutoAperturaConcursalInput:  "concursal/auto_apertura_concurso.j2",
+    AutoDeclaracionQuiebraInput: "concursal/auto_quiebra.j2",
     # Penal
-    CitacionImputacionInput:     "penal/citacion_imputacion.j2",
-    AutoElevacionJuicioInput:    "penal/auto_elevacion_juicio.j2",
+    CitacionImputacionInput:       "penal/citacion_imputacion.j2",
+    AutoElevacionJuicioInput:      "penal/auto_elevacion_juicio.j2",
+    FijacionAudienciaDebateInput:  "penal/fijacion_debate.j2",
+    # Niñez
+    AutoControlLegalidadInput:     "ninez/auto_control_legalidad.j2",
 }
 
 # ---------------------------------------------------------------------------

@@ -10,7 +10,7 @@ from fastapi.responses import Response
 
 from ...engine import render
 from ...generador import texto_a_docx
-from ...models.documentos.penal import CitacionImputacionInput, AutoElevacionJuicioInput
+from ...models.documentos.penal import CitacionImputacionInput, AutoElevacionJuicioInput, FijacionAudienciaDebateInput
 
 router = APIRouter(prefix="/penal", tags=["Penal"])
 
@@ -82,4 +82,35 @@ def elevacion_juicio_docx(
         content=docx,
         media_type=_DOCX_MEDIA,
         headers={"Content-Disposition": 'attachment; filename="auto_elevacion_juicio.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Fijación de audiencia de debate
+# ---------------------------------------------------------------------------
+
+@router.post("/fijacion-debate/preview", summary="Vista previa en texto")
+def fijacion_debate_preview(
+    body: FijacionAudienciaDebateInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/fijacion-debate/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def fijacion_debate_docx(
+    body: FijacionAudienciaDebateInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="fijacion_debate.docx"'},
     )

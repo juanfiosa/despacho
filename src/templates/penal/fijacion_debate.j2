@@ -1,0 +1,47 @@
+{#
+  Decreto de fijación de audiencia de debate oral (art. 374 CPP Ley 8123, Córdoba)
+  Input: FijacionAudienciaDebateInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+AUTOS Y VISTOS: Elevada la causa a este Tribunal para la sustanciación del
+juicio oral y público contra {{ partes_por_rol(partes, "imputado") }},
+acusado/a por el delito de {{ calificacion_legal }}, a instancia del/la
+Ministerio Público Fiscal representado por el/la Dr./Dra. {{ fiscal_nombre }},
+y cumplidos los actos previos del art. 374 del Código Procesal Penal de la
+Provincia de Córdoba (Ley 8123).-
+
+CONSIDERANDO: Que habiéndose cumplido los trámites previos de notificación
+y ofrecimiento de prueba, y encontrándose la causa en estado de fijar la
+audiencia de debate, corresponde proceder en los términos del art. 374 CPP.-
+
+SE RESUELVE:
+
+I. FIJAR AUDIENCIA DE DEBATE ORAL Y PÚBLICO para el día
+{{ fecha_debate.day }} de {{ fecha_debate | nombre_mes }} de {{ fecha_debate.year }},
+a las {{ hora_debate }} horas,
+{% if sala %}en {{ sala }},{% endif %}
+para la sustanciación del juicio oral seguido contra
+{{ partes_por_rol(partes, "imputado") }}, por el delito de
+{{ calificacion_legal }}
+{% if dias_duracion_estimada %}
+(duración estimada: {{ dias_duracion_estimada }} día{{ "s" if dias_duracion_estimada > 1 else "" }} de audiencia)
+{% endif %}
+.-
+
+II. CITAR a todas las partes, defensores, testigos y peritos ofrecidos para
+el día y hora fijados, bajo apercibimiento de ley.-
+
+III. Notifíquese con la antelación prevista en el art. 375 CPP.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

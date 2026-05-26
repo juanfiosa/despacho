@@ -1,8 +1,9 @@
 """
 Modelos de input para documentos del fuero Penal (CPP Ley 8123, Córdoba).
 Documentos cubiertos:
-  - CitacionImputacionInput     → citación del imputado al acto de imputación (art. 271 CPP)
-  - AutoElevacionJuicioInput    → auto de elevación a juicio (art. 354 CPP)
+  - CitacionImputacionInput         → citación del imputado al acto de imputación (art. 271 CPP)
+  - AutoElevacionJuicioInput        → auto de elevación a juicio (art. 354 CPP)
+  - FijacionAudienciaDebateInput    → decreto que fija fecha del debate oral (art. 374 CPP)
 """
 
 from datetime import date
@@ -55,4 +56,23 @@ class AutoElevacionJuicioInput(ExpedienteBase):
     tipo_juicio: str = Field(
         default="oral",
         description="Tipo de juicio: 'oral' (público y oral) o 'abreviado'",
+    )
+
+
+class FijacionAudienciaDebateInput(ExpedienteBase):
+    """
+    Decreto que fija fecha, hora y sede del debate oral y público
+    (art. 374 CPP Ley 8123, Córdoba).
+    """
+    fiscal_nombre: str = Field(description="Nombre del fiscal que sostendrá la acusación")
+    calificacion_legal: str = Field(
+        description="Calificación legal del hecho (ej: 'estafa reiterada, art. 172 CP')"
+    )
+    fecha_debate: date = Field(description="Fecha del debate oral")
+    hora_debate: str = Field(default="09:00", description="Hora de inicio del debate (HH:MM)")
+    sala: str | None = Field(default=None, description="Sala o sede del tribunal (opcional)")
+    dias_duracion_estimada: int | None = Field(
+        default=None,
+        ge=1,
+        description="Duración estimada en días de audiencia (opcional)",
     )

@@ -425,6 +425,35 @@ function buildPayload(fueroId, tipoDoc, expediente, camposDoc, juzgado) {
     prueba_rechazada: camposDoc.prueba_rechazada || [],
     fundamento_rechazo: camposDoc.fundamento_rechazo || null,
   }
+  if (tipoDoc === 'declaracion_quiebra') return {
+    ...base,
+    sindico_nombre:              camposDoc.sindico_nombre || '',
+    sindico_matricula:           camposDoc.sindico_matricula || null,
+    tipo_quiebra:                camposDoc.tipo_quiebra || 'voluntaria',
+    fecha_limite_verificacion:   camposDoc.fecha_limite_verificacion || '',
+    fecha_informe_individual:    camposDoc.fecha_informe_individual || '',
+    fecha_informe_general:       camposDoc.fecha_informe_general || '',
+    clausura_establecimiento:    camposDoc.clausura_establecimiento === true,
+    inhabilitacion_fallido:      camposDoc.inhabilitacion_fallido !== false,
+  }
+  if (tipoDoc === 'fijacion_debate') return {
+    ...base,
+    fiscal_nombre:           camposDoc.fiscal_nombre || '',
+    calificacion_legal:      camposDoc.calificacion_legal || '',
+    fecha_debate:            camposDoc.fecha_debate || new Date().toISOString().split('T')[0],
+    hora_debate:             camposDoc.hora_debate || '09:00',
+    sala:                    camposDoc.sala || null,
+    dias_duracion_estimada:  camposDoc.dias_duracion_estimada ? Number(camposDoc.dias_duracion_estimada) : null,
+  }
+  if (tipoDoc === 'control_legalidad_nna') return {
+    ...base,
+    nombre_nnya:                  camposDoc.nombre_nnya || '',
+    edad_nnya:                    camposDoc.edad_nnya ? Number(camposDoc.edad_nnya) : null,
+    organismo_administrativo:     camposDoc.organismo_administrativo || 'la Secretaría de Niñez, Adolescencia y Familia',
+    medida_adoptada:              camposDoc.medida_adoptada || '',
+    fecha_medida_administrativa:  camposDoc.fecha_medida_administrativa || new Date().toISOString().split('T')[0],
+    plazo_revision_dias:          Number(camposDoc.plazo_revision_dias) || 30,
+  }
   if (tipoDoc === 'auto_apertura_laboral') return {
     ...base,
     plazo_dias: Number(camposDoc.plazo_dias) || 40,
