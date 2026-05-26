@@ -179,6 +179,53 @@ export default function CamposDocumento({ tipo, valores, onChange }) {
         </Seccion>
       </>}
 
+      {/* ── Embargo preventivo ── */}
+      {tipo === 'embargo_preventivo' && <>
+        <Seccion titulo="Datos de la medida cautelar">
+          <Campo label="Monto a cautelar ($)" type="number" placeholder="500000"
+            value={valores.monto || ''} onChange={v => set('monto', v)} />
+          <Campo label="Domicilio de diligenciamiento"
+            placeholder="Av. Colón 123, Córdoba"
+            value={valores.domicilio_diligenciamiento || ''} onChange={v => set('domicilio_diligenciamiento', v)} />
+          <Campo label="Bienes a embargar (opcional — vacío = bienes en general)"
+            placeholder="vehículo Renault Sandero, dominio ABC123"
+            value={valores.bienes || ''} onChange={v => set('bienes', v)} />
+        </Seccion>
+      </>}
+
+      {/* ── Inhibición general de bienes ── */}
+      {tipo === 'inhibicion_general' && <>
+        <Seccion titulo="Datos de la medida cautelar">
+          <Campo label="Monto a cautelar ($)" type="number" placeholder="500000"
+            value={valores.monto || ''} onChange={v => set('monto', v)} />
+        </Seccion>
+      </>}
+
+      {/* ── Medidas urgentes VF ── */}
+      {tipo === 'medidas_urgentes_vf' && <>
+        <Seccion titulo="Medidas a dictar">
+          <CheckField label="Exclusión del hogar familiar"
+            checked={valores.exclusion_hogar !== false} onChange={v => set('exclusion_hogar', v)} />
+          {valores.exclusion_hogar !== false &&
+            <Campo label="Domicilio del hogar familiar"
+              placeholder="Bv. San Juan 456, Córdoba"
+              value={valores.domicilio_hogar || ''} onChange={v => set('domicilio_hogar', v)} />
+          }
+          <CheckField label="Restricción de acercamiento (perímetro)"
+            checked={valores.restriccion_acercamiento !== false} onChange={v => set('restriccion_acercamiento', v)} />
+          {valores.restriccion_acercamiento !== false &&
+            <Campo label="Distancia mínima (metros)" type="number" placeholder="300"
+              value={valores.metros_restriccion || ''} onChange={v => set('metros_restriccion', v)} />
+          }
+          <CheckField label="Prohibición de contacto (llamadas, mensajes, redes)"
+            checked={valores.prohibicion_contacto !== false} onChange={v => set('prohibicion_contacto', v)} />
+        </Seccion>
+        <Seccion titulo="Vigencia">
+          <Campo label="Duración de las medidas (días corridos)" type="number" placeholder="90"
+            value={valores.plazo_dias || ''} onChange={v => set('plazo_dias', v)} />
+        </Seccion>
+      </>}
+
       {/* ── Decreto de trámite ── */}
       {tipo === 'decreto_tramite' && <>
         <Seccion titulo="Tipo de decreto">

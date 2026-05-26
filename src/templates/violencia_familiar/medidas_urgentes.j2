@@ -1,0 +1,78 @@
+{#
+  Auto de medidas urgentes de protección — Ley 9283 (Violencia Familiar, Córdoba)
+  Input: MedidasUrgentesVFInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: La denuncia formulada en autos, a fin de resolver sobre
+las medidas urgentes de protección previstas por la Ley 9283.-
+
+CONSIDERANDO: Que del relato de los hechos y de la documentación
+acompañada surge con la verosimilitud propia de esta etapa la existencia
+de situación de violencia familiar en los términos de los arts. 4 y 5 de
+la Ley 9283 de la Provincia de Córdoba; que la urgencia del caso y la
+necesidad de proteger la integridad física y psíquica de la/el damnificada/o
+justifican el dictado de medidas en forma inmediata, de conformidad con lo
+normado por los arts. 22 y 26 de la citada ley.-
+
+SE RESUELVE:
+
+{% set parte_denunciado = partes | selectattr("rol", "equalto", "denunciado") | list %}
+{% set nombre_denunciado = parte_denunciado[0].nombre if parte_denunciado else "el/la denunciado/a" %}
+{% set parte_victima = partes | selectattr("rol", "equalto", "victima") | list %}
+{% set nombre_victima = parte_victima[0].nombre if parte_victima else "la/el denunciante" %}
+
+{% set resolviendo = [] %}
+{% if exclusion_hogar %}
+{% set _ = resolviendo.append("exclusion") %}
+{% endif %}
+{% if restriccion_acercamiento %}
+{% set _ = resolviendo.append("restriccion") %}
+{% endif %}
+{% if prohibicion_contacto %}
+{% set _ = resolviendo.append("contacto") %}
+{% endif %}
+
+{% set num = namespace(n=1) %}
+{% if exclusion_hogar %}
+{{ num.n }}. ORDENAR la exclusión del hogar familiar sito en
+{{ domicilio_hogar }} al/a la Sr./Sra. {{ nombre_denunciado }}, quien
+deberá retirarse de dicho domicilio en forma inmediata, bajo
+apercibimiento de procederse a su desahucio con auxilio de la fuerza
+pública (art. 26 inc. a Ley 9283).-
+{% set num.n = num.n + 1 %}
+{% endif %}
+{% if restriccion_acercamiento %}
+{{ num.n }}. PROHIBIR al/a la Sr./Sra. {{ nombre_denunciado }} acercarse
+a {{ nombre_victima }} a una distancia menor de {{ metros_restriccion }}
+({{ metros_restriccion }}) metros, en cualquier lugar donde ésta/e se
+encuentre, incluyendo su domicilio, lugar de trabajo y/o establecimientos
+educativos de los hijos en común (art. 26 inc. b Ley 9283).-
+{% set num.n = num.n + 1 %}
+{% endif %}
+{% if prohibicion_contacto %}
+{{ num.n }}. PROHIBIR al/a la Sr./Sra. {{ nombre_denunciado }} todo tipo
+de contacto con {{ nombre_victima }}, ya sea en forma personal, telefónica,
+por mensajes de texto, correo electrónico, redes sociales o por cualquier
+otro medio directo o indirecto (art. 26 inc. c Ley 9283).-
+{% set num.n = num.n + 1 %}
+{% endif %}
+{{ num.n }}. Las presentes medidas se dictan por el término de {{ plazo_dias }}
+({{ plazo_dias }}) días corridos, pudiendo ser prorrogadas si las
+circunstancias así lo requirieran.-
+
+{{ num.n + 1 }}. Cítese a las partes a audiencia a los efectos previstos
+por el art. 28 de la Ley 9283. Notifíquese con habilitación de días y
+horas inhábiles.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

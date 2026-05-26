@@ -11,6 +11,10 @@ from .ordinario import (
     TipoTrasladoDemanda,
     AutoAperturaOrdinarioInput,
 )
+from .cautelares import (
+    EmbargoPreventivoInput,
+    InhibicionGeneralInput,
+)
 
 __all__ = [
     "IntimacionPagoInput",
@@ -22,4 +26,6 @@ __all__ = [
     "TrasladoDemandaInput",
     "TipoTrasladoDemanda",
     "AutoAperturaOrdinarioInput",
+    "EmbargoPreventivoInput",
+    "InhibicionGeneralInput",
 ]

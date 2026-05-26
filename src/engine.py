@@ -19,6 +19,11 @@ from .models.documentos.civil_comercial.ordinario import (
     TrasladoDemandaInput,
     AutoAperturaOrdinarioInput,
 )
+from .models.documentos.civil_comercial.cautelares import (
+    EmbargoPreventivoInput,
+    InhibicionGeneralInput,
+)
+from .models.documentos.violencia_familiar import MedidasUrgentesVFInput
 
 # ---------------------------------------------------------------------------
 # Filtros personalizados
@@ -72,6 +77,11 @@ _TEMPLATE_MAP: dict[type, str] = {
     # Ordinario
     TrasladoDemandaInput:       "civil_comercial/ordinario/traslado_demanda.j2",
     AutoAperturaOrdinarioInput: "civil_comercial/ordinario/auto_apertura_prueba.j2",
+    # Cautelares
+    EmbargoPreventivoInput:     "civil_comercial/cautelares/embargo_preventivo.j2",
+    InhibicionGeneralInput:     "civil_comercial/cautelares/inhibicion_general.j2",
+    # Violencia Familiar
+    MedidasUrgentesVFInput:     "violencia_familiar/medidas_urgentes.j2",
 }
 
 # ---------------------------------------------------------------------------

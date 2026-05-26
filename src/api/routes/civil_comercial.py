@@ -17,6 +17,8 @@ from ...models.documentos.civil_comercial import (
     DecretoTramiteInput,
     TrasladoDemandaInput,
     AutoAperturaOrdinarioInput,
+    EmbargoPreventivoInput,
+    InhibicionGeneralInput,
 )
 
 router = APIRouter(prefix="/civil-comercial", tags=["Civil y Comercial"])
@@ -188,6 +190,68 @@ def apertura_prueba_ordinario_docx(
         content=docx,
         media_type=_DOCX_MEDIA,
         headers={"Content-Disposition": 'attachment; filename="auto_apertura_prueba_ordinario.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Cautelares — Embargo preventivo
+# ---------------------------------------------------------------------------
+
+@router.post("/cautelares/embargo-preventivo/preview", summary="Vista previa en texto")
+def embargo_preventivo_preview(
+    body: EmbargoPreventivoInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/cautelares/embargo-preventivo/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def embargo_preventivo_docx(
+    body: EmbargoPreventivoInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="embargo_preventivo.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Cautelares — Inhibición general de bienes
+# ---------------------------------------------------------------------------
+
+@router.post("/cautelares/inhibicion-general/preview", summary="Vista previa en texto")
+def inhibicion_general_preview(
+    body: InhibicionGeneralInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/cautelares/inhibicion-general/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def inhibicion_general_docx(
+    body: InhibicionGeneralInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="inhibicion_general.docx"'},
     )
 
 

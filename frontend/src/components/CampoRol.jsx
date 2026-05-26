@@ -3,7 +3,7 @@ const ROLES = {
   laboral:         ['actor', 'demandado', 'otro'],
   familia:         ['actor', 'demandado', 'alimentante', 'alimentado', 'requirente', 'requerido', 'otro'],
   penal:           ['imputado', 'victima', 'fiscal', 'querellante', 'defensor', 'otro'],
-  violencia_familiar: ['requirente', 'requerido', 'victima', 'otro'],
+  violencia_familiar: ['denunciante', 'denunciado', 'victima', 'otro'],
   ninez:           ['progenitor', 'menor', 'representante_legal', 'defensor_publico', 'otro'],
   contencioso_administrativo: ['actor', 'demandado', 'codemandado', 'otro'],
   concursal:       ['concursado', 'acreedor', 'sindico', 'otro'],

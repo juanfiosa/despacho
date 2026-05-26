@@ -258,6 +258,39 @@ _CIVIL_COMERCIAL = Fuero(
             ],
         ),
         Proceso(
+            id="cautelares",
+            label="Medidas Cautelares",
+            descripcion="Embargo preventivo e inhibición general de bienes (arts. 456-466 CPCC)",
+            etapas=[
+                Etapa(
+                    id="embargo",
+                    label="Embargo preventivo",
+                    descripcion="Auto que decreta embargo preventivo sobre bienes del demandado",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="embargo_preventivo",
+                            label="Auto de embargo preventivo",
+                            descripcion="Decreta embargo preventivo y comisiona al Oficial de Justicia",
+                            norma="Art. 466 CPCC",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="inhibicion",
+                    label="Inhibición general de bienes",
+                    descripcion="Auto que decreta inhibición general para anotar en registros públicos",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="inhibicion_general",
+                            label="Auto de inhibición general de bienes",
+                            descripcion="Decreta inhibición general y ordena oficios al Registro General y AFIP",
+                            norma="Art. 466 CPCC",
+                        ),
+                    ],
+                ),
+            ],
+        ),
+        Proceso(
             id="sucesorio",
             label="Proceso Sucesorio",
             descripcion="Tramitación de la sucesión de una persona fallecida",
@@ -625,7 +658,7 @@ _VIOLENCIA_FAMILIAR = Fuero(
                     descripcion="Admite la denuncia y dicta medidas de protección urgentes",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="decreto_tramite",
+                            tipo="medidas_urgentes_vf",
                             label="Auto de medidas urgentes",
                             descripcion="Dicta medidas de exclusión del hogar, restricción de acercamiento y/o prohibición de contacto",
                             norma="Art. 26 Ley 9283",

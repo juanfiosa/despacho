@@ -10,7 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
-from .routes import civil_comercial_router, calculadora_router, catalogo_router
+from .routes import civil_comercial_router, violencia_familiar_router, calculadora_router, catalogo_router
 
 _FRONTEND_DIST = Path(__file__).parent.parent.parent / "frontend" / "dist"
 
@@ -32,9 +32,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(catalogo_router,        prefix="/api/v1")
-app.include_router(civil_comercial_router, prefix="/api/v1")
-app.include_router(calculadora_router,     prefix="/api/v1")
+app.include_router(catalogo_router,           prefix="/api/v1")
+app.include_router(civil_comercial_router,    prefix="/api/v1")
+app.include_router(violencia_familiar_router, prefix="/api/v1")
+app.include_router(calculadora_router,        prefix="/api/v1")
 
 
 @app.get("/health", tags=["Sistema"])

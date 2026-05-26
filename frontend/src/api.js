@@ -35,6 +35,11 @@ const PATHS_PREVIEW = {
   // Ordinario
   traslado_demanda:        '/civil-comercial/ordinario/traslado-demanda/preview',
   auto_apertura_ordinario: '/civil-comercial/ordinario/apertura-prueba/preview',
+  // Cautelares
+  embargo_preventivo:      '/civil-comercial/cautelares/embargo-preventivo/preview',
+  inhibicion_general:      '/civil-comercial/cautelares/inhibicion-general/preview',
+  // Violencia Familiar
+  medidas_urgentes_vf:     '/violencia-familiar/medidas-urgentes/preview',
 }
 const PATHS_DOCX = {
   // Ejecutivo
@@ -45,6 +50,11 @@ const PATHS_DOCX = {
   // Ordinario
   traslado_demanda:        '/civil-comercial/ordinario/traslado-demanda/docx',
   auto_apertura_ordinario: '/civil-comercial/ordinario/apertura-prueba/docx',
+  // Cautelares
+  embargo_preventivo:      '/civil-comercial/cautelares/embargo-preventivo/docx',
+  inhibicion_general:      '/civil-comercial/cautelares/inhibicion-general/docx',
+  // Violencia Familiar
+  medidas_urgentes_vf:     '/violencia-familiar/medidas-urgentes/docx',
 }
 
 export async function previewDocumento(tipo, payload, fechaResolucion) {

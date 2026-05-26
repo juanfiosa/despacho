@@ -18,6 +18,18 @@ import CamposDocumento from './CamposDocumento.jsx'
 
 const PASOS = ['Fuero', 'Expediente', 'Proceso', 'Etapa', 'Documento', 'Datos', 'Preview']
 
+const PARTES_DEFAULT = {
+  civil_comercial:           [{ rol: 'actor', nombre: '', dni_cuit: '', domicilio_real: '' }, { rol: 'demandado', nombre: '', dni_cuit: '', domicilio_real: '' }],
+  laboral:                   [{ rol: 'actor', nombre: '', dni_cuit: '', domicilio_real: '' }, { rol: 'demandado', nombre: '', dni_cuit: '', domicilio_real: '' }],
+  familia:                   [{ rol: 'actor', nombre: '', dni_cuit: '', domicilio_real: '' }, { rol: 'demandado', nombre: '', dni_cuit: '', domicilio_real: '' }],
+  contencioso_administrativo:[{ rol: 'actor', nombre: '', dni_cuit: '', domicilio_real: '' }, { rol: 'demandado', nombre: '', dni_cuit: '', domicilio_real: '' }],
+  violencia_familiar:        [{ rol: 'denunciante', nombre: '', dni_cuit: '', domicilio_real: '' }, { rol: 'denunciado', nombre: '', dni_cuit: '', domicilio_real: '' }],
+  penal:                     [{ rol: 'imputado', nombre: '', dni_cuit: '', domicilio_real: '' }, { rol: 'victima', nombre: '', dni_cuit: '', domicilio_real: '' }],
+  ninez:                     [{ rol: 'menor', nombre: '', dni_cuit: '', domicilio_real: '' }, { rol: 'progenitor', nombre: '', dni_cuit: '', domicilio_real: '' }],
+  concursal:                 [{ rol: 'concursado', nombre: '', dni_cuit: '', domicilio_real: '' }],
+}
+const partesDefault = (fid) => (PARTES_DEFAULT[fid] || PARTES_DEFAULT.civil_comercial).map(p => ({...p}))
+
 export default function Wizard({ juzgado, onCambiarJuzgado }) {
   const [paso,     setPaso]     = useState(0)
   const [catalogo, setCatalogo] = useState(null)
@@ -32,10 +44,7 @@ export default function Wizard({ juzgado, onCambiarJuzgado }) {
   // Datos del expediente
   const [expediente, setExpediente] = useState({
     numero: '', caratula: '',
-    partes: [
-      { rol: 'actor',     nombre: '', dni_cuit: '', domicilio_real: '' },
-      { rol: 'demandado', nombre: '', dni_cuit: '', domicilio_real: '' },
-    ],
+    partes: partesDefault(juzgado.fuero),
   })
 
   // Campos específicos del documento
@@ -103,10 +112,7 @@ export default function Wizard({ juzgado, onCambiarJuzgado }) {
   const reiniciar = () => {
     setProcesoId(null); setEtapaId(null); setTipoDoc(null)
     setCamposDoc({}); setPreview(null); setFechaRes('')
-    setExpediente({ numero: '', caratula: '', partes: [
-      { rol: 'actor', nombre: '', dni_cuit: '', domicilio_real: '' },
-      { rol: 'demandado', nombre: '', dni_cuit: '', domicilio_real: '' },
-    ]})
+    setExpediente({ numero: '', caratula: '', partes: partesDefault(fueroId) })
     setPaso(0)
   }
 
@@ -137,7 +143,7 @@ export default function Wizard({ juzgado, onCambiarJuzgado }) {
                   label={f.label}
                   sub={f.norma}
                   seleccionada={f.id === fueroId}
-                  onClick={() => { setFueroId(f.id); setProcesoId(null); setEtapaId(null); setTipoDoc(null) }}
+                  onClick={() => { setFueroId(f.id); setProcesoId(null); setEtapaId(null); setTipoDoc(null); setExpediente(e => ({...e, partes: partesDefault(f.id)})) }}
                 />
               ))}
             </div>
@@ -418,6 +424,25 @@ function buildPayload(fueroId, tipoDoc, expediente, camposDoc, juzgado) {
     prueba_admitida:  camposDoc.prueba_admitida  || [],
     prueba_rechazada: camposDoc.prueba_rechazada || [],
     fundamento_rechazo: camposDoc.fundamento_rechazo || null,
+  }
+  if (tipoDoc === 'embargo_preventivo') return {
+    ...base,
+    monto: Number(camposDoc.monto) || 0,
+    domicilio_diligenciamiento: camposDoc.domicilio_diligenciamiento || '',
+    bienes: camposDoc.bienes || null,
+  }
+  if (tipoDoc === 'inhibicion_general') return {
+    ...base,
+    monto: Number(camposDoc.monto) || 0,
+  }
+  if (tipoDoc === 'medidas_urgentes_vf') return {
+    ...base,
+    exclusion_hogar:          camposDoc.exclusion_hogar !== false,
+    domicilio_hogar:          camposDoc.domicilio_hogar || null,
+    restriccion_acercamiento: camposDoc.restriccion_acercamiento !== false,
+    metros_restriccion:       Number(camposDoc.metros_restriccion) || 300,
+    prohibicion_contacto:     camposDoc.prohibicion_contacto !== false,
+    plazo_dias:               Number(camposDoc.plazo_dias) || 90,
   }
   return base
 }

@@ -1,0 +1,37 @@
+{#
+  Auto de inhibición general de bienes (art. 466 CPCC Córdoba)
+  Input: InhibicionGeneralInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import pesos, partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: El pedido de medida cautelar articulado por la parte actora.-
+
+CONSIDERANDO: Que encontrándose reunidos los presupuestos de verosimilitud
+del derecho y peligro en la demora (art. 456 CPCC), y siendo la inhibición
+general de bienes una medida cautelar procedente cuando no se conocen bienes
+del deudor susceptibles de embargo (art. 466 in fine CPCC), corresponde
+hacer lugar a la medida solicitada.-
+
+SE RESUELVE:
+
+I. DECRETAR INHIBICIÓN GENERAL DE BIENES de {{ partes_por_rol(partes, "demandado") }},
+D.N.I./C.U.I.T. {{ partes | selectattr("rol", "equalto", "demandado") | map(attribute="dni_cuit") | first | default("___________") }},
+hasta cubrir la suma de {{ pesos(monto) }}, más intereses y costas (art. 466 CPCC).-
+
+II. OFÍCIESE al Registro General de la Provincia de Córdoba para la
+anotación de la presente inhibición general de bienes.-
+
+III. OFÍCIESE a la Dirección General de Rentas de la Provincia de Córdoba
+y a la A.F.I.P. a sus efectos.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}
