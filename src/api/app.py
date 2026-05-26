@@ -15,6 +15,8 @@ from .routes import (
     violencia_familiar_router,
     familia_router,
     laboral_router,
+    concursal_router,
+    penal_router,
     calculadora_router,
     catalogo_router,
 )
@@ -44,6 +46,8 @@ app.include_router(civil_comercial_router,    prefix="/api/v1")
 app.include_router(violencia_familiar_router, prefix="/api/v1")
 app.include_router(familia_router,            prefix="/api/v1")
 app.include_router(laboral_router,            prefix="/api/v1")
+app.include_router(concursal_router,          prefix="/api/v1")
+app.include_router(penal_router,              prefix="/api/v1")
 app.include_router(calculadora_router,        prefix="/api/v1")
 
 

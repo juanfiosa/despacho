@@ -1,0 +1,41 @@
+{#
+  Citación al imputado al acto de imputación (art. 271 CPP Ley 8123, Córdoba)
+  Input: CitacionImputacionInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+AUTOS Y VISTOS: El requerimiento formulado por
+{% if fiscal_unidad %}{{ fiscal_unidad }}, a cargo del/la Dr./Dra. {{ fiscal_nombre }},{% else %}el/la Dr./Dra. {{ fiscal_nombre }}, Fiscal de Instrucción,{% endif %}
+a fin de que se cite al imputado {{ partes_por_rol(partes, "imputado") }} al
+acto de imputación previsto en el art. 271 del Código Procesal Penal de la
+Provincia de Córdoba (Ley 8123).-
+
+CONSIDERANDO: Que corresponde hacer lugar a lo solicitado por la Fiscalía
+actuante, ordenando la citación del imputado para el acto procesal requerido.-
+
+SE RESUELVE:
+
+I. CITAR a {{ partes_por_rol(partes, "imputado") }} para que comparezca ante
+{% if fiscal_unidad %}{{ fiscal_unidad }}, a cargo del/la Dr./Dra. {{ fiscal_nombre }},{% else %}el/la Dr./Dra. {{ fiscal_nombre }}, Fiscal de Instrucción,{% endif %}
+el día {{ fecha_citacion.day }} de {{ fecha_citacion | nombre_mes }} de
+{{ fecha_citacion.year }}, a las {{ hora_citacion }} horas, a efectos de
+ser imputado/a en relación al siguiente hecho:
+
+"{{ objeto_imputacion }}".-
+
+II. La presente citación se realiza bajo apercibimiento de ordenar su
+comparendo compulsivo en caso de incomparecencia injustificada (art. 271
+in fine CPP). El imputado tiene derecho a ser asistido por defensor de su
+confianza o por el Defensor Público Oficial.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

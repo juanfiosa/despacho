@@ -1,7 +1,8 @@
 """
 Modelos de input para documentos del fuero Laboral (CPT Ley 7987, Córdoba).
 Documentos cubiertos:
-  - AutoAdmisionLaboralInput  → decreto de admisión + citación a audiencia de conciliación
+  - AutoAdmisionLaboralInput      → decreto de admisión + citación a audiencia de conciliación
+  - AutoAperturaLaboralInput      → auto de apertura a prueba laboral (art. 83 CPT)
 """
 
 from datetime import date
@@ -9,6 +10,7 @@ from datetime import date
 from pydantic import Field
 
 from ...base import ExpedienteBase
+from ..civil_comercial.ejecutivo import AutoAperturaPruebaInput
 
 
 class AutoAdmisionLaboralInput(ExpedienteBase):
@@ -35,3 +37,11 @@ class AutoAdmisionLaboralInput(ExpedienteBase):
         default=None,
         description="Sala o número de sala donde se celebrará la audiencia (opcional)",
     )
+
+
+class AutoAperturaLaboralInput(AutoAperturaPruebaInput):
+    """
+    Auto de apertura a prueba en el proceso laboral ordinario (art. 83 CPT).
+    Mismos campos que el civil pero apunta a template con referencia CPT.
+    """
+    pass

@@ -229,6 +229,105 @@ export default function CamposDocumento({ tipo, valores, onChange }) {
         </Seccion>
       </>}
 
+      {/* ── Auto apertura prueba laboral ── */}
+      {tipo === 'auto_apertura_laboral' && <>
+        <Seccion titulo="Período probatorio">
+          <Grilla>
+            <Campo label="Plazo (días hábiles)" type="number" placeholder="40"
+              value={valores.plazo_dias || ''} onChange={v => set('plazo_dias', v)} />
+            <Campo label="Fecha de inicio del período" type="date"
+              value={valores.fecha_inicio_prueba || ''} onChange={v => set('fecha_inicio_prueba', v)} />
+          </Grilla>
+        </Seccion>
+        <Seccion titulo="Prueba admitida">
+          {TIPOS_PRUEBA.map(p => (
+            <CheckItem key={p.value} label={p.label}
+              checked={(valores.prueba_admitida || []).includes(p.value)}
+              onChange={() => togglePrueba('prueba_admitida', p.value)} />
+          ))}
+        </Seccion>
+        <Seccion titulo="Prueba rechazada (opcional)">
+          {TIPOS_PRUEBA.map(p => (
+            <CheckItem key={p.value} label={p.label}
+              checked={(valores.prueba_rechazada || []).includes(p.value)}
+              onChange={() => togglePrueba('prueba_rechazada', p.value)} />
+          ))}
+          {(valores.prueba_rechazada || []).length > 0 &&
+            <Campo label="Fundamento del rechazo"
+              value={valores.fundamento_rechazo || ''} onChange={v => set('fundamento_rechazo', v)} />
+          }
+        </Seccion>
+      </>}
+
+      {/* ── Auto apertura concurso preventivo ── */}
+      {tipo === 'auto_apertura_concurso' && <>
+        <Seccion titulo="Síndico designado">
+          <Grilla>
+            <Campo label="Nombre del síndico" placeholder="Contador/a Juan García"
+              value={valores.sindico_nombre || ''} onChange={v => set('sindico_nombre', v)} />
+            <Campo label="Matrícula (opcional)" placeholder="CPCE 12345"
+              value={valores.sindico_matricula || ''} onChange={v => set('sindico_matricula', v)} />
+          </Grilla>
+        </Seccion>
+        <Seccion titulo="Fechas del período informativo">
+          <Grilla>
+            <Campo label="Límite de verificación (art. 32)" type="date"
+              value={valores.fecha_limite_verificacion || ''} onChange={v => set('fecha_limite_verificacion', v)} />
+            <Campo label="Informe individual del síndico (art. 35)" type="date"
+              value={valores.fecha_informe_individual || ''} onChange={v => set('fecha_informe_individual', v)} />
+          </Grilla>
+          <Grilla>
+            <Campo label="Informe general del síndico (art. 39)" type="date"
+              value={valores.fecha_informe_general || ''} onChange={v => set('fecha_informe_general', v)} />
+            <Campo label="Audiencia informativa (art. 45)" type="date"
+              value={valores.fecha_audiencia_informativa || ''} onChange={v => set('fecha_audiencia_informativa', v)} />
+          </Grilla>
+        </Seccion>
+        <Seccion titulo="Medidas cautelares">
+          <CheckField label="Inhibición general de bienes provisional"
+            checked={valores.inhibicion_provisional !== false} onChange={v => set('inhibicion_provisional', v)} />
+        </Seccion>
+      </>}
+
+      {/* ── Citación imputación penal ── */}
+      {tipo === 'citacion_imputacion' && <>
+        <Seccion titulo="Fiscalía requirente">
+          <Campo label="Nombre del/la fiscal" placeholder="Dr./Dra. Nombre Apellido"
+            value={valores.fiscal_nombre || ''} onChange={v => set('fiscal_nombre', v)} />
+          <Campo label="Unidad Fiscal (opcional)" placeholder="Fiscalía de Instrucción N.° 4"
+            value={valores.fiscal_unidad || ''} onChange={v => set('fiscal_unidad', v)} />
+        </Seccion>
+        <Seccion titulo="Hecho imputado">
+          <Campo label="Descripción del hecho / calificación"
+            placeholder="homicidio culposo en accidente de tránsito, art. 84 CP"
+            value={valores.objeto_imputacion || ''} onChange={v => set('objeto_imputacion', v)} />
+        </Seccion>
+        <Seccion titulo="Fecha de comparecencia">
+          <Grilla>
+            <Campo label="Fecha" type="date"
+              value={valores.fecha_citacion || ''} onChange={v => set('fecha_citacion', v)} />
+            <Campo label="Hora (HH:MM)" placeholder="09:00"
+              value={valores.hora_citacion || ''} onChange={v => set('hora_citacion', v)} />
+          </Grilla>
+        </Seccion>
+      </>}
+
+      {/* ── Auto elevación a juicio ── */}
+      {tipo === 'auto_elevacion_juicio' && <>
+        <Seccion titulo="Requerimiento fiscal">
+          <Campo label="Nombre del/la fiscal"
+            placeholder="Dr./Dra. Nombre Apellido"
+            value={valores.fiscal_nombre || ''} onChange={v => set('fiscal_nombre', v)} />
+          <Campo label="Calificación legal"
+            placeholder="robo calificado, arts. 164 y 166 inc. 2 CP"
+            value={valores.calificacion_legal || ''} onChange={v => set('calificacion_legal', v)} />
+          <SelectField label="Tipo de juicio" opciones={[
+            { value: 'oral',      label: 'Juicio oral y público' },
+            { value: 'abreviado', label: 'Juicio abreviado' },
+          ]} value={valores.tipo_juicio || 'oral'} onChange={v => set('tipo_juicio', v)} />
+        </Seccion>
+      </>}
+
       {/* ── Embargo preventivo ── */}
       {tipo === 'embargo_preventivo' && <>
         <Seccion titulo="Datos de la medida cautelar">

@@ -1,0 +1,71 @@
+{#
+  Auto de apertura del concurso preventivo (art. 14 Ley 24522)
+  Input: AutoAperturaConcursalInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol, fecha_larga %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: La presentación concursal efectuada por
+{{ partes_por_rol(partes, "concursado") }}, y la documentación acompañada
+en autos, a fin de resolver conforme a los arts. 11 y 14 de la Ley de
+Concursos y Quiebras N.° 24522 y sus modificatorias.-
+
+CONSIDERANDO: I. Que del análisis de la presentación en concurso preventivo
+efectuada por {{ partes_por_rol(partes, "concursado") }} surge que la misma
+cumple en forma aparente con los requisitos formales previstos por el art. 11
+de la Ley 24522, razón por la cual corresponde declarar abierto el concurso
+preventivo.-
+
+II. Que a los efectos de la organización del proceso se hace necesario fijar
+las fechas de los actos procesales previstos en el art. 14 de la ley citada,
+designar síndico y dictar las medidas cautelares pertinentes.-
+
+SE RESUELVE:
+
+I. DECLARAR ABIERTO el concurso preventivo de {{ partes_por_rol(partes, "concursado") }}
+(art. 14 Ley 24522).-
+
+II. DESIGNAR síndico titular al/a la
+{% if sindico_matricula %}Contador/a Público/a {{ sindico_nombre }}, matrícula N.° {{ sindico_matricula }},{% else %}{{ sindico_nombre }},{% endif %}
+quien deberá aceptar el cargo dentro del plazo de ley, bajo apercibimiento
+de designarse nuevo síndico (art. 14 inc. 1 Ley 24522).-
+
+III. FIJAR las siguientes fechas del proceso concursal (art. 14 incs. 3 y 5
+Ley 24522):
+a) Período de verificación de créditos: los acreedores deberán presentarse
+   ante el síndico hasta el día {{ fecha_limite_verificacion.day }} de
+   {{ fecha_limite_verificacion | nombre_mes }} de {{ fecha_limite_verificacion.year }}
+   (art. 32 Ley 24522).-
+b) Informe individual del síndico: deberá presentarse antes del día
+   {{ fecha_informe_individual.day }} de
+   {{ fecha_informe_individual | nombre_mes }} de {{ fecha_informe_individual.year }}
+   (art. 35 Ley 24522).-
+c) Informe general del síndico: deberá presentarse antes del día
+   {{ fecha_informe_general.day }} de
+   {{ fecha_informe_general | nombre_mes }} de {{ fecha_informe_general.year }}
+   (art. 39 Ley 24522).-
+d) Audiencia informativa: se fija para el día {{ fecha_audiencia_informativa.day }}
+   de {{ fecha_audiencia_informativa | nombre_mes }} de {{ fecha_audiencia_informativa.year }},
+   a las 09:00 horas (art. 45 Ley 24522).-
+{% if inhibicion_provisional %}
+
+IV. DECRETAR, con carácter provisional, la INHIBICIÓN GENERAL DE BIENES de
+{{ partes_por_rol(partes, "concursado") }}, la que deberá anotarse en el
+Registro General de la Provincia de Córdoba y demás registros que correspondan
+(art. 14 inc. 7 Ley 24522).-
+{% endif %}
+
+{{ "V" if inhibicion_provisional else "IV" }}. ORDENAR la publicación de edictos en el Boletín Oficial de la Provincia
+de Córdoba y en un diario de amplia circulación local, por el término de cinco
+(5) días, conforme lo dispuesto por el art. 27 Ley 24522. OFÍCIESE.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

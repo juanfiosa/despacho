@@ -114,3 +114,10 @@ class TipoDocumento(str, Enum):
     ADMISION_LABORAL = "admision_laboral"
     # Violencia Familiar
     MEDIDAS_URGENTES_VF = "medidas_urgentes_vf"
+    # Laboral adicional
+    AUTO_APERTURA_LABORAL = "auto_apertura_laboral"
+    # Concursal
+    AUTO_APERTURA_CONCURSO = "auto_apertura_concurso"
+    # Penal
+    CITACION_IMPUTACION = "citacion_imputacion"
+    AUTO_ELEVACION_JUICIO = "auto_elevacion_juicio"

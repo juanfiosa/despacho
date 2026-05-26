@@ -425,6 +425,38 @@ function buildPayload(fueroId, tipoDoc, expediente, camposDoc, juzgado) {
     prueba_rechazada: camposDoc.prueba_rechazada || [],
     fundamento_rechazo: camposDoc.fundamento_rechazo || null,
   }
+  if (tipoDoc === 'auto_apertura_laboral') return {
+    ...base,
+    plazo_dias: Number(camposDoc.plazo_dias) || 40,
+    fecha_inicio_prueba: camposDoc.fecha_inicio_prueba || new Date().toISOString().split('T')[0],
+    prueba_admitida:  camposDoc.prueba_admitida  || [],
+    prueba_rechazada: camposDoc.prueba_rechazada || [],
+    fundamento_rechazo: camposDoc.fundamento_rechazo || null,
+  }
+  if (tipoDoc === 'auto_apertura_concurso') return {
+    ...base,
+    sindico_nombre:              camposDoc.sindico_nombre || '',
+    sindico_matricula:           camposDoc.sindico_matricula || null,
+    fecha_limite_verificacion:   camposDoc.fecha_limite_verificacion || '',
+    fecha_informe_individual:    camposDoc.fecha_informe_individual || '',
+    fecha_informe_general:       camposDoc.fecha_informe_general || '',
+    fecha_audiencia_informativa: camposDoc.fecha_audiencia_informativa || '',
+    inhibicion_provisional:      camposDoc.inhibicion_provisional !== false,
+  }
+  if (tipoDoc === 'citacion_imputacion') return {
+    ...base,
+    fiscal_nombre:      camposDoc.fiscal_nombre || '',
+    fiscal_unidad:      camposDoc.fiscal_unidad || null,
+    objeto_imputacion:  camposDoc.objeto_imputacion || '',
+    fecha_citacion:     camposDoc.fecha_citacion || new Date().toISOString().split('T')[0],
+    hora_citacion:      camposDoc.hora_citacion || '09:00',
+  }
+  if (tipoDoc === 'auto_elevacion_juicio') return {
+    ...base,
+    fiscal_nombre:       camposDoc.fiscal_nombre || '',
+    calificacion_legal:  camposDoc.calificacion_legal || '',
+    tipo_juicio:         camposDoc.tipo_juicio || 'oral',
+  }
   if (tipoDoc === 'alimentos_provisorios') return {
     ...base,
     cuota:            Number(camposDoc.cuota) || 0,

@@ -44,6 +44,12 @@ const PATHS_PREVIEW = {
   alimentos_provisorios:   '/familia/alimentos-provisorios/preview',
   // Laboral
   admision_laboral:        '/laboral/admision-demanda/preview',
+  auto_apertura_laboral:   '/laboral/apertura-prueba/preview',
+  // Concursal
+  auto_apertura_concurso:  '/concursal/apertura-concurso/preview',
+  // Penal
+  citacion_imputacion:     '/penal/citacion-imputacion/preview',
+  auto_elevacion_juicio:   '/penal/elevacion-juicio/preview',
 }
 const PATHS_DOCX = {
   // Ejecutivo
@@ -63,6 +69,12 @@ const PATHS_DOCX = {
   alimentos_provisorios:   '/familia/alimentos-provisorios/docx',
   // Laboral
   admision_laboral:        '/laboral/admision-demanda/docx',
+  auto_apertura_laboral:   '/laboral/apertura-prueba/docx',
+  // Concursal
+  auto_apertura_concurso:  '/concursal/apertura-concurso/docx',
+  // Penal
+  citacion_imputacion:     '/penal/citacion-imputacion/docx',
+  auto_elevacion_juicio:   '/penal/elevacion-juicio/docx',
 }
 
 export async function previewDocumento(tipo, payload, fechaResolucion) {

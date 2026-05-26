@@ -1,0 +1,51 @@
+{#
+  Auto de apertura a prueba en el proceso laboral (art. 83 CPT Ley 7987, Córdoba)
+  Input: AutoAperturaLaboralInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: El estado de la causa, frustrada/concluida sin acuerdo
+la audiencia de conciliación, a fin de resolver sobre la apertura del período
+probatorio (art. 83 CPT Ley 7987).-
+
+CONSIDERANDO: Que no habiendo podido lograrse la conciliación entre las
+partes, y hallándose la causa en condiciones de recibir prueba, corresponde
+abrir el período probatorio y admitir la prueba ofrecida por las partes
+conforme las facultades del art. 83 del Código Procesal del Trabajo de la
+Provincia de Córdoba.-
+
+SE RESUELVE:
+
+I. ABRIR la causa a prueba por el término de
+{{ plazo_dias }} ({{ plazo_dias | numero_letras }}) días hábiles a contar
+desde el {{ fecha_inicio_prueba.day }} de {{ fecha_inicio_prueba | nombre_mes }}
+de {{ fecha_inicio_prueba.year }} (art. 83 CPT).-
+
+{% if prueba_admitida %}
+II. ADMITIR la siguiente prueba:
+{% for p in prueba_admitida %}
+   - {{ p | replace("_", " ") | capitalize }}
+{% endfor %}
+{% endif %}
+
+{% if prueba_rechazada %}
+{{ "III" if prueba_admitida else "II" }}. RECHAZAR la siguiente prueba
+{% if fundamento_rechazo %}por {{ fundamento_rechazo }}{% endif %}:
+{% for p in prueba_rechazada %}
+   - {{ p | replace("_", " ") | capitalize }}
+{% endfor %}
+{% endif %}
+
+{{ "IV" if prueba_admitida and prueba_rechazada else ("III" if prueba_admitida or prueba_rechazada else "II") }}. Notifíquese a las partes.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

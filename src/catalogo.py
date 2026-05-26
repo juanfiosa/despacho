@@ -359,9 +359,9 @@ _LABORAL = Fuero(
                     descripcion="Frustrada la conciliación, se abre la causa a prueba",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="auto_apertura_prueba",
+                            tipo="auto_apertura_laboral",
                             label="Auto de apertura a prueba",
-                            descripcion="Abre el período probatorio conforme ofrecimiento de partes",
+                            descripcion="Abre el período probatorio laboral conforme CPT",
                             norma="Art. 83 CPT",
                         ),
                     ],
@@ -593,9 +593,9 @@ _PENAL = Fuero(
                     descripcion="Citación al imputado para el acto de imputación",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="decreto_tramite",
+                            tipo="citacion_imputacion",
                             label="Citación a acto de imputación",
-                            descripcion="Cita al imputado a comparecer ante el fiscal",
+                            descripcion="Cita al imputado a comparecer ante el fiscal bajo apercibimiento",
                             norma="Art. 271 CPP",
                         ),
                     ],
@@ -606,9 +606,9 @@ _PENAL = Fuero(
                     descripcion="Auto que eleva la causa a juicio oral",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="decreto_tramite",
+                            tipo="auto_elevacion_juicio",
                             label="Auto de elevación a juicio",
-                            descripcion="Declara clausurada la investigación y eleva la causa a juicio",
+                            descripcion="Clausura la investigación y eleva la causa a juicio oral o abreviado",
                             norma="Art. 354 CPP",
                         ),
                     ],
@@ -735,9 +735,9 @@ _CONCURSAL = Fuero(
                     descripcion="Auto que declara abierto el concurso preventivo",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="decreto_tramite",
+                            tipo="auto_apertura_concurso",
                             label="Auto de apertura del concurso preventivo",
-                            descripcion="Declara abierto el concurso, designa síndico y fija fechas",
+                            descripcion="Declara abierto el concurso, designa síndico, fija período informativo y audiencia",
                             norma="Art. 14 Ley 24522",
                         ),
                     ],

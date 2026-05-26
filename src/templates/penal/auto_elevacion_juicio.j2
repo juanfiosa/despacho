@@ -1,0 +1,46 @@
+{#
+  Auto de elevación a juicio (art. 354 CPP Ley 8123, Córdoba)
+  Input: AutoElevacionJuicioInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: El requerimiento de elevación a juicio formulado por
+el/la Dr./Dra. {{ fiscal_nombre }}, Fiscal de Instrucción, en relación al
+imputado {{ partes_por_rol(partes, "imputado") }}, y las actuaciones
+obrantes en autos.-
+
+CONSIDERANDO: I. Que el/la Fiscal requirente ha formulado requerimiento de
+elevación a juicio en los términos del art. 354 del Código Procesal Penal de
+la Provincia de Córdoba (Ley 8123), con la calificación legal de
+{{ calificacion_legal }}.-
+
+II. Que examinada la investigación penal preparatoria no se advierte la
+existencia de defectos formales que impidan la elevación a juicio, y que la
+misma se encuentra en estado de ser juzgada conforme lo normado por los
+arts. 351 y siguientes del CPP.-
+
+SE RESUELVE:
+
+I. ELEVAR la presente causa a
+{% if tipo_juicio == "abreviado" %}JUICIO ABREVIADO{% else %}JUICIO ORAL Y PÚBLICO{% endif %}
+en los términos del art. 354 del CPP, seguida en contra de
+{{ partes_por_rol(partes, "imputado") }}, por el delito de
+{{ calificacion_legal }}.-
+
+II. CLAUSURAR la Investigación Penal Preparatoria.-
+
+III. REMÍTANSE los presentes actuados al Tribunal
+{% if tipo_juicio == "abreviado" %}competente{% else %}de Juicio que corresponda{% endif %}
+a sus efectos.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

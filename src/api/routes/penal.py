@@ -1,5 +1,5 @@
 """
-Endpoints para documentos del fuero Laboral — CPT Ley 7987 (Córdoba).
+Endpoints para documentos del fuero Penal — CPP Ley 8123 (Córdoba).
 """
 
 from datetime import date
@@ -10,9 +10,9 @@ from fastapi.responses import Response
 
 from ...engine import render
 from ...generador import texto_a_docx
-from ...models.documentos.laboral import AutoAdmisionLaboralInput, AutoAperturaLaboralInput
+from ...models.documentos.penal import CitacionImputacionInput, AutoElevacionJuicioInput
 
-router = APIRouter(prefix="/laboral", tags=["Laboral"])
+router = APIRouter(prefix="/penal", tags=["Penal"])
 
 _DOCX_MEDIA = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 
@@ -24,12 +24,12 @@ def _fecha_param(fecha_resolucion: str | None) -> date | None:
 
 
 # ---------------------------------------------------------------------------
-# Auto de admisión de demanda laboral
+# Citación a acto de imputación
 # ---------------------------------------------------------------------------
 
-@router.post("/admision-demanda/preview", summary="Vista previa en texto")
-def admision_laboral_preview(
-    body: AutoAdmisionLaboralInput,
+@router.post("/citacion-imputacion/preview", summary="Vista previa en texto")
+def citacion_imputacion_preview(
+    body: CitacionImputacionInput,
     fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
 ):
     texto = render(body, _fecha_param(fecha_resolucion))
@@ -37,12 +37,12 @@ def admision_laboral_preview(
 
 
 @router.post(
-    "/admision-demanda/docx",
+    "/citacion-imputacion/docx",
     summary="Descarga DOCX",
     response_class=Response,
 )
-def admision_laboral_docx(
-    body: AutoAdmisionLaboralInput,
+def citacion_imputacion_docx(
+    body: CitacionImputacionInput,
     fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
 ):
     texto = render(body, _fecha_param(fecha_resolucion))
@@ -50,17 +50,17 @@ def admision_laboral_docx(
     return Response(
         content=docx,
         media_type=_DOCX_MEDIA,
-        headers={"Content-Disposition": 'attachment; filename="admision_demanda_laboral.docx"'},
+        headers={"Content-Disposition": 'attachment; filename="citacion_imputacion.docx"'},
     )
 
 
 # ---------------------------------------------------------------------------
-# Auto de apertura a prueba laboral
+# Auto de elevación a juicio
 # ---------------------------------------------------------------------------
 
-@router.post("/apertura-prueba/preview", summary="Vista previa en texto")
-def apertura_prueba_laboral_preview(
-    body: AutoAperturaLaboralInput,
+@router.post("/elevacion-juicio/preview", summary="Vista previa en texto")
+def elevacion_juicio_preview(
+    body: AutoElevacionJuicioInput,
     fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
 ):
     texto = render(body, _fecha_param(fecha_resolucion))
@@ -68,12 +68,12 @@ def apertura_prueba_laboral_preview(
 
 
 @router.post(
-    "/apertura-prueba/docx",
+    "/elevacion-juicio/docx",
     summary="Descarga DOCX",
     response_class=Response,
 )
-def apertura_prueba_laboral_docx(
-    body: AutoAperturaLaboralInput,
+def elevacion_juicio_docx(
+    body: AutoElevacionJuicioInput,
     fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
 ):
     texto = render(body, _fecha_param(fecha_resolucion))
@@ -81,5 +81,5 @@ def apertura_prueba_laboral_docx(
     return Response(
         content=docx,
         media_type=_DOCX_MEDIA,
-        headers={"Content-Disposition": 'attachment; filename="auto_apertura_prueba_laboral.docx"'},
+        headers={"Content-Disposition": 'attachment; filename="auto_elevacion_juicio.docx"'},
     )
