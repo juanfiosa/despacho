@@ -620,6 +620,372 @@ function buildPayload(fueroId, tipoDoc, expediente, camposDoc, juzgado) {
     descripcion_acuerdo:        camposDoc.descripcion_acuerdo || '',
     tipo_acuerdo_descripcion:   camposDoc.tipo_acuerdo_descripcion || null,
   }
+  // ---------------------------------------------------------------------------
+  // Contencioso Administrativo — adicionales
+  // ---------------------------------------------------------------------------
+  if (tipoDoc === 'traslado_demanda_ca') return {
+    ...base,
+    organismo_demandado:         camposDoc.organismo_demandado || 'la Provincia de Córdoba',
+    plazo_contestacion_dias:     Number(camposDoc.plazo_contestacion_dias) || 30,
+    domicilio_notificacion:      camposDoc.domicilio_notificacion || null,
+    con_remision_expediente:     camposDoc.con_remision_expediente !== false,
+  }
+  if (tipoDoc === 'apertura_prueba_ca') return {
+    ...base,
+    plazo_dias:           Number(camposDoc.plazo_dias) || 40,
+    fecha_inicio_prueba:  camposDoc.fecha_inicio_prueba || new Date().toISOString().split('T')[0],
+    prueba_admitida:      camposDoc.prueba_admitida || [],
+  }
+  if (tipoDoc === 'citacion_audiencia_preliminar_ca') return {
+    ...base,
+    fecha_audiencia:    camposDoc.fecha_audiencia || new Date().toISOString().split('T')[0],
+    hora_audiencia:     camposDoc.hora_audiencia || '09:00',
+    sala:               camposDoc.sala || null,
+    objeto_audiencia:   camposDoc.objeto_audiencia || 'fijación de hechos controvertidos, saneamiento y ofrecimiento de prueba',
+  }
+  if (tipoDoc === 'suspension_acto_administrativo') return {
+    ...base,
+    acto_impugnado:       camposDoc.acto_impugnado || '',
+    organismo_emisor:     camposDoc.organismo_emisor || '',
+    causal_suspension:    camposDoc.causal_suspension || 'verosimilitud_derecho_peligro_demora',
+    contracautela:        camposDoc.contracautela || null,
+  }
+  if (tipoDoc === 'llamamiento_autos_ca') return {
+    ...base,
+    etapa:                  camposDoc.etapa_llamamiento || 'sentencia_definitiva',
+    vencio_prueba:          camposDoc.vencio_prueba !== false,
+    presentaron_alegatos:   camposDoc.presentaron_alegatos === true,
+  }
+  if (tipoDoc === 'intimacion_organismo_demandado') return {
+    ...base,
+    organismo_demandado:                   camposDoc.organismo_demandado || 'la Provincia de Córdoba',
+    plazo_dias:                            Number(camposDoc.plazo_dias) || 10,
+    numero_expediente_administrativo:      camposDoc.numero_expediente_administrativo || null,
+    apercibimiento:                        camposDoc.apercibimiento || 'tener por ciertos los hechos invocados por el actor (art. 355 CPCC, aplicación supletoria)',
+  }
+  // ---------------------------------------------------------------------------
+  // Violencia Familiar — adicionales
+  // ---------------------------------------------------------------------------
+  if (tipoDoc === 'prorroga_medidas_vf') return {
+    ...base,
+    plazo_prorroga_dias:  Number(camposDoc.plazo_prorroga_dias) || 90,
+    medidas_vigentes:     camposDoc.medidas_vigentes || [],
+    motivo_prorroga:      camposDoc.motivo_prorroga || 'subsisten las circunstancias de riesgo que motivaron las medidas originales',
+  }
+  if (tipoDoc === 'cese_medidas_vf') return {
+    ...base,
+    medidas_que_cesan:    camposDoc.medidas_que_cesan || [],
+    motivo_cese:          camposDoc.motivo_cese_vf || 'superacion_riesgo',
+    motivo_descripcion:   camposDoc.motivo_descripcion || null,
+  }
+  if (tipoDoc === 'oficio_policia_vf') return {
+    ...base,
+    tipo_oficio:                  camposDoc.tipo_oficio || 'custodia',
+    domicilio_intervencion:       camposDoc.domicilio_intervencion || '',
+    descripcion_instrucciones:    camposDoc.descripcion_instrucciones || '',
+    unidad_policial:              camposDoc.unidad_policial || null,
+  }
+  // ---------------------------------------------------------------------------
+  // Familia — adicionales
+  // ---------------------------------------------------------------------------
+  if (tipoDoc === 'exclusion_hogar') return {
+    ...base,
+    plazo_cumplimiento_horas:     Number(camposDoc.plazo_cumplimiento_horas) || 24,
+    con_auxilio_policial:         camposDoc.con_auxilio_policial !== false,
+    con_prohibicion_acercamiento: camposDoc.con_prohibicion_acercamiento !== false,
+    distancia_metros:             camposDoc.distancia_metros ? Number(camposDoc.distancia_metros) : null,
+    domicilio_exclusion:          camposDoc.domicilio_exclusion || '',
+  }
+  if (tipoDoc === 'regimen_comunicacion_provisorio') return {
+    ...base,
+    descripcion_regimen:  camposDoc.descripcion_regimen || '',
+    lugar_entrega:        camposDoc.lugar_entrega || null,
+    con_supervision:      camposDoc.con_supervision === true,
+    vigencia:             camposDoc.vigencia_regimen || 'hasta_sentencia',
+  }
+  if (tipoDoc === 'intimacion_pago_cuotas_alimentarias') return {
+    ...base,
+    cuotas_adeudadas:         Number(camposDoc.cuotas_adeudadas) || 1,
+    monto_total_adeudado:     Number(camposDoc.monto_total_adeudado) || 0,
+    plazo_dias:               Number(camposDoc.plazo_dias) || 5,
+    apercibimiento_art553:    camposDoc.apercibimiento_art553 !== false,
+    con_embargo:              camposDoc.con_embargo === true,
+  }
+  if (tipoDoc === 'atribucion_hogar_conyugal') return {
+    ...base,
+    domicilio_hogar:              camposDoc.domicilio_hogar || '',
+    caracter:                     camposDoc.caracter_atribucion || 'provisorio',
+    con_exclusion_otro_conyuge:   camposDoc.con_exclusion_otro_conyuge !== false,
+    plazo_exclusion_horas:        Number(camposDoc.plazo_exclusion_horas) || 24,
+    fundamento:                   camposDoc.fundamento_atribucion || 'hijos_menores',
+  }
+  if (tipoDoc === 'citacion_conciliacion_familia') return {
+    ...base,
+    tipo_proceso:         camposDoc.tipo_proceso_familia || 'alimentos',
+    fecha_audiencia:      camposDoc.fecha_audiencia || new Date().toISOString().split('T')[0],
+    hora_audiencia:       camposDoc.hora_audiencia || '09:00',
+    sala:                 camposDoc.sala || null,
+    con_equipo_tecnico:   camposDoc.con_equipo_tecnico === true,
+  }
+  // ---------------------------------------------------------------------------
+  // Laboral — adicionales
+  // ---------------------------------------------------------------------------
+  if (tipoDoc === 'traslado_contestacion_laboral') return {
+    ...base,
+    plazo_dias:               Number(camposDoc.plazo_dias) || 5,
+    con_reconvencion:         camposDoc.con_reconvencion === true,
+    plazo_reconvencion_dias:  camposDoc.plazo_reconvencion_dias ? Number(camposDoc.plazo_reconvencion_dias) : null,
+  }
+  if (tipoDoc === 'citacion_vista_causa') return {
+    ...base,
+    fecha_audiencia:  camposDoc.fecha_audiencia || new Date().toISOString().split('T')[0],
+    hora_audiencia:   camposDoc.hora_audiencia || '09:00',
+    sala:             camposDoc.sala || null,
+    con_peritos:      camposDoc.con_peritos === true,
+    con_testigos:     camposDoc.con_testigos === true,
+  }
+  if (tipoDoc === 'intimacion_pago_liquidacion') return {
+    ...base,
+    datos_economicos:               buildEco(camposDoc),
+    plazo_dias:                     Number(camposDoc.plazo_dias) || 5,
+    incluye_intereses_moratorios:   camposDoc.incluye_intereses_moratorios !== false,
+  }
+  if (tipoDoc === 'homologacion_acuerdo_laboral') return {
+    ...base,
+    descripcion_acuerdo:  camposDoc.descripcion_acuerdo || '',
+    monto_total:          camposDoc.monto_total ? Number(camposDoc.monto_total) : null,
+    tipo_acuerdo:         camposDoc.tipo_acuerdo_laboral || 'total',
+  }
+  if (tipoDoc === 'auto_liquidacion_aprobada') return {
+    ...base,
+    monto_liquidado:              Number(camposDoc.monto_liquidado) || 0,
+    fecha_liquidacion:            camposDoc.fecha_liquidacion || new Date().toISOString().split('T')[0],
+    aprobada_por:                 camposDoc.aprobada_por || 'perito_contador',
+    observaciones_liquidacion:    camposDoc.observaciones_liquidacion || null,
+  }
+  // ---------------------------------------------------------------------------
+  // Concursal — adicionales
+  // ---------------------------------------------------------------------------
+  if (tipoDoc === 'periodo_exclusividad') return {
+    ...base,
+    fecha_inicio_exclusividad:  camposDoc.fecha_inicio_exclusividad || new Date().toISOString().split('T')[0],
+    plazo_dias_habiles:         Number(camposDoc.plazo_dias_habiles) || 90,
+    porcentaje_conformidades:   Number(camposDoc.porcentaje_conformidades) || 66,
+  }
+  if (tipoDoc === 'homologacion_acuerdo_concursal') return {
+    ...base,
+    tipo_acuerdo:             camposDoc.tipo_acuerdo_concursal || 'unificado',
+    descripcion_acuerdo:      camposDoc.descripcion_acuerdo || '',
+    plazo_cumplimiento_anos:  camposDoc.plazo_cumplimiento_anos ? Number(camposDoc.plazo_cumplimiento_anos) : null,
+  }
+  if (tipoDoc === 'citacion_acreedores_edicto') return {
+    ...base,
+    sindico_nombre:               camposDoc.sindico_nombre || '',
+    sindico_domicilio:            camposDoc.sindico_domicilio || '',
+    fecha_limite_verificacion:    camposDoc.fecha_limite_verificacion || new Date().toISOString().split('T')[0],
+    dias_publicacion:             Number(camposDoc.dias_publicacion) || 5,
+    tipo_proceso:                 camposDoc.tipo_proceso_concursal || 'concurso_preventivo',
+  }
+  if (tipoDoc === 'designacion_sindico') return {
+    ...base,
+    sindico_nombre:           camposDoc.sindico_nombre || '',
+    sindico_matricula:        camposDoc.sindico_matricula || null,
+    tipo_proceso:             camposDoc.tipo_proceso_concursal || 'concurso_preventivo',
+    plazo_aceptacion_dias:    Number(camposDoc.plazo_aceptacion_dias) || 5,
+  }
+  if (tipoDoc === 'verificacion_creditos') return {
+    ...base,
+    sindico_nombre:           camposDoc.sindico_nombre || '',
+    creditos_verificados:     Number(camposDoc.creditos_verificados) || 0,
+    creditos_inadmisibles:    Number(camposDoc.creditos_inadmisibles) || 0,
+    monto_total_verificado:   camposDoc.monto_total_verificado ? Number(camposDoc.monto_total_verificado) : null,
+    con_privilegio_especial:  Number(camposDoc.con_privilegio_especial) || 0,
+    con_privilegio_general:   Number(camposDoc.con_privilegio_general) || 0,
+  }
+  if (tipoDoc === 'realizacion_bienes') return {
+    ...base,
+    modalidad_realizacion:  camposDoc.modalidad_realizacion || 'subasta_judicial',
+    descripcion_bienes:     camposDoc.descripcion_bienes || '',
+    martillero_nombre:      camposDoc.martillero_nombre || null,
+    base_subasta:           camposDoc.base_subasta ? Number(camposDoc.base_subasta) : null,
+    fecha_subasta:          camposDoc.fecha_subasta || null,
+  }
+  // ---------------------------------------------------------------------------
+  // Penal — adicionales
+  // ---------------------------------------------------------------------------
+  if (tipoDoc === 'prision_preventiva') return {
+    ...base,
+    fiscal_nombre:        camposDoc.fiscal_nombre || null,
+    defensor_nombre:      camposDoc.defensor_nombre || null,
+    calificacion_legal:   camposDoc.calificacion_legal || '',
+    causal:               camposDoc.causal_prision || 'peligro_fuga',
+    descripcion_hecho:    camposDoc.descripcion_hecho || null,
+    escala_minima_pena:   camposDoc.escala_minima_pena || null,
+  }
+  if (tipoDoc === 'cese_prision_preventiva') return {
+    ...base,
+    fiscal_nombre:        camposDoc.fiscal_nombre || null,
+    defensor_nombre:      camposDoc.defensor_nombre || null,
+    calificacion_legal:   camposDoc.calificacion_legal || null,
+    modalidad:            camposDoc.modalidad_libertad || 'excarcelacion',
+    causal_cese:          camposDoc.causal_cese || 'variacion_circunstancias',
+    causal_descripcion:   camposDoc.causal_descripcion || null,
+    condiciones:          camposDoc.condiciones || [],
+  }
+  if (tipoDoc === 'admision_partes_civiles') return {
+    ...base,
+    tipo_parte_civil:           camposDoc.tipo_parte_civil || 'actor_civil',
+    nombre_parte_civil:         camposDoc.nombre_parte_civil || '',
+    calificacion_provisional:   camposDoc.calificacion_provisional || null,
+    plazo_contestacion_dias:    camposDoc.plazo_contestacion_dias ? Number(camposDoc.plazo_contestacion_dias) : null,
+  }
+  if (tipoDoc === 'traslado_vista_fiscal') return {
+    ...base,
+    tipo_vista:   camposDoc.tipo_vista || 'fiscal_instruccion',
+    objeto_vista: camposDoc.objeto_vista || '',
+    plazo_dias:   Number(camposDoc.plazo_dias) || 5,
+  }
+  if (tipoDoc === 'citacion_testigos_peritos') return {
+    ...base,
+    fecha_debate:       camposDoc.fecha_debate || new Date().toISOString().split('T')[0],
+    hora_debate:        camposDoc.hora_debate || '09:00',
+    tipo_convocados:    camposDoc.tipo_convocados || 'testigos',
+    lista_convocados:   camposDoc.lista_convocados || [],
+    apercibimiento:     camposDoc.apercibimiento || 'conducción por la fuerza pública en caso de inasistencia injustificada (art. 221 CPP)',
+  }
+  if (tipoDoc === 'suspension_juicio_prueba') return {
+    ...base,
+    fiscal_nombre:          camposDoc.fiscal_nombre || null,
+    defensor_nombre:        camposDoc.defensor_nombre || null,
+    calificacion_legal:     camposDoc.calificacion_legal || '',
+    plazo_suspension_meses: Number(camposDoc.plazo_suspension_meses) || 12,
+    reglas_conducta:        camposDoc.reglas_conducta || [],
+    reparacion_danio:       camposDoc.reparacion_danio || null,
+  }
+  if (tipoDoc === 'extraccion_testimonios') return {
+    ...base,
+    objeto_testimonios: camposDoc.objeto_testimonios || '',
+    destino:            camposDoc.destino || '',
+    motivo:             camposDoc.motivo || '',
+  }
+  if (tipoDoc === 'archivo_notificacion') return {
+    ...base,
+    causal_archivo:         camposDoc.causal_archivo || 'desestimacion_fiscal',
+    causal_descripcion:     camposDoc.causal_descripcion || null,
+    notificar_querellante:  camposDoc.notificar_querellante === true,
+  }
+  // ---------------------------------------------------------------------------
+  // Niñez — adicionales
+  // ---------------------------------------------------------------------------
+  if (tipoDoc === 'auto_medida_abrigo') return {
+    ...base,
+    nombre_nnya:        camposDoc.nombre_nnya || '',
+    edad_nnya:          camposDoc.edad_nnya ? Number(camposDoc.edad_nnya) : null,
+    modalidad_abrigo:   camposDoc.modalidad_abrigo || 'hogar_convivencial',
+    establecimiento:    camposDoc.establecimiento || null,
+    motivo_abrigo:      camposDoc.motivo_abrigo || '',
+    plazo_dias:         Number(camposDoc.plazo_dias) || 30,
+  }
+  if (tipoDoc === 'notificacion_senaf') return {
+    ...base,
+    nombre_nnya:            camposDoc.nombre_nnya || '',
+    organismo_notificar:    camposDoc.organismo_notificar || 'la Secretaría de Niñez, Adolescencia y Familia (SENAF)',
+    objeto_notificacion:    camposDoc.objeto_notificacion || '',
+    plazo_respuesta_dias:   camposDoc.plazo_respuesta_dias ? Number(camposDoc.plazo_respuesta_dias) : null,
+  }
+  if (tipoDoc === 'auto_internacion_salud_mental') return {
+    ...base,
+    nombre_nnya:                camposDoc.nombre_nnya || '',
+    edad_nnya:                  camposDoc.edad_nnya ? Number(camposDoc.edad_nnya) : null,
+    establecimiento_salud:      camposDoc.establecimiento_salud || '',
+    diagnostico_provisional:    camposDoc.diagnostico_provisional || null,
+    medico_interviniente:       camposDoc.medico_interviniente || null,
+    plazo_revision_dias:        Number(camposDoc.plazo_revision_dias) || 30,
+  }
+  if (tipoDoc === 'decreto_visitas_supervisadas') return {
+    ...base,
+    nombre_nnya:          camposDoc.nombre_nnya || '',
+    descripcion_regimen:  camposDoc.descripcion_regimen || '',
+    lugar_visitas:        camposDoc.lugar_visitas || 'sede_juzgado',
+    supervisor:           camposDoc.supervisor || null,
+    vigencia:             camposDoc.vigencia_visitas || 'hasta_nueva_resolucion',
+  }
+  if (tipoDoc === 'auto_reintegro_familiar') return {
+    ...base,
+    nombre_nnya:              camposDoc.nombre_nnya || '',
+    grupo_familiar_reintegro: camposDoc.grupo_familiar_reintegro || '',
+    condiciones_reintegro:    camposDoc.condiciones_reintegro || [],
+    motivo_reintegro:         camposDoc.motivo_reintegro || 'han cesado las circunstancias que motivaron la medida excepcional',
+  }
+  if (tipoDoc === 'citacion_seguimiento_nna') return {
+    ...base,
+    nombre_nnya:          camposDoc.nombre_nnya || '',
+    tipo_audiencia:       camposDoc.tipo_audiencia_nna || 'seguimiento',
+    fecha_audiencia:      camposDoc.fecha_audiencia || new Date().toISOString().split('T')[0],
+    hora_audiencia:       camposDoc.hora_audiencia || '09:00',
+    citar_senaf:          camposDoc.citar_senaf !== false,
+    citar_equipo_tecnico: camposDoc.citar_equipo_tecnico !== false,
+  }
+  // ---------------------------------------------------------------------------
+  // Sucesorio — adicionales
+  // ---------------------------------------------------------------------------
+  if (tipoDoc === 'citacion_herederos_acreedores') return {
+    ...base,
+    causante_nombre:            camposDoc.causante_nombre || '',
+    dias_edictos:               Number(camposDoc.dias_edictos) || 5,
+    publicar_boletin_oficial:   camposDoc.publicar_boletin_oficial !== false,
+    publicar_diario_local:      camposDoc.publicar_diario_local !== false,
+    plazo_presentacion_dias:    Number(camposDoc.plazo_presentacion_dias) || 30,
+  }
+  if (tipoDoc === 'aprobacion_inventario_avaluo') return {
+    ...base,
+    causante_nombre:          camposDoc.causante_nombre || '',
+    perito_nombre:            camposDoc.perito_nombre || '',
+    monto_total_avaluo:       camposDoc.monto_total_avaluo ? Number(camposDoc.monto_total_avaluo) : null,
+    bienes_descripcion:       camposDoc.bienes_descripcion || null,
+    con_impugnacion:          camposDoc.con_impugnacion === true,
+    resolucion_impugnacion:   camposDoc.resolucion_impugnacion || null,
+  }
+  // ---------------------------------------------------------------------------
+  // Incidentes civiles
+  // ---------------------------------------------------------------------------
+  if (tipoDoc === 'caducidad_instancia') return {
+    ...base,
+    instancia:          camposDoc.instancia || 'primera',
+    plazo_meses:        Number(camposDoc.plazo_meses) || 6,
+    ultima_actuacion:   camposDoc.ultima_actuacion || null,
+    parte_peticionante: camposDoc.parte_peticionante || 'demandado',
+    costas_al_actor:    camposDoc.costas_al_actor !== false,
+  }
+  if (tipoDoc === 'designacion_perito') return {
+    ...base,
+    especialidad:           camposDoc.especialidad || '',
+    perito_nombre:          camposDoc.perito_nombre || null,
+    plazo_aceptacion_dias:  Number(camposDoc.plazo_aceptacion_dias) || 5,
+    plazo_dictamen_dias:    Number(camposDoc.plazo_dictamen_dias) || 30,
+    puntos_periciales:      camposDoc.puntos_periciales || [],
+  }
+  if (tipoDoc === 'intimacion_cumplimiento_sentencia') return {
+    ...base,
+    plazo_dias:               Number(camposDoc.plazo_dias) || 10,
+    tipo_obligacion:          camposDoc.tipo_obligacion || 'dar_dinero',
+    descripcion_obligacion:   camposDoc.descripcion_obligacion || null,
+    apercibimiento:           camposDoc.apercibimiento || 'ejecución forzada con costas',
+  }
+  if (tipoDoc === 'auto_desglose') return {
+    ...base,
+    descripcion_documentos:   camposDoc.descripcion_documentos || '',
+    parte_solicitante:        camposDoc.parte_solicitante || 'actor',
+    motivo:                   camposDoc.motivo || null,
+    dejar_testimonio:         camposDoc.dejar_testimonio !== false,
+  }
+  if (tipoDoc === 'citacion_audiencia_conciliacion') return {
+    ...base,
+    fecha_audiencia:        camposDoc.fecha_audiencia || new Date().toISOString().split('T')[0],
+    hora_audiencia:         camposDoc.hora_audiencia || '09:00',
+    sala:                   camposDoc.sala || null,
+    con_asistencia_letrada: camposDoc.con_asistencia_letrada !== false,
+  }
   return base
 }
 

@@ -309,6 +309,19 @@ _CIVIL_COMERCIAL = Fuero(
                     ],
                 ),
                 Etapa(
+                    id="citacion_herederos",
+                    label="Citación de herederos y acreedores",
+                    descripcion="Edictos citando a herederos y acreedores a presentarse al juicio",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="citacion_herederos_acreedores",
+                            label="Decreto de citación de herederos y acreedores",
+                            descripcion="Ordena publicar edictos citando a herederos y acreedores a presentarse al sucesorio",
+                            norma="Art. 2340 CCyCN / Art. 655 CPCC",
+                        ),
+                    ],
+                ),
+                Etapa(
                     id="declaratoria",
                     label="Declaratoria de herederos",
                     descripcion="Auto que reconoce la vocación hereditaria de los presentantes",
@@ -318,6 +331,91 @@ _CIVIL_COMERCIAL = Fuero(
                             label="Auto de declaratoria de herederos",
                             descripcion="Declara herederos a los presentantes y ordena anotaciones registrales",
                             norma="Arts. 2353 y ss. CCyCN",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="inventario",
+                    label="Inventario y avalúo",
+                    descripcion="Aprobación del inventario y avalúo de los bienes hereditarios",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="aprobacion_inventario_avaluo",
+                            label="Decreto de aprobación de inventario y avalúo",
+                            descripcion="Aprueba el inventario y avalúo de los bienes hereditarios practicado por el perito tasador",
+                            norma="Art. 2341 CCyCN / Art. 655 y ss. CPCC",
+                        ),
+                    ],
+                ),
+            ],
+        ),
+        Proceso(
+            id="incidentes",
+            label="Incidentes y Resoluciones",
+            descripcion="Incidentes procesales civiles: caducidad, peritos, cumplimiento de sentencia, desglose y conciliación",
+            etapas=[
+                Etapa(
+                    id="caducidad",
+                    label="Caducidad de instancia",
+                    descripcion="Declaración de caducidad de instancia por inactividad procesal",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="caducidad_instancia",
+                            label="Decreto de caducidad de instancia",
+                            descripcion="Declara operada la caducidad de instancia por inactividad durante el plazo legal",
+                            norma="Art. 339 CPCC",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="perito",
+                    label="Designación de perito",
+                    descripcion="Auto que designa al perito y fija plazo para el dictamen",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="designacion_perito",
+                            label="Auto de designación de perito",
+                            descripcion="Designa al perito, le notifica el cargo y le fija plazo para aceptar y dictaminar",
+                            norma="Art. 261 CPCC",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="cumplimiento_sentencia",
+                    label="Cumplimiento de sentencia",
+                    descripcion="Intimación al condenado a cumplir la sentencia firme",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="intimacion_cumplimiento_sentencia",
+                            label="Intimación de cumplimiento de sentencia",
+                            descripcion="Intima al condenado a cumplir la sentencia bajo apercibimiento de ejecución forzada",
+                            norma="Art. 559 CPCC",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="desglose",
+                    label="Desglose de documentación",
+                    descripcion="Decreto de desglose y devolución de documentos originales",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="auto_desglose",
+                            label="Decreto de desglose",
+                            descripcion="Ordena el desglose y devolución de la documentación original acompañada por la parte",
+                            norma="Art. 75 CPCC",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="conciliacion_civil",
+                    label="Audiencia de conciliación",
+                    descripcion="Citación a audiencia de conciliación en proceso civil",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="citacion_audiencia_conciliacion",
+                            label="Decreto de citación a audiencia de conciliación",
+                            descripcion="Cita a las partes a audiencia de conciliación en el proceso civil ordinario",
+                            norma="Art. 58 CPCC",
                         ),
                     ],
                 ),
@@ -367,6 +465,45 @@ _LABORAL = Fuero(
                     ],
                 ),
                 Etapa(
+                    id="contestacion",
+                    label="Traslado de contestación",
+                    descripcion="Decreto post-contestación de demanda",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="traslado_contestacion_laboral",
+                            label="Decreto de traslado de contestación",
+                            descripcion="Tiene por contestada la demanda laboral y corre traslado al actor",
+                            norma="CPT Ley 7987",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="vista_causa",
+                    label="Vista de causa",
+                    descripcion="Citación a audiencia de vista de causa",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="citacion_vista_causa",
+                            label="Citación a audiencia de vista de causa",
+                            descripcion="Cita a las partes a la audiencia de vista de causa laboral",
+                            norma="Art. 83 CPT",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="homologacion",
+                    label="Homologación de acuerdo",
+                    descripcion="Auto que homologa el acuerdo conciliatorio",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="homologacion_acuerdo_laboral",
+                            label="Auto de homologación de acuerdo laboral",
+                            descripcion="Homologa el acuerdo conciliatorio y le confiere fuerza de sentencia firme",
+                            norma="Art. 83 CPT",
+                        ),
+                    ],
+                ),
+                Etapa(
                     id="autos_resolver",
                     label="Llamamiento de autos",
                     descripcion="Causa en condiciones de dictar sentencia",
@@ -387,15 +524,15 @@ _LABORAL = Fuero(
             descripcion="Ejecución forzada de sentencia firme en materia laboral",
             etapas=[
                 Etapa(
-                    id="liquidacion",
-                    label="Liquidación",
-                    descripcion="Aprobación de la liquidación practicada",
+                    id="aprobacion_liquidacion",
+                    label="Aprobación de liquidación",
+                    descripcion="Auto que aprueba la liquidación practicada por el perito",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="decreto_tramite",
-                            label="Traslado de liquidación",
-                            descripcion="Corre traslado de la liquidación a la parte contraria",
-                            norma="Art. 812 CPCC (supletorio)",
+                            tipo="auto_liquidacion_aprobada",
+                            label="Auto de aprobación de liquidación",
+                            descripcion="Aprueba la liquidación practicada e intima al condenado al pago",
+                            norma="Art. 132 CPT",
                         ),
                     ],
                 ),
@@ -405,10 +542,10 @@ _LABORAL = Fuero(
                     descripcion="Intimación al condenado a pagar el importe de la liquidación aprobada",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="intimacion_pago",
-                            label="Decreto de intimación de pago",
-                            descripcion="Intima al deudor a abonar la suma liquidada",
-                            norma="Art. 529 CPCC (supletorio)",
+                            tipo="intimacion_pago_liquidacion",
+                            label="Decreto de intimación de pago de liquidación",
+                            descripcion="Intima al condenado a abonar la suma liquidada bajo apercibimiento de embargo",
+                            norma="Art. 132 CPT",
                         ),
                     ],
                 ),
@@ -463,10 +600,10 @@ _FAMILIA = Fuero(
                     descripcion="Cobro de cuotas impagas",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="intimacion_pago",
+                            tipo="intimacion_pago_cuotas_alimentarias",
                             label="Intimación de pago de cuotas alimentarias",
-                            descripcion="Intima al alimentante a abonar las cuotas adeudadas",
-                            norma="Art. 550 CCyCN",
+                            descripcion="Intima al alimentante a abonar las cuotas adeudadas bajo apercibimiento del art. 553 CCyCN",
+                            norma="Art. 550 / Art. 553 CCyCN",
                         ),
                     ],
                 ),
@@ -537,6 +674,19 @@ _FAMILIA = Fuero(
                     ],
                 ),
                 Etapa(
+                    id="provisorio",
+                    label="Régimen provisorio",
+                    descripcion="Fijación de régimen de comunicación provisorio mientras tramita la causa",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="regimen_comunicacion_provisorio",
+                            label="Decreto de régimen de comunicación provisorio",
+                            descripcion="Fija régimen de comunicación provisorio entre el progenitor no conviviente y el/los hijo/s",
+                            norma="Art. 555 CCyCN / CPF Ley 10305",
+                        ),
+                    ],
+                ),
+                Etapa(
                     id="homologacion",
                     label="Homologación de acuerdo",
                     descripcion="Auto que homologa el régimen de comunicación acordado por las partes",
@@ -546,6 +696,59 @@ _FAMILIA = Fuero(
                             label="Auto de homologación de régimen de comunicación",
                             descripcion="Homologa el régimen de comunicación acordado conforme al interés superior del niño",
                             norma="Art. 555 CCyCN / Art. 166 inc. 1 CPCC",
+                        ),
+                    ],
+                ),
+            ],
+        ),
+        Proceso(
+            id="exclusion_atribucion",
+            label="Exclusión del Hogar / Atribución",
+            descripcion="Exclusión del hogar del agresor y atribución del uso del hogar conyugal",
+            etapas=[
+                Etapa(
+                    id="exclusion",
+                    label="Exclusión del hogar",
+                    descripcion="Ordenar la exclusión del hogar del conviviente o cónyuge agresor",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="exclusion_hogar",
+                            label="Decreto de exclusión del hogar",
+                            descripcion="Ordena la exclusión del conviviente o cónyuge que ejerce violencia y fija prohibición de acercamiento",
+                            norma="Art. 519 CCyCN / Art. 6 CPF",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="atribucion",
+                    label="Atribución del hogar conyugal",
+                    descripcion="Auto que atribuye el uso del hogar conyugal a uno de los cónyuges",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="atribucion_hogar_conyugal",
+                            label="Auto de atribución del hogar conyugal",
+                            descripcion="Atribuye provisoria o definitivamente el uso del hogar conyugal a uno de los cónyuges",
+                            norma="Art. 443 CCyCN",
+                        ),
+                    ],
+                ),
+            ],
+        ),
+        Proceso(
+            id="conciliacion_familia",
+            label="Audiencia de Conciliación",
+            descripcion="Citación a audiencia de conciliación en proceso de familia",
+            etapas=[
+                Etapa(
+                    id="citacion",
+                    label="Citación a audiencia",
+                    descripcion="Fija y cita a las partes a audiencia de conciliación",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="citacion_conciliacion_familia",
+                            label="Decreto de citación a audiencia de conciliación",
+                            descripcion="Cita a las partes a audiencia de conciliación en proceso de familia",
+                            norma="Art. 58 y conc. CPF Ley 10305",
                         ),
                     ],
                 ),
@@ -582,15 +785,67 @@ _CONTENCIOSO = Fuero(
                     ],
                 ),
                 Etapa(
+                    id="traslado",
+                    label="Traslado de demanda",
+                    descripcion="Corre traslado de la demanda al organismo o ente demandado",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="traslado_demanda_ca",
+                            label="Decreto de traslado de demanda",
+                            descripcion="Corre traslado al organismo demandado para que conteste y ordena remisión del expediente administrativo",
+                            norma="Art. 13 CPCA",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="intimacion_organismo",
+                    label="Intimación al organismo",
+                    descripcion="Intimación al organismo demandado a remitir el expediente administrativo",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="intimacion_organismo_demandado",
+                            label="Decreto de intimación al organismo",
+                            descripcion="Intima al organismo a remitir el expediente administrativo bajo apercibimiento",
+                            norma="CPCA Ley 7182",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="cautelares_ca",
+                    label="Medida cautelar",
+                    descripcion="Suspensión cautelar del acto administrativo impugnado",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="suspension_acto_administrativo",
+                            label="Auto de suspensión del acto administrativo",
+                            descripcion="Suspende cautelarmente los efectos del acto impugnado hasta la resolución definitiva",
+                            norma="Art. 19 CPCA",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="audiencia_preliminar",
+                    label="Audiencia preliminar",
+                    descripcion="Audiencia de fijación de hechos controvertidos y ofrecimiento de prueba",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="citacion_audiencia_preliminar_ca",
+                            label="Citación a audiencia preliminar",
+                            descripcion="Cita a las partes a la audiencia de saneamiento procesal y fijación de prueba",
+                            norma="Art. 46 CPCA",
+                        ),
+                    ],
+                ),
+                Etapa(
                     id="apertura_prueba",
                     label="Apertura a prueba",
                     descripcion="Apertura del período probatorio",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="auto_apertura_prueba",
+                            tipo="apertura_prueba_ca",
                             label="Auto de apertura a prueba",
-                            descripcion="Abre el período probatorio conforme art. 498 CPCC aplicado supletoriamente",
-                            norma="Art. 13 CPCA / Art. 498 CPCC (supletorio)",
+                            descripcion="Abre el período probatorio en el proceso contencioso administrativo",
+                            norma="Art. 47 CPCA",
                         ),
                     ],
                 ),
@@ -600,10 +855,10 @@ _CONTENCIOSO = Fuero(
                     descripcion="Causa en estado de dictar sentencia",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="decreto_tramite",
-                            label="Llamamiento de autos para resolver",
-                            descripcion="Llama los autos para dictar sentencia",
-                            norma="Art. 120 CPCC (supletorio)",
+                            tipo="llamamiento_autos_ca",
+                            label="Decreto de llamamiento de autos",
+                            descripcion="Llama los autos para dictar sentencia definitiva en el proceso contencioso administrativo",
+                            norma="Art. 51 CPCA",
                         ),
                     ],
                 ),
@@ -666,6 +921,77 @@ _PENAL = Fuero(
                     ],
                 ),
                 Etapa(
+                    id="prision_preventiva",
+                    label="Prisión preventiva",
+                    descripcion="Resolución sobre la prisión preventiva del imputado",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="prision_preventiva",
+                            label="Auto de prisión preventiva",
+                            descripcion="Decreta la prisión preventiva del imputado por peligro de fuga o entorpecimiento",
+                            norma="Art. 281 CPP",
+                        ),
+                        DocumentoDisponible(
+                            tipo="cese_prision_preventiva",
+                            label="Auto de cese de prisión preventiva",
+                            descripcion="Dispone la excarcelación, exención o morigeración de la prisión preventiva",
+                            norma="Art. 283 CPP",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="partes_civiles",
+                    label="Partes civiles",
+                    descripcion="Constitución de actor civil y/o tercero civilmente demandado",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="admision_partes_civiles",
+                            label="Decreto de admisión de partes civiles",
+                            descripcion="Admite la constitución del actor civil o tercero civilmente demandado en la causa",
+                            norma="Art. 96 CPP",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="vista_fiscal",
+                    label="Vista al Ministerio Fiscal",
+                    descripcion="Traslado de actuaciones al fiscal para que dictamine",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="traslado_vista_fiscal",
+                            label="Decreto de traslado / vista al fiscal",
+                            descripcion="Confiere vista o traslado al fiscal de instrucción, cámara o general para que dictamine",
+                            norma="Art. 334 CPP",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="extraccion_testimonios",
+                    label="Extracción de testimonios",
+                    descripcion="Extracción de copias para remitir a otro tribunal o fiscalía",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="extraccion_testimonios",
+                            label="Decreto de extracción de testimonios",
+                            descripcion="Ordena extraer testimonios para remitir a otro tribunal, juzgado o fiscalía",
+                            norma="Art. 181 CPP",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="archivo",
+                    label="Archivo de actuaciones",
+                    descripcion="Auto de archivo con notificación a las partes",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="archivo_notificacion",
+                            label="Auto de archivo con notificación",
+                            descripcion="Dispone el archivo de las actuaciones y ordena notificar a las partes",
+                            norma="Art. 334 CPP",
+                        ),
+                    ],
+                ),
+                Etapa(
                     id="elevacion_juicio",
                     label="Elevación a juicio",
                     descripcion="Auto que eleva la causa a juicio oral",
@@ -695,6 +1021,32 @@ _PENAL = Fuero(
                             label="Decreto de fijación de audiencia de debate",
                             descripcion="Fija fecha, hora y lugar del debate; cita a partes, testigos y peritos",
                             norma="Art. 374 CPP",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="testigos_peritos",
+                    label="Citación testigos y peritos",
+                    descripcion="Citación de testigos y/o peritos al debate oral",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="citacion_testigos_peritos",
+                            label="Decreto de citación de testigos y peritos",
+                            descripcion="Cita a los testigos y/o peritos a comparecer al debate bajo apercibimiento",
+                            norma="Arts. 374 y 221 CPP",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="probation",
+                    label="Suspensión del juicio a prueba",
+                    descripcion="Homologación del acuerdo de probation",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="suspension_juicio_prueba",
+                            label="Auto de suspensión del juicio a prueba",
+                            descripcion="Homologa el acuerdo de probation y fija las reglas de conducta impuestas al imputado",
+                            norma="Art. 76 bis CP / Art. 360 CPP",
                         ),
                     ],
                 ),
@@ -743,6 +1095,45 @@ _VIOLENCIA_FAMILIAR = Fuero(
                         ),
                     ],
                 ),
+                Etapa(
+                    id="prorroga",
+                    label="Prórroga de medidas",
+                    descripcion="Prórroga de las medidas de protección por subsistir el riesgo",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="prorroga_medidas_vf",
+                            label="Auto de prórroga de medidas",
+                            descripcion="Prorroga las medidas urgentes de protección por subsistir la situación de riesgo",
+                            norma="Art. 26 Ley 9283",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="cese",
+                    label="Cese de medidas",
+                    descripcion="Levantamiento de las medidas de protección",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="cese_medidas_vf",
+                            label="Auto de cese de medidas",
+                            descripcion="Dispone el levantamiento de las medidas al superarse la situación de riesgo",
+                            norma="Art. 26 Ley 9283",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="oficio_policia",
+                    label="Oficio a la Policía",
+                    descripcion="Libramiento de oficio policial para custodia, verificación o traslado",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="oficio_policia_vf",
+                            label="Decreto de oficio a la Policía",
+                            descripcion="Libra oficio a la Policía de la Provincia para que intervenga en la causa",
+                            norma="Ley 9283",
+                        ),
+                    ],
+                ),
             ],
         ),
     ],
@@ -776,8 +1167,60 @@ _NINEZ = Fuero(
                     ],
                 ),
                 Etapa(
-                    id="seguimiento",
-                    label="Seguimiento y prórroga",
+                    id="abrigo",
+                    label="Medida de abrigo",
+                    descripcion="Alojamiento transitorio del NNyA en familia alternativa u hogar convivencial",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="auto_medida_abrigo",
+                            label="Auto de medida de abrigo",
+                            descripcion="Ordena el alojamiento transitorio del NNyA en familia alternativa, hogar convivencial o establecimiento",
+                            norma="Art. 48 Ley 9944",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="notificacion_senaf",
+                    label="Notificación a SENAF",
+                    descripcion="Notificación al organismo administrativo de niñez",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="notificacion_senaf",
+                            label="Decreto de notificación a SENAF",
+                            descripcion="Notifica a la SENAF u organismo administrativo de niñez sobre resolución o audiencia",
+                            norma="Ley 9944 / Ley 26061",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="internacion",
+                    label="Internación en salud mental",
+                    descripcion="Internación involuntaria por razones de salud mental",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="auto_internacion_salud_mental",
+                            label="Auto de internación involuntaria",
+                            descripcion="Ordena la internación involuntaria del NNyA en institución de salud mental",
+                            norma="Art. 43 Ley 26657",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="visitas",
+                    label="Visitas supervisadas",
+                    descripcion="Régimen de visitas bajo supervisión del equipo técnico",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="decreto_visitas_supervisadas",
+                            label="Decreto de visitas supervisadas",
+                            descripcion="Fija régimen de visitas supervisadas entre el NNyA y sus progenitores o referentes familiares",
+                            norma="Ley 9944 / Art. 555 CCyCN",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="prorroga",
+                    label="Prórroga de medida",
                     descripcion="Revisión periódica de la medida excepcional y prórroga si corresponde",
                     documentos=[
                         DocumentoDisponible(
@@ -785,6 +1228,32 @@ _NINEZ = Fuero(
                             label="Auto de prórroga de medida excepcional",
                             descripcion="Prorroga la medida por no haberse superado las circunstancias de riesgo",
                             norma="Art. 55 Ley 9944",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="seguimiento",
+                    label="Audiencia de seguimiento",
+                    descripcion="Citación a audiencia de seguimiento de la medida excepcional",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="citacion_seguimiento_nna",
+                            label="Citación a audiencia de seguimiento",
+                            descripcion="Convoca a las partes, SENAF y equipo técnico a audiencia de seguimiento de la medida",
+                            norma="Art. 52 Ley 9944",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="reintegro",
+                    label="Reintegro familiar",
+                    descripcion="Reintegro del NNyA a su grupo familiar de origen",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="auto_reintegro_familiar",
+                            label="Auto de reintegro familiar",
+                            descripcion="Ordena el reintegro del NNyA a su grupo familiar por haberse superado la situación de vulneración",
+                            norma="Art. 48 y conc. Ley 9944",
                         ),
                     ],
                 ),
@@ -834,15 +1303,67 @@ _CONCURSAL = Fuero(
                     ],
                 ),
                 Etapa(
-                    id="verificacion",
-                    label="Verificación de créditos",
-                    descripcion="Período de verificación de créditos ante el síndico",
+                    id="designacion_sindico",
+                    label="Designación de síndico",
+                    descripcion="Designación del síndico concursal y notificación del cargo",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="decreto_tramite",
-                            label="Decreto de presentación del informe individual",
-                            descripcion="Tiene por presentado el informe individual del síndico y fija audiencia informativa",
-                            norma="Art. 35 Ley 24522",
+                            tipo="designacion_sindico",
+                            label="Decreto de designación de síndico",
+                            descripcion="Designa al síndico concursal y le fija plazo para aceptar el cargo",
+                            norma="Art. 14 Ley 24522",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="citacion_acreedores",
+                    label="Citación de acreedores",
+                    descripcion="Publicación de edictos citando a los acreedores a verificar créditos",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="citacion_acreedores_edicto",
+                            label="Decreto de citación de acreedores por edictos",
+                            descripcion="Ordena publicar edictos citando a los acreedores a verificar sus créditos ante el síndico",
+                            norma="Art. 27 Ley 24522",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="verificacion",
+                    label="Verificación de créditos",
+                    descripcion="Resolución del juez sobre los créditos verificados e inadmisibles",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="verificacion_creditos",
+                            label="Auto de verificación de créditos",
+                            descripcion="Resuelve sobre los créditos verificados, admitidos e inadmisibles según informe del síndico",
+                            norma="Art. 36 Ley 24522",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="exclusividad",
+                    label="Período de exclusividad",
+                    descripcion="Fijación del período de exclusividad para negociar con los acreedores",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="periodo_exclusividad",
+                            label="Decreto de período de exclusividad",
+                            descripcion="Fija el período de exclusividad para que el concursado obtenga conformidades de sus acreedores",
+                            norma="Art. 43 Ley 24522",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="homologacion",
+                    label="Homologación del acuerdo",
+                    descripcion="Auto que homologa el acuerdo preventivo",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="homologacion_acuerdo_concursal",
+                            label="Auto de homologación del acuerdo preventivo",
+                            descripcion="Homologa el acuerdo obtenido por el concursado con sus acreedores",
+                            norma="Art. 52 Ley 24522",
                         ),
                     ],
                 ),
@@ -863,6 +1384,19 @@ _CONCURSAL = Fuero(
                             label="Sentencia de quiebra",
                             descripcion="Declara la quiebra, designa síndico, fija período informativo y ordena inhabilitación",
                             norma="Art. 88 Ley 24522",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="realizacion",
+                    label="Realización de bienes",
+                    descripcion="Liquidación de los bienes del fallido",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="realizacion_bienes",
+                            label="Decreto de realización de bienes",
+                            descripcion="Ordena la realización (liquidación) de los bienes del fallido y fija la modalidad",
+                            norma="Art. 203 Ley 24522",
                         ),
                     ],
                 ),
