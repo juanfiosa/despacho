@@ -1,7 +1,7 @@
 """Endpoints del catálogo de procesos judiciales."""
 
-from fastapi import APIRouter
-from src.catalogo import catalogo_serializable, get_fuero, get_proceso, get_etapa
+from fastapi import APIRouter, Query
+from src.catalogo import catalogo_serializable, get_fuero, get_proceso, get_etapa, FUEROS
 
 router = APIRouter(prefix="/catalogo", tags=["Catálogo"])
 
@@ -9,6 +9,45 @@ router = APIRouter(prefix="/catalogo", tags=["Catálogo"])
 @router.get("", summary="Catálogo completo: fueros → procesos → etapas → documentos")
 def catalogo_completo():
     return catalogo_serializable()
+
+
+@router.get("/buscar", summary="Búsqueda global de documentos por texto libre")
+def buscar_documentos(
+    q: str = Query(..., min_length=2, description="Texto a buscar (mínimo 2 caracteres)")
+):
+    """Busca en todos los documentos del catálogo por label, descripción y norma.
+    Devuelve lista de resultados con contexto de fuero/proceso/etapa."""
+    q_lower = q.lower()
+    resultados = []
+    for fuero in FUEROS:
+        for proceso in fuero.procesos:
+            for etapa in proceso.etapas:
+                for doc in etapa.documentos:
+                    if (q_lower in doc.label.lower()
+                            or q_lower in doc.descripcion.lower()
+                            or q_lower in doc.norma.lower()
+                            or q_lower in etapa.label.lower()
+                            or q_lower in proceso.label.lower()):
+                        resultados.append({
+                            "tipo":             doc.tipo,
+                            "label":            doc.label,
+                            "descripcion":      doc.descripcion,
+                            "norma":            doc.norma,
+                            "fuero_id":         fuero.id,
+                            "fuero_label":      fuero.label,
+                            "proceso_id":       proceso.id,
+                            "proceso_label":    proceso.label,
+                            "etapa_id":         etapa.id,
+                            "etapa_label":      etapa.label,
+                        })
+    # Deduplicar por tipo (un mismo tipo puede aparecer en varias etapas)
+    seen = set()
+    unicos = []
+    for r in resultados:
+        if r["tipo"] not in seen:
+            seen.add(r["tipo"])
+            unicos.append(r)
+    return unicos
 
 
 @router.get("/{fuero_id}", summary="Procesos de un fuero")

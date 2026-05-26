@@ -24,6 +24,7 @@ export const getCatalogo     = ()                          => get('/catalogo')
 export const getFuero        = (fid)                       => get(`/catalogo/${fid}`)
 export const getProceso      = (fid, pid)                  => get(`/catalogo/${fid}/${pid}`)
 export const getEtapa        = (fid, pid, eid)             => get(`/catalogo/${fid}/${pid}/${eid}`)
+export const buscarDocumentos = (q)                        => get(`/catalogo/buscar?q=${encodeURIComponent(q)}`)
 
 // Generación
 const PATHS_PREVIEW = {
@@ -262,4 +263,12 @@ export async function descargarDocx(tipo, payload, fechaResolucion) {
 // Calculadora
 export async function calcularIntereses(body) {
   return (await post('/calculadora/intereses', body)).json()
+}
+
+export async function calcularVencimiento(body) {
+  return (await post('/calculadora/vencimiento', body)).json()
+}
+
+export async function verificarDiaHabil(fecha) {
+  return get(`/calculadora/dia-habil?fecha=${fecha}`)
 }

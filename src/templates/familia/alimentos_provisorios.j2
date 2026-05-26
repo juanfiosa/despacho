@@ -28,8 +28,8 @@ SE RESUELVE:
 {% set nombre_alimentado = parte_alimentado[0].nombre if parte_alimentado else partes_por_rol(partes, "actor") %}
 
 I. FIJAR ALIMENTOS PROVISORIOS a cargo de {{ nombre_alimentante }} y a
-favor de {{ nombre_alimentado }} en la suma de {{ pesos(cuota) }}
-({{ pesos(cuota) }}), pagaderos en forma
+favor de {{ nombre_alimentado }} en la suma de {{ pesos(cuota) }},
+pagaderos en forma
 {% if periodicidad == "mensual" %}mensual{% elif periodicidad == "quincenal" %}quincenal{% elif periodicidad == "semanal" %}semanal{% else %}{{ periodicidad }}{% endif %},
 con vencimiento el día {{ dia_vencimiento }} de cada
 {% if periodicidad == "mensual" %}mes{% elif periodicidad == "quincenal" %}quincena{% elif periodicidad == "semanal" %}semana{% else %}período{% endif %}.-

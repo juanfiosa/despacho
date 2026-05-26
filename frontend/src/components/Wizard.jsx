@@ -11,8 +11,8 @@
  *   6  PREVIEW     — vista previa + descarga DOCX
  */
 
-import { useState, useEffect } from 'react'
-import { getCatalogo, previewDocumento, descargarDocx } from '../api.js'
+import { useState, useEffect, useRef } from 'react'
+import { getCatalogo, previewDocumento, descargarDocx, buscarDocumentos } from '../api.js'
 import PartesEditor from './PartesEditor.jsx'
 import CamposDocumento from './CamposDocumento.jsx'
 
@@ -52,6 +52,12 @@ export default function Wizard({ juzgado, onCambiarJuzgado }) {
   const [fechaRes,  setFechaRes]  = useState('')
   const [preview,   setPreview]   = useState(null)
   const [cargando,  setCargando]  = useState(false)
+
+  // Búsqueda rápida
+  const [busqueda,      setBusqueda]      = useState('')
+  const [resultados,    setResultados]    = useState([])
+  const [buscando,      setBuscando]      = useState(false)
+  const busquedaTimer = useRef(null)
 
   // Cargar catálogo al montar
   useEffect(() => {
@@ -112,19 +118,83 @@ export default function Wizard({ juzgado, onCambiarJuzgado }) {
   const reiniciar = () => {
     setProcesoId(null); setEtapaId(null); setTipoDoc(null)
     setCamposDoc({}); setPreview(null); setFechaRes('')
+    setBusqueda(''); setResultados([])
     setExpediente({ numero: '', caratula: '', partes: partesDefault(fueroId) })
     setPaso(0)
+  }
+
+  // Búsqueda con debounce de 300 ms
+  const handleBusqueda = (texto) => {
+    setBusqueda(texto)
+    clearTimeout(busquedaTimer.current)
+    if (texto.trim().length < 2) { setResultados([]); return }
+    busquedaTimer.current = setTimeout(async () => {
+      setBuscando(true)
+      try {
+        const res = await buscarDocumentos(texto.trim())
+        setResultados(res)
+      } catch { setResultados([]) }
+      finally { setBuscando(false) }
+    }, 300)
+  }
+
+  // Seleccionar un documento desde la búsqueda
+  const seleccionarDesdeSearch = (resultado) => {
+    setFueroId(resultado.fuero_id)
+    setProcesoId(resultado.proceso_id)
+    setEtapaId(resultado.etapa_id)
+    setTipoDoc(resultado.tipo)
+    setExpediente(e => ({ ...e, partes: partesDefault(resultado.fuero_id) }))
+    setBusqueda(''); setResultados([])
+    setPaso(5) // saltar directo a campos
   }
 
   return (
     <div style={layoutStyle}>
       {/* Header */}
       <header style={headerStyle}>
-        <div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, flex: 1, minWidth: 0 }}>
           <span style={logoStyle}>Despacho</span>
-          <span style={juzgadoChipStyle}>{juzgado.nombre}{juzgado.secretaria ? ` — ${juzgado.secretaria}` : ''}</span>
+          <span style={{ ...juzgadoChipStyle, flexShrink: 0 }}>{juzgado.nombre}{juzgado.secretaria ? ` — ${juzgado.secretaria}` : ''}</span>
+          {/* Búsqueda rápida */}
+          <div style={{ position: 'relative', flex: 1, maxWidth: 400 }}>
+            <input
+              type="text"
+              placeholder="Buscar documento… (ej: alimentos, sobreseimiento, perito)"
+              value={busqueda}
+              onChange={e => handleBusqueda(e.target.value)}
+              style={searchInputStyle}
+            />
+            {buscando && <span style={searchSpinnerStyle}>…</span>}
+            {resultados.length > 0 && (
+              <div style={searchDropdownStyle}>
+                {resultados.slice(0, 10).map(r => (
+                  <button
+                    key={`${r.tipo}-${r.fuero_id}`}
+                    onClick={() => seleccionarDesdeSearch(r)}
+                    style={searchItemStyle}
+                    onMouseEnter={e => e.currentTarget.style.background = '#f0f4ff'}
+                    onMouseLeave={e => e.currentTarget.style.background = '#fff'}
+                  >
+                    <div style={{ fontWeight: 600, fontSize: 13, color: '#1a1a2e' }}>{r.label}</div>
+                    <div style={{ fontSize: 11, color: '#888' }}>{r.fuero_label} › {r.proceso_label} › {r.etapa_label}</div>
+                  </button>
+                ))}
+                {resultados.length > 10 && (
+                  <div style={{ padding: '6px 12px', fontSize: 11, color: '#aaa', textAlign: 'center' }}>
+                    +{resultados.length - 10} resultados más — refiná la búsqueda
+                  </div>
+                )}
+              </div>
+            )}
+            {busqueda.length >= 2 && !buscando && resultados.length === 0 && (
+              <div style={searchDropdownStyle}>
+                <div style={{ padding: '10px 12px', fontSize: 12, color: '#aaa', textAlign: 'center' }}>Sin resultados para "{busqueda}"</div>
+              </div>
+            )}
+          </div>
         </div>
-        <button onClick={onCambiarJuzgado} style={btnCambiarStyle}>Cambiar juzgado</button>
+        <button onClick={onCambiarJuzgado} style={{ ...btnCambiarStyle, flexShrink: 0 }}>Cambiar juzgado</button>
       </header>
 
       {/* Barra de progreso */}
@@ -315,7 +385,7 @@ function BarraProgreso({ paso, pasos }) {
           <span style={{
             fontSize: 11, color: i === paso ? '#0047AB' : '#999',
             fontWeight: i === paso ? 600 : 400,
-            display: 'none', // mostrar solo en desktop
+            display: 'none',
           }}>{label}</span>
           {i < pasos.length - 1 && (
             <div style={{ width: 24, height: 2, background: i < paso ? '#0047AB' : '#e0e0e8', margin: '0 4px' }} />
@@ -1003,7 +1073,7 @@ function buildEco(c) {
 // Estilos
 // ---------------------------------------------------------------------------
 
-const layoutStyle       = { display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden', fontFamily: 'system-ui, sans-serif' }
+const layoutStyle       = { display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden', fontFamily: 'system-ui, sans-serif' }
 const headerStyle       = { background: '#0047AB', color: '#fff', padding: '10px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0 }
 const logoStyle         = { fontSize: 20, fontWeight: 800, letterSpacing: '-0.02em', marginRight: 16 }
 const juzgadoChipStyle  = { fontSize: 13, background: 'rgba(255,255,255,0.2)', borderRadius: 20, padding: '3px 10px' }
@@ -1029,3 +1099,7 @@ const loadingStyle      = { padding: 32, color: '#888' }
 const previewWrapStyle  = { display: 'flex', flexDirection: 'column', height: '100%' }
 const previewHeaderStyle= { padding: '12px 24px', borderBottom: '1px solid #eee', background: '#fff', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0, flexWrap: 'wrap', gap: 8 }
 const preStyle          = { fontFamily: '"Courier New", monospace', fontSize: 13, lineHeight: 1.8, padding: 32, whiteSpace: 'pre-wrap', wordBreak: 'break-word', margin: 16, background: '#fff', borderRadius: 8, border: '1px solid #e0e0e8' }
+const searchInputStyle  = { width: '100%', padding: '6px 12px', borderRadius: 20, border: 'none', fontSize: 13, background: 'rgba(255,255,255,0.15)', color: '#fff', outline: 'none', boxSizing: 'border-box' }
+const searchDropdownStyle = { position: 'absolute', top: '100%', left: 0, right: 0, background: '#fff', borderRadius: 8, boxShadow: '0 4px 20px rgba(0,0,0,0.15)', zIndex: 1000, marginTop: 4, maxHeight: 320, overflowY: 'auto', border: '1px solid #e0e0e8' }
+const searchItemStyle   = { display: 'block', width: '100%', padding: '8px 12px', background: '#fff', border: 'none', cursor: 'pointer', textAlign: 'left', borderBottom: '1px solid #f0f0f8', transition: 'background 0.1s' }
+const searchSpinnerStyle = { position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.7)', fontSize: 13 }
