@@ -1,9 +1,10 @@
 """
 Modelos de input para documentos del juicio ejecutivo (CPCC Ley 8465, Córdoba).
 Documentos cubiertos:
-  - IntimacionPagoInput      → decreto intimando pago bajo apercibimiento
-  - MandamientoPagoInput     → mandamiento de intimación y embargo
-  - AutoAperturaPruebaInput  → auto de apertura a prueba
+  - AdmisionEjecutivoInput   → decreto de admisión de la demanda ejecutiva (art. 175 CPCC)
+  - IntimacionPagoInput      → decreto intimando pago bajo apercibimiento (art. 529 CPCC)
+  - MandamientoPagoInput     → mandamiento de intimación y embargo (art. 531 CPCC)
+  - AutoAperturaPruebaInput  → auto de apertura a prueba (art. 498 CPCC)
   - DecretoTramiteInput      → decretos de trámite (traslado, vista, etc.)
 """
 
@@ -13,6 +14,33 @@ from enum import Enum
 from pydantic import Field
 
 from ...base import ExpedienteBase, DatosEconomicos
+
+
+# ---------------------------------------------------------------------------
+# Admisión de la demanda ejecutiva
+# ---------------------------------------------------------------------------
+
+class AdmisionEjecutivoInput(ExpedienteBase):
+    """
+    Primer decreto que da trámite a la demanda ejecutiva: tiene por presentada
+    la demanda, verifica la suficiencia del título y, si corresponde, libra el
+    mandamiento de intimación de pago y embargo (art. 175/529 CPCC Córdoba).
+    """
+    titulo_ejecutivo: str = Field(
+        description="Tipo de título ejecutivo (ej: 'pagaré', 'cheque', 'hipoteca', 'sentencia firme')"
+    )
+    objeto: str = Field(
+        default="cobro de pesos",
+        description="Objeto del proceso ejecutivo",
+    )
+    librar_mandamiento: bool = Field(
+        default=True,
+        description=(
+            "Si True, el decreto también libra el mandamiento de intimación y embargo "
+            "en el mismo acto; si False, solo admite la demanda y ordena la intimación "
+            "por cédula"
+        ),
+    )
 
 
 # ---------------------------------------------------------------------------

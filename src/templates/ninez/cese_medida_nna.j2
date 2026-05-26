@@ -1,0 +1,54 @@
+{#
+  Auto que dispone el cese de la medida de protección excepcional de derechos
+  (art. 52/55 Ley 9944 — Córdoba)
+  Input: CeseMedidaNNAInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: El informe presentado por {{ organismo_administrativo }}
+respecto de la situación actual del/de la NNyA {{ nombre_nnya }}
+{% if edad_nnya is not none %}, de {{ edad_nnya }} años de edad{% endif %},
+en el marco de la medida de protección excepcional vigente, y la totalidad
+de las actuaciones obrantes en autos (arts. 52 y 55 Ley 9944).-
+
+CONSIDERANDO: I. Que el informe remitido por {{ organismo_administrativo }}
+da cuenta de que {{ motivo_cese }}, lo que determina que la continuación de
+la medida de protección excepcional ha devenido innecesaria y/o contraria al
+interés superior del/de la NNyA (arts. 3 CDN; 4 y 52 Ley 9944).-
+
+II. Que la medida de protección excepcional consistente en
+"{{ medida_adoptada }}", dispuesta respecto del/de la NNyA {{ nombre_nnya }},
+ha cumplido su función protectora y/o han cesado las circunstancias de riesgo
+que la motivaron, correspondiendo disponer su finalización.-
+
+III. Que el cese de la medida no implica el cierre de toda intervención
+institucional, debiendo el organismo administrativo continuar el seguimiento
+del/de la NNyA y de su grupo familiar en el marco de las medidas ordinarias
+de protección integral (art. 48 Ley 9944).-
+
+SE RESUELVE:
+
+I. DISPONER EL CESE de la medida de protección excepcional de derechos
+consistente en "{{ medida_adoptada }}", dispuesta respecto del/de la NNyA
+{{ nombre_nnya }}, en atención a que {{ motivo_cese }}
+(arts. 52 y 55 Ley 9944).-
+
+II. REQUERIR a {{ organismo_administrativo }} que informe en el plazo de
+treinta (30) días las acciones de seguimiento y acompañamiento post-cese
+que se implementarán para garantizar la no reiteración de la situación de
+vulneración de derechos.-
+
+III. ARCHIVAR las presentes actuaciones previo informe de cierre del
+organismo interviniente.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

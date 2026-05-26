@@ -11,6 +11,7 @@ from fastapi.responses import Response, JSONResponse
 from ...engine import render
 from ...generador import texto_a_docx
 from ...models.documentos.civil_comercial import (
+    AdmisionEjecutivoInput,
     IntimacionPagoInput,
     MandamientoPagoInput,
     AutoAperturaPruebaInput,
@@ -39,6 +40,37 @@ def _render_y_docx(documento, fecha_resolucion: date | None, nombre: str):
     texto = render(documento, fecha_resolucion)
     docx_bytes = texto_a_docx(texto, nombre)
     return texto, docx_bytes
+
+
+# ---------------------------------------------------------------------------
+# Admisión de demanda ejecutiva
+# ---------------------------------------------------------------------------
+
+@router.post("/ejecutivo/admision/preview", summary="Vista previa en texto")
+def admision_ejecutivo_preview(
+    body: AdmisionEjecutivoInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/ejecutivo/admision/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def admision_ejecutivo_docx(
+    body: AdmisionEjecutivoInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="admision_ejecutivo.docx"'},
+    )
 
 
 # ---------------------------------------------------------------------------

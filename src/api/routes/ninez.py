@@ -10,7 +10,7 @@ from fastapi.responses import Response
 
 from ...engine import render
 from ...generador import texto_a_docx
-from ...models.documentos.ninez import AutoControlLegalidadInput
+from ...models.documentos.ninez import AutoControlLegalidadInput, ProrrogaMedidaNNAInput, CeseMedidaNNAInput
 
 router = APIRouter(prefix="/ninez", tags=["Niñez y Adolescencia"])
 
@@ -51,4 +51,66 @@ def control_legalidad_docx(
         content=docx,
         media_type=_DOCX_MEDIA,
         headers={"Content-Disposition": 'attachment; filename="auto_control_legalidad.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Prórroga de medida de protección excepcional
+# ---------------------------------------------------------------------------
+
+@router.post("/prorroga-medida/preview", summary="Vista previa en texto")
+def prorroga_medida_preview(
+    body: ProrrogaMedidaNNAInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/prorroga-medida/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def prorroga_medida_docx(
+    body: ProrrogaMedidaNNAInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="prorroga_medida_nna.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Cese de medida de protección excepcional
+# ---------------------------------------------------------------------------
+
+@router.post("/cese-medida/preview", summary="Vista previa en texto")
+def cese_medida_preview(
+    body: CeseMedidaNNAInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/cese-medida/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def cese_medida_docx(
+    body: CeseMedidaNNAInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="cese_medida_nna.docx"'},
     )

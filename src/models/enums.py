@@ -139,3 +139,8 @@ class TipoDocumento(str, Enum):
     CITACION_AUDIENCIA_VF = "citacion_audiencia_vf"
     # Civil/Sucesorio — declaratoria
     DECLARATORIA_HEREDEROS = "declaratoria_herederos"
+    # Civil/Ejecutivo — admisión
+    ADMISION_EJECUTIVO = "admision_ejecutivo"
+    # Niñez — seguimiento y cese
+    PRORROGA_MEDIDA_NNA = "prorroga_medida_nna"
+    CESE_MEDIDA_NNA = "cese_medida_nna"

@@ -577,6 +577,29 @@ function buildPayload(fueroId, tipoDoc, expediente, camposDoc, juzgado) {
     bienes_inmuebles:  camposDoc.bienes_inmuebles !== false,
     bienes_muebles:    camposDoc.bienes_muebles !== false,
   }
+  if (tipoDoc === 'admision_ejecutivo') return {
+    ...base,
+    titulo_ejecutivo:    camposDoc.titulo_ejecutivo || '',
+    objeto:              camposDoc.objeto || 'cobro de pesos',
+    librar_mandamiento:  camposDoc.librar_mandamiento !== false,
+  }
+  if (tipoDoc === 'prorroga_medida_nna') return {
+    ...base,
+    nombre_nnya:              camposDoc.nombre_nnya || '',
+    edad_nnya:                camposDoc.edad_nnya ? Number(camposDoc.edad_nnya) : null,
+    organismo_administrativo: camposDoc.organismo_administrativo || 'la Secretaría de Niñez, Adolescencia y Familia',
+    medida_adoptada:          camposDoc.medida_adoptada || '',
+    motivo_prorroga:          camposDoc.motivo_prorroga || 'no han variado sustancialmente las circunstancias que motivaron la medida',
+    plazo_prorroga_dias:      Number(camposDoc.plazo_prorroga_dias) || 30,
+  }
+  if (tipoDoc === 'cese_medida_nna') return {
+    ...base,
+    nombre_nnya:              camposDoc.nombre_nnya || '',
+    edad_nnya:                camposDoc.edad_nnya ? Number(camposDoc.edad_nnya) : null,
+    organismo_administrativo: camposDoc.organismo_administrativo || 'la Secretaría de Niñez, Adolescencia y Familia',
+    medida_adoptada:          camposDoc.medida_adoptada || '',
+    motivo_cese:              camposDoc.motivo_cese || 'han cesado las circunstancias que motivaron la medida',
+  }
   return base
 }
 

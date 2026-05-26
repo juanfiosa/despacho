@@ -10,6 +10,7 @@ from typing import Any
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
 
 from .models.documentos.civil_comercial.ejecutivo import (
+    AdmisionEjecutivoInput,
     IntimacionPagoInput,
     MandamientoPagoInput,
     AutoAperturaPruebaInput,
@@ -36,7 +37,7 @@ from .models.documentos.familia import (
 from .models.documentos.laboral import AutoAdmisionLaboralInput, AutoAperturaLaboralInput
 from .models.documentos.concursal import AutoAperturaConcursalInput, AutoDeclaracionQuiebraInput
 from .models.documentos.penal import CitacionImputacionInput, AutoElevacionJuicioInput, FijacionAudienciaDebateInput
-from .models.documentos.ninez import AutoControlLegalidadInput
+from .models.documentos.ninez import AutoControlLegalidadInput, ProrrogaMedidaNNAInput, CeseMedidaNNAInput
 
 # ---------------------------------------------------------------------------
 # Filtros personalizados
@@ -83,6 +84,7 @@ def _nombre_mes(d: date) -> str:
 
 _TEMPLATE_MAP: dict[type, str] = {
     # Ejecutivo
+    AdmisionEjecutivoInput:     "civil_comercial/ejecutivo/admision_ejecutivo.j2",
     IntimacionPagoInput:        "civil_comercial/ejecutivo/intimacion_pago.j2",
     MandamientoPagoInput:       "civil_comercial/ejecutivo/mandamiento_pago.j2",
     AutoAperturaPruebaInput:    "civil_comercial/ejecutivo/auto_apertura_prueba.j2",
@@ -120,6 +122,8 @@ _TEMPLATE_MAP: dict[type, str] = {
     FijacionAudienciaDebateInput:  "penal/fijacion_debate.j2",
     # Niñez
     AutoControlLegalidadInput:     "ninez/auto_control_legalidad.j2",
+    ProrrogaMedidaNNAInput:        "ninez/prorroga_medida_nna.j2",
+    CeseMedidaNNAInput:            "ninez/cese_medida_nna.j2",
 }
 
 # ---------------------------------------------------------------------------

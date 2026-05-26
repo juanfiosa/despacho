@@ -1,0 +1,55 @@
+{#
+  Decreto de admisión de la demanda ejecutiva (art. 175/529 CPCC Córdoba)
+  Input: AdmisionEjecutivoInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+AUTOS Y VISTOS: La demanda ejecutiva interpuesta por
+{{ partes_por_rol(partes, "actor") }} contra
+{{ partes_por_rol(partes, "demandado") }},
+en concepto de {{ objeto }}, acompañando en calidad de título ejecutivo:
+{{ titulo_ejecutivo }}.-
+
+CONSIDERANDO: Que la demanda reúne los requisitos de forma y el título
+acompañado reviste el carácter de ejecutivo conforme las disposiciones del
+Libro IV, Título I del Código Procesal Civil y Comercial de la Provincia de
+Córdoba (Ley 8465), razón por la cual corresponde admitirla y dar curso al
+proceso.-
+
+SE RESUELVE:
+
+I. ADMITIR la demanda ejecutiva articulada por
+{{ partes_por_rol(partes, "actor") }} contra
+{{ partes_por_rol(partes, "demandado") }},
+por {{ objeto }}, en los términos del art. 175 CPCC.-
+{% if librar_mandamiento %}
+
+II. LIBRAR MANDAMIENTO DE INTIMACIÓN DE PAGO Y EMBARGO contra
+{{ partes_por_rol(partes, "demandado") }},
+para que en el término de cinco (5) días hábiles abone el capital reclamado
+más intereses y costas, bajo apercibimiento de procederse al embargo de sus
+bienes en la medida necesaria para satisfacer el crédito reclamado
+(art. 529 CPCC). DÉSELE COMISIÓN SUFICIENTE al/a la Oficial de Justicia de
+turno para practicar la diligencia.-
+
+III. NOTIFÍQUESE el presente a la parte actora a los fines de que concurra
+a retirar el despacho correspondiente.-
+{% else %}
+
+II. INTIMAR AL PAGO a {{ partes_por_rol(partes, "demandado") }}
+para que en el término de cinco (5) días hábiles abone el capital reclamado
+más intereses y costas, bajo apercibimiento de embargarse bienes de su
+propiedad (art. 529 CPCC). Notifíquese con copia de la demanda y título.-
+{% endif %}
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

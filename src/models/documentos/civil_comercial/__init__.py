@@ -1,4 +1,5 @@
 from .ejecutivo import (
+    AdmisionEjecutivoInput,
     IntimacionPagoInput,
     MandamientoPagoInput,
     AutoAperturaPruebaInput,
@@ -19,6 +20,7 @@ from .sucesorio import AutoAperturaSuccesorioInput, DeclaratoriaHerederosInput
 from .sumarisimo import AutoSumarisimoCitacionInput
 
 __all__ = [
+    "AdmisionEjecutivoInput",
     "IntimacionPagoInput",
     "MandamientoPagoInput",
     "AutoAperturaPruebaInput",

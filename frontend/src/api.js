@@ -68,6 +68,11 @@ const PATHS_PREVIEW = {
   citacion_audiencia_vf:   '/violencia-familiar/citacion-audiencia/preview',
   // Sucesorio — declaratoria
   declaratoria_herederos:  '/civil-comercial/sucesorio/declaratoria/preview',
+  // Ejecutivo — admisión
+  admision_ejecutivo:      '/civil-comercial/ejecutivo/admision/preview',
+  // Niñez — seguimiento
+  prorroga_medida_nna:     '/ninez/prorroga-medida/preview',
+  cese_medida_nna:         '/ninez/cese-medida/preview',
 }
 const PATHS_DOCX = {
   // Ejecutivo
@@ -111,6 +116,11 @@ const PATHS_DOCX = {
   citacion_audiencia_vf:   '/violencia-familiar/citacion-audiencia/docx',
   // Sucesorio — declaratoria
   declaratoria_herederos:  '/civil-comercial/sucesorio/declaratoria/docx',
+  // Ejecutivo — admisión
+  admision_ejecutivo:      '/civil-comercial/ejecutivo/admision/docx',
+  // Niñez — seguimiento
+  prorroga_medida_nna:     '/ninez/prorroga-medida/docx',
+  cese_medida_nna:         '/ninez/cese-medida/docx',
 }
 
 export async function previewDocumento(tipo, payload, fechaResolucion) {

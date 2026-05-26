@@ -1,0 +1,55 @@
+{#
+  Auto que prorroga la medida de protección excepcional de derechos
+  (art. 55 Ley 9944 — Córdoba)
+  Input: ProrrogaMedidaNNAInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: El informe de seguimiento presentado por
+{{ organismo_administrativo }} respecto de la medida de protección excepcional
+vigente con relación al/a la NNyA {{ nombre_nnya }}
+{% if edad_nnya is not none %}, de {{ edad_nnya }} años de edad{% endif %},
+y la situación actual de la causa (art. 55 Ley 9944).-
+
+CONSIDERANDO: I. Que {{ organismo_administrativo }} ha informado que
+{{ motivo_prorroga }}, razón por la cual la medida de protección excepcional
+consistente en "{{ medida_adoptada }}" que viene ejecutándose respecto del/de
+la NNyA {{ nombre_nnya }} no puede cesar aún sin comprometer su interés superior
+(art. 3 CDN; art. 4 Ley 9944).-
+
+II. Que atento las constancias de autos y los informes técnicos incorporados,
+se advierte que las condiciones que dieron origen a la intervención no han
+sido superadas en su totalidad, por lo que corresponde prorrogar la medida
+por el término indicado, a fin de que continúen los procesos de acompañamiento
+y fortalecimiento del vínculo familiar (art. 55 Ley 9944).-
+
+III. Que la prórroga no implica renuncia al objetivo de reintegración del/de la
+NNyA a su familia de origen y/o ampliada, debiéndose garantizar en todo momento
+el derecho del/de la NNyA a ser oído/a (art. 12 CDN).-
+
+SE RESUELVE:
+
+I. PRORROGAR la medida de protección excepcional de derechos consistente en
+"{{ medida_adoptada }}", dispuesta respecto del/de la NNyA {{ nombre_nnya }},
+por el término de {{ plazo_prorroga_dias }}
+({{ plazo_prorroga_dias | numero_letras }}) días corridos, contados desde la
+fecha de vencimiento de la medida anterior (art. 55 Ley 9944).-
+
+II. REQUERIR a {{ organismo_administrativo }} un nuevo informe de seguimiento
+al vencimiento del plazo de prórroga otorgado, con evaluación del estado de
+situación y perspectiva de reintegración familiar.-
+
+III. Deberá garantizarse en todo momento el derecho del/de la NNyA {{ nombre_nnya }}
+a ser oído/a conforme su autonomía progresiva (art. 12 CDN / art. 4 Ley 9944).-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

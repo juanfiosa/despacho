@@ -44,6 +44,69 @@ export default function CamposDocumento({ tipo, valores, onChange }) {
   return (
     <div>
 
+      {/* ── Admisión ejecutivo ── */}
+      {tipo === 'admision_ejecutivo' && <>
+        <Seccion titulo="Título ejecutivo">
+          <Campo label="Tipo de título ejecutivo"
+            placeholder="pagaré / cheque / hipoteca / sentencia firme"
+            value={valores.titulo_ejecutivo || ''} onChange={v => set('titulo_ejecutivo', v)} />
+          <Campo label="Objeto del proceso" placeholder="cobro de pesos"
+            value={valores.objeto || ''} onChange={v => set('objeto', v)} />
+        </Seccion>
+        <Seccion titulo="Decreto">
+          <CheckField label="Librar mandamiento de intimación y embargo en el mismo acto"
+            checked={valores.librar_mandamiento !== false} onChange={v => set('librar_mandamiento', v)} />
+        </Seccion>
+      </>}
+
+      {/* ── Prórroga medida NNA ── */}
+      {tipo === 'prorroga_medida_nna' && <>
+        <Seccion titulo="NNyA involucrado/a">
+          <Grilla>
+            <Campo label="Nombre completo del/la NNyA"
+              value={valores.nombre_nnya || ''} onChange={v => set('nombre_nnya', v)} />
+            <Campo label="Edad (años, opcional)" type="number"
+              value={valores.edad_nnya || ''} onChange={v => set('edad_nnya', v)} />
+          </Grilla>
+        </Seccion>
+        <Seccion titulo="Medida a prorrogar">
+          <Campo label="Organismo administrativo"
+            placeholder="la Secretaría de Niñez, Adolescencia y Familia"
+            value={valores.organismo_administrativo || ''} onChange={v => set('organismo_administrativo', v)} />
+          <Campo label="Descripción de la medida"
+            placeholder="inclusión transitoria en familia alternativa / hogar convivencial"
+            value={valores.medida_adoptada || ''} onChange={v => set('medida_adoptada', v)} />
+          <Campo label="Fundamento de la prórroga"
+            placeholder="no han variado sustancialmente las circunstancias que motivaron la medida"
+            value={valores.motivo_prorroga || ''} onChange={v => set('motivo_prorroga', v)} />
+          <Campo label="Días de prórroga" type="number" placeholder="30"
+            value={valores.plazo_prorroga_dias || ''} onChange={v => set('plazo_prorroga_dias', v)} />
+        </Seccion>
+      </>}
+
+      {/* ── Cese medida NNA ── */}
+      {tipo === 'cese_medida_nna' && <>
+        <Seccion titulo="NNyA involucrado/a">
+          <Grilla>
+            <Campo label="Nombre completo del/la NNyA"
+              value={valores.nombre_nnya || ''} onChange={v => set('nombre_nnya', v)} />
+            <Campo label="Edad (años, opcional)" type="number"
+              value={valores.edad_nnya || ''} onChange={v => set('edad_nnya', v)} />
+          </Grilla>
+        </Seccion>
+        <Seccion titulo="Medida que cesa">
+          <Campo label="Organismo administrativo"
+            placeholder="la Secretaría de Niñez, Adolescencia y Familia"
+            value={valores.organismo_administrativo || ''} onChange={v => set('organismo_administrativo', v)} />
+          <Campo label="Descripción de la medida"
+            placeholder="inclusión transitoria en familia alternativa / hogar convivencial"
+            value={valores.medida_adoptada || ''} onChange={v => set('medida_adoptada', v)} />
+          <Campo label="Motivo del cese"
+            placeholder="han cesado las circunstancias que motivaron la medida / reintegro al grupo familiar"
+            value={valores.motivo_cese || ''} onChange={v => set('motivo_cese', v)} />
+        </Seccion>
+      </>}
+
       {/* ── Intimación de pago ── */}
       {tipo === 'intimacion_pago' && <>
         <Seccion titulo="Datos económicos">

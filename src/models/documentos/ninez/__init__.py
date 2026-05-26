@@ -1,3 +1,3 @@
-from .ninez import AutoControlLegalidadInput
+from .ninez import AutoControlLegalidadInput, ProrrogaMedidaNNAInput, CeseMedidaNNAInput
 
-__all__ = ["AutoControlLegalidadInput"]
+__all__ = ["AutoControlLegalidadInput", "ProrrogaMedidaNNAInput", "CeseMedidaNNAInput"]

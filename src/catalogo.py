@@ -72,10 +72,10 @@ _CIVIL_COMERCIAL = Fuero(
                     descripcion="Primer proveído que da curso a la demanda ejecutiva",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="decreto_tramite",
+                            tipo="admision_ejecutivo",
                             label="Decreto de admisión",
-                            descripcion="Tiene por presentada la demanda y corre traslado",
-                            norma="Art. 175 CPCC",
+                            descripcion="Admite la demanda ejecutiva, verifica el título y libra mandamiento de intimación",
+                            norma="Art. 175 / Art. 529 CPCC",
                         ),
                     ],
                 ),
@@ -707,6 +707,32 @@ _NINEZ = Fuero(
                             label="Auto de control de legalidad",
                             descripcion="Declara la legalidad de la medida de protección excepcional y ordena informe de seguimiento",
                             norma="Art. 52 Ley 9944",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="seguimiento",
+                    label="Seguimiento y prórroga",
+                    descripcion="Revisión periódica de la medida excepcional y prórroga si corresponde",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="prorroga_medida_nna",
+                            label="Auto de prórroga de medida excepcional",
+                            descripcion="Prorroga la medida por no haberse superado las circunstancias de riesgo",
+                            norma="Art. 55 Ley 9944",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="cese",
+                    label="Cese de la medida",
+                    descripcion="Finalización de la medida de protección excepcional",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="cese_medida_nna",
+                            label="Auto de cese de medida excepcional",
+                            descripcion="Dispone el cese de la medida por haberse superado la situación de riesgo",
+                            norma="Arts. 52 y 55 Ley 9944",
                         ),
                     ],
                 ),
