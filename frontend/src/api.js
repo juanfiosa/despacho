@@ -27,16 +27,24 @@ export const getEtapa        = (fid, pid, eid)             => get(`/catalogo/${f
 
 // Generación
 const PATHS_PREVIEW = {
-  intimacion_pago:      '/civil-comercial/ejecutivo/intimacion-pago/preview',
-  mandamiento_pago:     '/civil-comercial/ejecutivo/mandamiento-pago/preview',
-  auto_apertura_prueba: '/civil-comercial/ejecutivo/apertura-prueba/preview',
-  decreto_tramite:      '/civil-comercial/decreto-tramite/preview',
+  // Ejecutivo
+  intimacion_pago:         '/civil-comercial/ejecutivo/intimacion-pago/preview',
+  mandamiento_pago:        '/civil-comercial/ejecutivo/mandamiento-pago/preview',
+  auto_apertura_prueba:    '/civil-comercial/ejecutivo/apertura-prueba/preview',
+  decreto_tramite:         '/civil-comercial/decreto-tramite/preview',
+  // Ordinario
+  traslado_demanda:        '/civil-comercial/ordinario/traslado-demanda/preview',
+  auto_apertura_ordinario: '/civil-comercial/ordinario/apertura-prueba/preview',
 }
 const PATHS_DOCX = {
-  intimacion_pago:      '/civil-comercial/ejecutivo/intimacion-pago/docx',
-  mandamiento_pago:     '/civil-comercial/ejecutivo/mandamiento-pago/docx',
-  auto_apertura_prueba: '/civil-comercial/ejecutivo/apertura-prueba/docx',
-  decreto_tramite:      '/civil-comercial/decreto-tramite/docx',
+  // Ejecutivo
+  intimacion_pago:         '/civil-comercial/ejecutivo/intimacion-pago/docx',
+  mandamiento_pago:        '/civil-comercial/ejecutivo/mandamiento-pago/docx',
+  auto_apertura_prueba:    '/civil-comercial/ejecutivo/apertura-prueba/docx',
+  decreto_tramite:         '/civil-comercial/decreto-tramite/docx',
+  // Ordinario
+  traslado_demanda:        '/civil-comercial/ordinario/traslado-demanda/docx',
+  auto_apertura_ordinario: '/civil-comercial/ordinario/apertura-prueba/docx',
 }
 
 export async function previewDocumento(tipo, payload, fechaResolucion) {

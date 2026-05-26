@@ -15,6 +15,8 @@ from ...models.documentos.civil_comercial import (
     MandamientoPagoInput,
     AutoAperturaPruebaInput,
     DecretoTramiteInput,
+    TrasladoDemandaInput,
+    AutoAperturaOrdinarioInput,
 )
 
 router = APIRouter(prefix="/civil-comercial", tags=["Civil y Comercial"])
@@ -124,6 +126,68 @@ def apertura_prueba_docx(
         content=docx,
         media_type=_DOCX_MEDIA,
         headers={"Content-Disposition": 'attachment; filename="auto_apertura_prueba.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Ordinario — Traslado de demanda
+# ---------------------------------------------------------------------------
+
+@router.post("/ordinario/traslado-demanda/preview", summary="Vista previa en texto")
+def traslado_demanda_preview(
+    body: TrasladoDemandaInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/ordinario/traslado-demanda/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def traslado_demanda_docx(
+    body: TrasladoDemandaInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="traslado_demanda.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Ordinario — Auto apertura a prueba
+# ---------------------------------------------------------------------------
+
+@router.post("/ordinario/apertura-prueba/preview", summary="Vista previa en texto")
+def apertura_prueba_ordinario_preview(
+    body: AutoAperturaOrdinarioInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/ordinario/apertura-prueba/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def apertura_prueba_ordinario_docx(
+    body: AutoAperturaOrdinarioInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="auto_apertura_prueba_ordinario.docx"'},
     )
 
 

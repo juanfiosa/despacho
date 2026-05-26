@@ -160,25 +160,25 @@ _CIVIL_COMERCIAL = Fuero(
                 Etapa(
                     id="admision",
                     label="Admisión de demanda",
-                    descripcion="Primer proveído; se tiene por presentada la demanda",
+                    descripcion="Primer proveído; corre traslado de la demanda al demandado",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="decreto_tramite",
-                            label="Decreto de admisión y traslado",
-                            descripcion="Admite la demanda y corre traslado al demandado",
-                            norma="Art. 175 CPCC",
+                            tipo="traslado_demanda",
+                            label="Traslado de demanda",
+                            descripcion="Admite la demanda y corre traslado al demandado por 30 días hábiles",
+                            norma="Art. 176 CPCC",
                         ),
                     ],
                 ),
                 Etapa(
                     id="contestacion",
                     label="Contestación de demanda",
-                    descripcion="Proveídos posteriores a la contestación",
+                    descripcion="Proveídos posteriores a la contestación / traslado de reconvención",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="decreto_tramite",
+                            tipo="traslado_demanda",
                             label="Decreto post-contestación",
-                            descripcion="Tiene por contestada la demanda; corre traslado de reconvención si hay",
+                            descripcion="Tiene por contestada la demanda; corre traslado de reconvención si hubiere",
                             norma="Art. 192 CPCC",
                         ),
                     ],
@@ -186,13 +186,13 @@ _CIVIL_COMERCIAL = Fuero(
                 Etapa(
                     id="apertura_prueba",
                     label="Apertura a prueba",
-                    descripcion="Auto que abre el período probatorio",
+                    descripcion="Auto que abre el período probatorio de cuarenta días hábiles",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="auto_apertura_prueba",
+                            tipo="auto_apertura_ordinario",
                             label="Auto de apertura a prueba",
-                            descripcion="Fija plazo y admite/rechaza prueba ofrecida",
-                            norma="Art. 498 CPCC",
+                            descripcion="Fija 40 días hábiles de prueba y admite/rechaza la prueba ofrecida",
+                            norma="Art. 493 CPCC",
                         ),
                     ],
                 ),

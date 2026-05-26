@@ -6,6 +6,11 @@ from .ejecutivo import (
     TipoPrueba,
     TipoDecretoTramite,
 )
+from .ordinario import (
+    TrasladoDemandaInput,
+    TipoTrasladoDemanda,
+    AutoAperturaOrdinarioInput,
+)
 
 __all__ = [
     "IntimacionPagoInput",
@@ -14,4 +19,7 @@ __all__ = [
     "DecretoTramiteInput",
     "TipoPrueba",
     "TipoDecretoTramite",
+    "TrasladoDemandaInput",
+    "TipoTrasladoDemanda",
+    "AutoAperturaOrdinarioInput",
 ]

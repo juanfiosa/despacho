@@ -28,6 +28,12 @@ const TIPOS_DECRETO = [
   { value: 'otro',               label: 'Otro (especificar)' },
 ]
 
+const TIPOS_TRASLADO = [
+  { value: 'demanda',      label: 'Traslado de demanda (art. 176 CPCC)' },
+  { value: 'contestacion', label: 'Por contestada la demanda (art. 192 CPCC)' },
+  { value: 'reconvencion', label: 'Traslado de reconvención (art. 192 CPCC)' },
+]
+
 export default function CamposDocumento({ tipo, valores, onChange }) {
   const set = (campo, val) => onChange(v => ({ ...v, [campo]: val }))
   const togglePrueba = (lista, val) => {
@@ -98,6 +104,53 @@ export default function CamposDocumento({ tipo, valores, onChange }) {
 
       {/* ── Auto de apertura a prueba ── */}
       {tipo === 'auto_apertura_prueba' && <>
+        <Seccion titulo="Período probatorio">
+          <Grilla>
+            <Campo label="Plazo (días hábiles)" type="number" placeholder="40"
+              value={valores.plazo_dias || ''} onChange={v => set('plazo_dias', v)} />
+            <Campo label="Fecha de inicio del período" type="date"
+              value={valores.fecha_inicio_prueba || ''} onChange={v => set('fecha_inicio_prueba', v)} />
+          </Grilla>
+        </Seccion>
+        <Seccion titulo="Prueba admitida">
+          {TIPOS_PRUEBA.map(p => (
+            <CheckItem key={p.value} label={p.label}
+              checked={(valores.prueba_admitida || []).includes(p.value)}
+              onChange={() => togglePrueba('prueba_admitida', p.value)} />
+          ))}
+        </Seccion>
+        <Seccion titulo="Prueba rechazada (opcional)">
+          {TIPOS_PRUEBA.map(p => (
+            <CheckItem key={p.value} label={p.label}
+              checked={(valores.prueba_rechazada || []).includes(p.value)}
+              onChange={() => togglePrueba('prueba_rechazada', p.value)} />
+          ))}
+          {(valores.prueba_rechazada || []).length > 0 &&
+            <Campo label="Fundamento del rechazo"
+              value={valores.fundamento_rechazo || ''} onChange={v => set('fundamento_rechazo', v)} />
+          }
+        </Seccion>
+      </>}
+
+      {/* ── Traslado de demanda (ordinario) ── */}
+      {tipo === 'traslado_demanda' && <>
+        <Seccion titulo="Tipo de proveído">
+          <SelectField label="Tipo" opciones={TIPOS_TRASLADO}
+            value={valores.tipo_traslado || 'demanda'} onChange={v => set('tipo_traslado', v)} />
+          {(valores.tipo_traslado || 'demanda') === 'demanda' &&
+            <Campo label="Objeto del proceso"
+              placeholder="daños y perjuicios derivados de accidente de tránsito"
+              value={valores.objeto || ''} onChange={v => set('objeto', v)} />
+          }
+          {(valores.tipo_traslado || 'demanda') !== 'contestacion' &&
+            <Campo label="Plazo (días hábiles)" type="number" placeholder="30"
+              value={valores.plazo_dias || ''} onChange={v => set('plazo_dias', v)} />
+          }
+        </Seccion>
+      </>}
+
+      {/* ── Auto apertura prueba ordinario ── */}
+      {tipo === 'auto_apertura_ordinario' && <>
         <Seccion titulo="Período probatorio">
           <Grilla>
             <Campo label="Plazo (días hábiles)" type="number" placeholder="40"

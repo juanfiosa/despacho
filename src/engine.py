@@ -15,6 +15,10 @@ from .models.documentos.civil_comercial.ejecutivo import (
     AutoAperturaPruebaInput,
     DecretoTramiteInput,
 )
+from .models.documentos.civil_comercial.ordinario import (
+    TrasladoDemandaInput,
+    AutoAperturaOrdinarioInput,
+)
 
 # ---------------------------------------------------------------------------
 # Filtros personalizados
@@ -60,10 +64,14 @@ def _nombre_mes(d: date) -> str:
 # ---------------------------------------------------------------------------
 
 _TEMPLATE_MAP: dict[type, str] = {
-    IntimacionPagoInput:     "civil_comercial/ejecutivo/intimacion_pago.j2",
-    MandamientoPagoInput:    "civil_comercial/ejecutivo/mandamiento_pago.j2",
-    AutoAperturaPruebaInput: "civil_comercial/ejecutivo/auto_apertura_prueba.j2",
-    DecretoTramiteInput:     "civil_comercial/ejecutivo/decreto_tramite.j2",
+    # Ejecutivo
+    IntimacionPagoInput:        "civil_comercial/ejecutivo/intimacion_pago.j2",
+    MandamientoPagoInput:       "civil_comercial/ejecutivo/mandamiento_pago.j2",
+    AutoAperturaPruebaInput:    "civil_comercial/ejecutivo/auto_apertura_prueba.j2",
+    DecretoTramiteInput:        "civil_comercial/ejecutivo/decreto_tramite.j2",
+    # Ordinario
+    TrasladoDemandaInput:       "civil_comercial/ordinario/traslado_demanda.j2",
+    AutoAperturaOrdinarioInput: "civil_comercial/ordinario/auto_apertura_prueba.j2",
 }
 
 # ---------------------------------------------------------------------------

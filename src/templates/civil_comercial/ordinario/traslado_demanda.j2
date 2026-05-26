@@ -1,0 +1,33 @@
+{#
+  Traslado de demanda / post-contestación / reconvención — juicio ordinario (CPCC Ley 8465)
+  Input: TrasladoDemandaInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import plazo, partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+{% if tipo == "demanda" %}
+Presentada la demanda de {{ objeto }}, téngase por parte actora a
+{{ partes_por_rol(partes, "actor") }} en la personería invocada. Córrase
+traslado de la demanda a {{ partes_por_rol(partes, "demandado") }} por el
+término de {{ plazo(plazo_dias) }}, para que la conteste bajo apercibimiento
+de ley (art. 176 CPCC). Notifíquese por cédula.-
+{% elif tipo == "contestacion" %}
+Presentada la contestación de demanda, téngase por parte demandada a
+{{ partes_por_rol(partes, "demandado") }} en la personería invocada. Por
+contestada la demanda. Notifíquese.-
+{% elif tipo == "reconvencion" %}
+Por deducida reconvención. Córrase traslado a
+{{ partes_por_rol(partes, "actor") }} por el término de {{ plazo(plazo_dias) }},
+para que la conteste bajo apercibimiento de ley (art. 192 CPCC). Notifíquese
+por cédula.-
+{% endif %}
+{% if texto_libre %}
+{{ texto_libre }}
+
+{% endif %}
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

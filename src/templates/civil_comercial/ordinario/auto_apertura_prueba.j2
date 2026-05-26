@@ -1,0 +1,53 @@
+{#
+  Auto de apertura a prueba — juicio ordinario (art. 493 CPCC Córdoba)
+  Input: AutoAperturaOrdinarioInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import fecha_larga, plazo %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{% set LABELS_PRUEBA = {
+    "documental":             "Prueba Documental",
+    "testimonial":            "Prueba Testimonial",
+    "pericial":               "Prueba Pericial",
+    "informativa":            "Prueba Informativa",
+    "confesional":            "Absolución de Posiciones",
+    "reconocimiento_judicial":"Reconocimiento Judicial"
+} %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: Los presentes autos a fin de resolver sobre la apertura del
+período probatorio en el juicio ordinario.-
+
+CONSIDERANDO: Que habiéndose trabado la litis y existiendo hechos
+controvertidos, corresponde abrir la causa a prueba conforme lo establece
+el art. 493 del Código Procesal Civil y Comercial de la Provincia de
+Córdoba (Ley 8465).-
+
+SE RESUELVE:
+
+I. ABRIR el presente juicio a prueba por el término de {{ plazo(plazo_dias) }},
+contado desde el {{ fecha_larga(fecha_inicio_prueba) }} (art. 493 CPCC).-
+
+II. ADMITIR la siguiente prueba ofrecida:
+{% for tipo in prueba_admitida %}
+   — {{ LABELS_PRUEBA.get(tipo, tipo) }}
+{% endfor %}
+
+{% if prueba_rechazada %}
+III. RECHAZAR la siguiente prueba:
+{% for tipo in prueba_rechazada %}
+   — {{ LABELS_PRUEBA.get(tipo, tipo) }}
+{% endfor %}
+
+   Fundamento: {{ fundamento_rechazo }}
+
+{% endif %}
+{% if texto_libre %}
+OBSERVACIONES: {{ texto_libre }}
+
+{% endif %}
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

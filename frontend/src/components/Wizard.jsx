@@ -405,6 +405,20 @@ function buildPayload(fueroId, tipoDoc, expediente, camposDoc, juzgado) {
     destinatario_rol: camposDoc.destinatario_rol || 'demandado',
     plazo_dias: camposDoc.plazo_dias ? Number(camposDoc.plazo_dias) : null,
   }
+  if (tipoDoc === 'traslado_demanda') return {
+    ...base,
+    tipo: camposDoc.tipo_traslado || 'demanda',
+    objeto: camposDoc.objeto || null,
+    plazo_dias: Number(camposDoc.plazo_dias) || 30,
+  }
+  if (tipoDoc === 'auto_apertura_ordinario') return {
+    ...base,
+    plazo_dias: Number(camposDoc.plazo_dias) || 40,
+    fecha_inicio_prueba: camposDoc.fecha_inicio_prueba || new Date().toISOString().split('T')[0],
+    prueba_admitida:  camposDoc.prueba_admitida  || [],
+    prueba_rechazada: camposDoc.prueba_rechazada || [],
+    fundamento_rechazo: camposDoc.fundamento_rechazo || null,
+  }
   return base
 }
 
