@@ -1,11 +1,16 @@
 """
 Modelos de input para documentos del fuero Familia (CPF Ley 10305, Córdoba).
 Documentos cubiertos:
-  - AlimentosProvisioriosInput     → auto que fija cuota alimentaria provisoria
-  - AdmisionAlimentosInput         → decreto de admisión de demanda de alimentos + citación a audiencia
-  - AdmisionDivorcioInput          → decreto de admisión de divorcio (arts. 437-438 CCyCN)
-  - AdmisionComunicacionInput      → decreto de admisión de régimen de comunicación + citación
-  - HomologacionAcuerdoFamiliaInput → auto homologando acuerdo en causa de familia
+  - AlimentosProvisioriosInput          → auto que fija cuota alimentaria provisoria
+  - AdmisionAlimentosInput              → decreto de admisión de demanda de alimentos + citación
+  - AdmisionDivorcioInput               → decreto de admisión de divorcio (arts. 437-438 CCyCN)
+  - AdmisionComunicacionInput           → decreto de admisión de régimen de comunicación + citación
+  - HomologacionAcuerdoFamiliaInput     → auto homologando acuerdo en causa de familia
+  - ExclusionHogarInput                 → decreto de exclusión del hogar (art. 519 CCyCN / art. 6 CPF)
+  - RegimenComunicacionProvisorioInput  → decreto que fija régimen de comunicación provisorio
+  - IntimacionPagoCuotasAlimentariasInput → intimación de pago de cuotas alimentarias adeudadas
+  - AtribucionHogarConyugalInput        → auto de atribución del hogar conyugal (art. 443 CCyCN)
+  - CitacionConciliacionFamiliaInput    → citación a audiencia de conciliación (CPF Ley 10305)
 """
 
 from datetime import date
@@ -13,7 +18,7 @@ from typing import Literal
 
 from pydantic import Field
 
-from ...base import ExpedienteBase
+from ...base import ExpedienteBase, DatosEconomicos
 
 
 class AlimentosProvisioriosInput(ExpedienteBase):
@@ -133,4 +138,144 @@ class AdmisionComunicacionInput(ExpedienteBase):
     sala: str | None = Field(
         default=None,
         description="Sala o número de despacho (opcional)",
+    )
+
+
+class ExclusionHogarInput(ExpedienteBase):
+    """
+    Decreto que ordena la exclusión del hogar del conviviente o cónyuge
+    que ejerce violencia, en el marco de un proceso de familia
+    (art. 519 CCyCN; art. 6 CPF Ley 10305, Córdoba).
+    """
+    plazo_cumplimiento_horas: int = Field(
+        default=24,
+        ge=1,
+        description="Plazo en horas para el cumplimiento de la exclusión",
+    )
+    con_auxilio_policial: bool = Field(
+        default=True,
+        description="Si True, se autoriza el auxilio de la fuerza pública para el diligenciamiento",
+    )
+    con_prohibicion_acercamiento: bool = Field(
+        default=True,
+        description="Si True, se fija también prohibición de acercamiento al domicilio y a la persona",
+    )
+    distancia_metros: int | None = Field(
+        default=None,
+        ge=1,
+        description="Distancia mínima de acercamiento en metros (si aplica prohibición)",
+    )
+    domicilio_exclusion: str = Field(
+        description="Domicilio del que se ordena la exclusión",
+    )
+
+
+class RegimenComunicacionProvisorioInput(ExpedienteBase):
+    """
+    Decreto que fija régimen de comunicación y contacto provisorio entre
+    el progenitor no conviviente y el/los hijo/s (art. 555 CCyCN;
+    CPF Ley 10305, Córdoba).
+    """
+    descripcion_regimen: str = Field(
+        description=(
+            "Descripción del régimen de comunicación provisorio (ej: 'fines de semana "
+            "alternos de sábado 10 hs. a domingo 18 hs., más los miércoles de 17 a 20 hs.')"
+        )
+    )
+    lugar_entrega: str | None = Field(
+        default=None,
+        description="Lugar de entrega y reintegro del/los menor/es (opcional)",
+    )
+    con_supervision: bool = Field(
+        default=False,
+        description="Si True, el régimen se cumple bajo supervisión del equipo técnico del juzgado",
+    )
+    vigencia: Literal["hasta_sentencia", "hasta_nueva_resolucion", "plazo_determinado"] = Field(
+        default="hasta_sentencia",
+        description="Vigencia del régimen provisorio",
+    )
+
+
+class IntimacionPagoCuotasAlimentariasInput(ExpedienteBase):
+    """
+    Intimación al alimentante a abonar las cuotas alimentarias adeudadas
+    bajo apercibimiento de lo dispuesto por el art. 553 CCyCN
+    (CPF Ley 10305, Córdoba).
+    """
+    cuotas_adeudadas: int = Field(
+        ge=1,
+        description="Número de cuotas alimentarias adeudadas",
+    )
+    monto_total_adeudado: float = Field(
+        gt=0,
+        description="Monto total adeudado en pesos (cuotas vencidas + intereses si aplica)",
+    )
+    plazo_dias: int = Field(
+        default=5,
+        ge=1,
+        description="Plazo en días hábiles para el pago",
+    )
+    apercibimiento_art553: bool = Field(
+        default=True,
+        description="Si True, se apercibe con las consecuencias del art. 553 CCyCN (intereses, medidas compulsivas)",
+    )
+    con_embargo: bool = Field(
+        default=False,
+        description="Si True, se traba embargo preventivo sobre bienes del alimentante en el mismo acto",
+    )
+
+
+class AtribucionHogarConyugalInput(ExpedienteBase):
+    """
+    Auto que atribuye el uso del hogar conyugal a uno de los cónyuges
+    durante el proceso o con carácter definitivo (art. 443 CCyCN;
+    CPF Ley 10305, Córdoba).
+    """
+    domicilio_hogar: str = Field(
+        description="Domicilio del hogar cuyo uso se atribuye",
+    )
+    caracter: Literal["provisorio", "definitivo"] = Field(
+        default="provisorio",
+        description="'provisorio' durante el proceso; 'definitivo' en sentencia o acuerdo",
+    )
+    con_exclusion_otro_conyuge: bool = Field(
+        default=True,
+        description="Si True, el decreto incluye la exclusión del otro cónyuge del inmueble",
+    )
+    plazo_exclusion_horas: int = Field(
+        default=24,
+        ge=1,
+        description="Plazo en horas para que el excluido desaloje (si con_exclusion_otro_conyuge=True)",
+    )
+    fundamento: Literal["hijos_menores", "enfermedad", "situacion_economica", "violencia", "otro"] = Field(
+        default="hijos_menores",
+        description="Fundamento principal de la atribución (art. 443 CCyCN)",
+    )
+
+
+class CitacionConciliacionFamiliaInput(ExpedienteBase):
+    """
+    Decreto que cita a las partes a audiencia de conciliación en proceso de
+    familia (art. 58 y conc. CPF Ley 10305, Córdoba).
+    """
+    tipo_proceso: Literal[
+        "alimentos", "comunicacion", "guarda", "divorcio", "liquidacion_bienes", "otro"
+    ] = Field(
+        default="alimentos",
+        description="Tipo de proceso de familia en el que se convoca a conciliación",
+    )
+    fecha_audiencia: date = Field(
+        description="Fecha de la audiencia de conciliación",
+    )
+    hora_audiencia: str = Field(
+        default="09:00",
+        description="Hora de la audiencia en formato HH:MM",
+    )
+    sala: str | None = Field(
+        default=None,
+        description="Sala o número de despacho (opcional)",
+    )
+    con_equipo_tecnico: bool = Field(
+        default=False,
+        description="Si True, se convoca también al equipo técnico interdisciplinario del juzgado",
     )

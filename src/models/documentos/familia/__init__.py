@@ -4,6 +4,11 @@ from .familia import (
     AdmisionDivorcioInput,
     AdmisionComunicacionInput,
     HomologacionAcuerdoFamiliaInput,
+    ExclusionHogarInput,
+    RegimenComunicacionProvisorioInput,
+    IntimacionPagoCuotasAlimentariasInput,
+    AtribucionHogarConyugalInput,
+    CitacionConciliacionFamiliaInput,
 )
 
 __all__ = [
@@ -12,4 +17,9 @@ __all__ = [
     "AdmisionDivorcioInput",
     "AdmisionComunicacionInput",
     "HomologacionAcuerdoFamiliaInput",
+    "ExclusionHogarInput",
+    "RegimenComunicacionProvisorioInput",
+    "IntimacionPagoCuotasAlimentariasInput",
+    "AtribucionHogarConyugalInput",
+    "CitacionConciliacionFamiliaInput",
 ]
