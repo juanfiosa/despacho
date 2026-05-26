@@ -346,9 +346,9 @@ _LABORAL = Fuero(
                     descripcion="Admite la demanda y cita a las partes a audiencia de conciliación",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="decreto_tramite",
-                            label="Decreto de admisión y citación a conciliación",
-                            descripcion="Admite la demanda y fija audiencia de conciliación",
+                            tipo="admision_laboral",
+                            label="Decreto de admisión y citación a audiencia",
+                            descripcion="Admite la demanda laboral y fija audiencia de conciliación",
                             norma="Art. 83 CPT",
                         ),
                     ],
@@ -450,7 +450,7 @@ _FAMILIA = Fuero(
                     descripcion="Fijación de cuota alimentaria provisoria",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="decreto_tramite",
+                            tipo="alimentos_provisorios",
                             label="Auto de alimentos provisorios",
                             descripcion="Fija cuota provisoria hasta la sentencia definitiva",
                             norma="Art. 544 CCyCN",

@@ -1,0 +1,51 @@
+{#
+  Auto de alimentos provisorios (art. 544 CCyCN)
+  Input: AlimentosProvisioriosInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import pesos, partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: El pedido de fijación de alimentos provisorios formulado en
+autos, a fin de resolver conforme al art. 544 del Código Civil y Comercial
+de la Nación.-
+
+CONSIDERANDO: Que atento las constancias de autos, el vínculo que une a las
+partes, las necesidades del alimentado y los ingresos y posibilidades
+económicas del alimentante acreditados en esta etapa del proceso, resulta
+procedente fijar una cuota alimentaria con carácter provisorio, sin perjuicio
+de lo que se resuelva en la sentencia definitiva (art. 544 CCyCN).-
+
+SE RESUELVE:
+
+{% set parte_alimentante = partes | selectattr("rol", "equalto", "alimentante") | list %}
+{% set nombre_alimentante = parte_alimentante[0].nombre if parte_alimentante else partes_por_rol(partes, "demandado") %}
+{% set parte_alimentado = partes | selectattr("rol", "equalto", "alimentado") | list %}
+{% set nombre_alimentado = parte_alimentado[0].nombre if parte_alimentado else partes_por_rol(partes, "actor") %}
+
+I. FIJAR ALIMENTOS PROVISORIOS a cargo de {{ nombre_alimentante }} y a
+favor de {{ nombre_alimentado }} en la suma de {{ pesos(cuota) }}
+({{ pesos(cuota) }}), pagaderos en forma
+{% if periodicidad == "mensual" %}mensual{% elif periodicidad == "quincenal" %}quincenal{% elif periodicidad == "semanal" %}semanal{% else %}{{ periodicidad }}{% endif %},
+con vencimiento el día {{ dia_vencimiento }} de cada
+{% if periodicidad == "mensual" %}mes{% elif periodicidad == "quincenal" %}quincena{% elif periodicidad == "semanal" %}semana{% else %}período{% endif %}.-
+
+II. Los alimentos fijados deberán abonarse mediante
+{% if forma_pago == "deposito_judicial" %}depósito judicial en la cuenta de autos
+{% elif forma_pago == "transferencia_bancaria" %}transferencia bancaria al CBU/alias {{ cbu_alias }}
+{% elif forma_pago == "efectivo" %}pago en efectivo con recibo
+{% endif %}correspondiente.-
+
+III. Bajo apercibimiento de lo dispuesto por el art. 553 del Código Civil y
+Comercial de la Nación (sanciones conminatorias e interés moratorio) en caso
+de incumplimiento.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

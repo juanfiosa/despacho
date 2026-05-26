@@ -24,6 +24,8 @@ from .models.documentos.civil_comercial.cautelares import (
     InhibicionGeneralInput,
 )
 from .models.documentos.violencia_familiar import MedidasUrgentesVFInput
+from .models.documentos.familia import AlimentosProvisioriosInput
+from .models.documentos.laboral import AutoAdmisionLaboralInput
 
 # ---------------------------------------------------------------------------
 # Filtros personalizados
@@ -82,6 +84,10 @@ _TEMPLATE_MAP: dict[type, str] = {
     InhibicionGeneralInput:     "civil_comercial/cautelares/inhibicion_general.j2",
     # Violencia Familiar
     MedidasUrgentesVFInput:     "violencia_familiar/medidas_urgentes.j2",
+    # Familia
+    AlimentosProvisioriosInput: "familia/alimentos_provisorios.j2",
+    # Laboral
+    AutoAdmisionLaboralInput:   "laboral/auto_admision.j2",
 }
 
 # ---------------------------------------------------------------------------

@@ -179,6 +179,56 @@ export default function CamposDocumento({ tipo, valores, onChange }) {
         </Seccion>
       </>}
 
+      {/* ── Alimentos provisorios ── */}
+      {tipo === 'alimentos_provisorios' && <>
+        <Seccion titulo="Cuota alimentaria">
+          <Campo label="Monto de la cuota ($)" type="number" placeholder="80000"
+            value={valores.cuota || ''} onChange={v => set('cuota', v)} />
+          <Grilla>
+            <SelectField label="Periodicidad" opciones={[
+              { value: 'mensual',    label: 'Mensual' },
+              { value: 'quincenal', label: 'Quincenal' },
+              { value: 'semanal',   label: 'Semanal' },
+            ]} value={valores.periodicidad || 'mensual'} onChange={v => set('periodicidad', v)} />
+            {(valores.periodicidad || 'mensual') === 'mensual' &&
+              <Campo label="Día de vencimiento" type="number" placeholder="1"
+                value={valores.dia_vencimiento || ''} onChange={v => set('dia_vencimiento', v)} />
+            }
+          </Grilla>
+        </Seccion>
+        <Seccion titulo="Forma de pago">
+          <SelectField label="Modalidad" opciones={[
+            { value: 'deposito_judicial',    label: 'Depósito judicial' },
+            { value: 'transferencia_bancaria', label: 'Transferencia bancaria' },
+            { value: 'efectivo',             label: 'Efectivo con recibo' },
+          ]} value={valores.forma_pago || 'deposito_judicial'} onChange={v => set('forma_pago', v)} />
+          {valores.forma_pago === 'transferencia_bancaria' &&
+            <Campo label="CBU / Alias bancario"
+              placeholder="alias.del.alimentado o 0720XXX..."
+              value={valores.cbu_alias || ''} onChange={v => set('cbu_alias', v)} />
+          }
+        </Seccion>
+      </>}
+
+      {/* ── Admisión laboral ── */}
+      {tipo === 'admision_laboral' && <>
+        <Seccion titulo="Objeto del reclamo">
+          <Campo label="Objeto"
+            placeholder="indemnización por despido injustificado, diferencias salariales y demás rubros"
+            value={valores.objeto || ''} onChange={v => set('objeto', v)} />
+        </Seccion>
+        <Seccion titulo="Audiencia de conciliación">
+          <Grilla>
+            <Campo label="Fecha de la audiencia" type="date"
+              value={valores.fecha_audiencia || ''} onChange={v => set('fecha_audiencia', v)} />
+            <Campo label="Hora (HH:MM)" placeholder="10:00"
+              value={valores.hora_audiencia || ''} onChange={v => set('hora_audiencia', v)} />
+          </Grilla>
+          <Campo label="Sala (opcional)" placeholder="Sala 3"
+            value={valores.sala || ''} onChange={v => set('sala', v)} />
+        </Seccion>
+      </>}
+
       {/* ── Embargo preventivo ── */}
       {tipo === 'embargo_preventivo' && <>
         <Seccion titulo="Datos de la medida cautelar">

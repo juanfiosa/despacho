@@ -46,9 +46,11 @@ class RolPenal(str, Enum):
 
 
 class RolViolenciaFamiliar(str, Enum):
-    REQUIRENTE = "requirente"
-    REQUERIDO = "requerido"
+    DENUNCIANTE = "denunciante"
+    DENUNCIADO = "denunciado"
     VICTIMA = "victima"
+    REQUIRENTE = "requirente"   # alias legacy
+    REQUERIDO = "requerido"     # alias legacy
     OTRO = "otro"
 
 
@@ -95,9 +97,20 @@ class TasaInteres(str, Enum):
 
 
 class TipoDocumento(str, Enum):
-    # Civil y Comercial — juicio ejecutivo
+    # Civil y Comercial — ejecutivo
     INTIMACION_PAGO = "intimacion_pago"
+    MANDAMIENTO_PAGO = "mandamiento_pago"
     AUTO_APERTURA_PRUEBA = "auto_apertura_prueba"
     DECRETO_TRAMITE = "decreto_tramite"
-    MANDAMIENTO_PAGO = "mandamiento_pago"
-    # (se amplía por fuero en versiones siguientes)
+    # Civil y Comercial — ordinario
+    TRASLADO_DEMANDA = "traslado_demanda"
+    AUTO_APERTURA_ORDINARIO = "auto_apertura_ordinario"
+    # Civil y Comercial — cautelares
+    EMBARGO_PREVENTIVO = "embargo_preventivo"
+    INHIBICION_GENERAL = "inhibicion_general"
+    # Familia
+    ALIMENTOS_PROVISORIOS = "alimentos_provisorios"
+    # Laboral
+    ADMISION_LABORAL = "admision_laboral"
+    # Violencia Familiar
+    MEDIDAS_URGENTES_VF = "medidas_urgentes_vf"

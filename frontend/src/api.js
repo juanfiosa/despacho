@@ -40,6 +40,10 @@ const PATHS_PREVIEW = {
   inhibicion_general:      '/civil-comercial/cautelares/inhibicion-general/preview',
   // Violencia Familiar
   medidas_urgentes_vf:     '/violencia-familiar/medidas-urgentes/preview',
+  // Familia
+  alimentos_provisorios:   '/familia/alimentos-provisorios/preview',
+  // Laboral
+  admision_laboral:        '/laboral/admision-demanda/preview',
 }
 const PATHS_DOCX = {
   // Ejecutivo
@@ -55,6 +59,10 @@ const PATHS_DOCX = {
   inhibicion_general:      '/civil-comercial/cautelares/inhibicion-general/docx',
   // Violencia Familiar
   medidas_urgentes_vf:     '/violencia-familiar/medidas-urgentes/docx',
+  // Familia
+  alimentos_provisorios:   '/familia/alimentos-provisorios/docx',
+  // Laboral
+  admision_laboral:        '/laboral/admision-demanda/docx',
 }
 
 export async function previewDocumento(tipo, payload, fechaResolucion) {

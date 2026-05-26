@@ -425,6 +425,21 @@ function buildPayload(fueroId, tipoDoc, expediente, camposDoc, juzgado) {
     prueba_rechazada: camposDoc.prueba_rechazada || [],
     fundamento_rechazo: camposDoc.fundamento_rechazo || null,
   }
+  if (tipoDoc === 'alimentos_provisorios') return {
+    ...base,
+    cuota:            Number(camposDoc.cuota) || 0,
+    periodicidad:     camposDoc.periodicidad || 'mensual',
+    dia_vencimiento:  Number(camposDoc.dia_vencimiento) || 1,
+    forma_pago:       camposDoc.forma_pago || 'deposito_judicial',
+    cbu_alias:        camposDoc.cbu_alias || null,
+  }
+  if (tipoDoc === 'admision_laboral') return {
+    ...base,
+    objeto:           camposDoc.objeto || '',
+    fecha_audiencia:  camposDoc.fecha_audiencia || new Date().toISOString().split('T')[0],
+    hora_audiencia:   camposDoc.hora_audiencia || '10:00',
+    sala:             camposDoc.sala || null,
+  }
   if (tipoDoc === 'embargo_preventivo') return {
     ...base,
     monto: Number(camposDoc.monto) || 0,
