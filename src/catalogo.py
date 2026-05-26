@@ -470,6 +470,19 @@ _FAMILIA = Fuero(
                         ),
                     ],
                 ),
+                Etapa(
+                    id="homologacion",
+                    label="Homologación de acuerdo",
+                    descripcion="Auto que homologa el acuerdo alimentario alcanzado por las partes",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="homologacion_acuerdo_familia",
+                            label="Auto de homologación de acuerdo",
+                            descripcion="Homologa el convenio sobre alimentos y le confiere fuerza de sentencia firme",
+                            norma="Art. 166 inc. 1 CPCC / CPF Ley 10305",
+                        ),
+                    ],
+                ),
             ],
         ),
         Proceso(
@@ -490,6 +503,19 @@ _FAMILIA = Fuero(
                         ),
                     ],
                 ),
+                Etapa(
+                    id="homologacion",
+                    label="Homologación del convenio regulador",
+                    descripcion="Auto que homologa el convenio regulador del divorcio",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="homologacion_acuerdo_familia",
+                            label="Auto de homologación de convenio regulador",
+                            descripcion="Homologa el convenio regulador del divorcio vincular y disuelve el vínculo",
+                            norma="Arts. 437-439 CCyCN / Art. 166 inc. 1 CPCC",
+                        ),
+                    ],
+                ),
             ],
         ),
         Proceso(
@@ -507,6 +533,19 @@ _FAMILIA = Fuero(
                             label="Decreto de admisión y citación",
                             descripcion="Admite la petición y cita a las partes a audiencia de conciliación",
                             norma="Art. 555 CCyCN / CPF Ley 10305",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="homologacion",
+                    label="Homologación de acuerdo",
+                    descripcion="Auto que homologa el régimen de comunicación acordado por las partes",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="homologacion_acuerdo_familia",
+                            label="Auto de homologación de régimen de comunicación",
+                            descripcion="Homologa el régimen de comunicación acordado conforme al interés superior del niño",
+                            norma="Art. 555 CCyCN / Art. 166 inc. 1 CPCC",
                         ),
                     ],
                 ),
@@ -588,6 +627,19 @@ _PENAL = Fuero(
             descripcion="Etapa de investigación previo al juicio oral",
             etapas=[
                 Etapa(
+                    id="desestimacion",
+                    label="Desestimación de denuncia o querella",
+                    descripcion="Rechazo in limine de la denuncia o querella por improcedencia manifiesta",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="desestimacion_denuncia",
+                            label="Auto de desestimación",
+                            descripcion="Desestima la denuncia o querella por ser manifiestamente improcedente, atípica, de acción extinguida o no constitutiva de delito",
+                            norma="Arts. 250 / 257 CPP",
+                        ),
+                    ],
+                ),
+                Etapa(
                     id="imputacion",
                     label="Acto de imputación",
                     descripcion="Citación al imputado para el acto de imputación",
@@ -597,6 +649,19 @@ _PENAL = Fuero(
                             label="Citación a acto de imputación",
                             descripcion="Cita al imputado a comparecer ante el fiscal bajo apercibimiento",
                             norma="Art. 271 CPP",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="sobreseimiento",
+                    label="Sobreseimiento",
+                    descripcion="Auto de sobreseimiento definitivo que extingue la acción penal",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="sobreseimiento",
+                            label="Auto de sobreseimiento definitivo",
+                            descripcion="Sobresee definitivamente al imputado por extinción de la acción, falta de participación, atipicidad o falta de prueba suficiente",
+                            norma="Arts. 350-351 CPP",
                         ),
                     ],
                 ),

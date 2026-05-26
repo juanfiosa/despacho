@@ -1,0 +1,58 @@
+{#
+  Auto de desestimación de denuncia o querella (art. 250/257 CPP Ley 8123, Córdoba)
+  Input: DesestimacionDenunciaInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+AUTOS Y VISTOS: La {{ tipo_acto }} presentada en estas actuaciones
+{% if partes | selectattr("rol", "equalto", "victima") | list %}
+por {{ partes | selectattr("rol", "equalto", "victima") | map(attribute="nombre") | join(", ") }}
+{% elif partes | selectattr("rol", "equalto", "querellante") | list %}
+por {{ partes | selectattr("rol", "equalto", "querellante") | map(attribute="nombre") | join(", ") }}
+{% endif %}
+{% if descripcion %}, en la que se relata {{ descripcion }}{% endif %}
+{% if fiscal_nombre %}, con intervención del/la Sr./Sra. Fiscal {{ fiscal_nombre }}{% endif %}.-
+
+CONSIDERANDO: Que
+{% if causal == "manifiestamente_improcedente" %}
+la {{ tipo_acto }} resulta manifiestamente improcedente, habida cuenta de que
+los hechos relatados no tienen aptitud para dar inicio a una persecución penal
+en los términos del art. 250 del Código Procesal Penal de la Provincia de
+Córdoba (Ley 8123)
+{% elif causal == "extincion_accion" %}
+la acción penal emergente de los hechos denunciados se encontraría extinguida,
+no siendo posible promover o continuar la persecución penal (art. 250 CPP)
+{% elif causal == "atipicidad" %}
+los hechos relatados en la {{ tipo_acto }} no encuadran en ninguna figura del
+Código Penal ni de la legislación complementaria, resultando manifiestamente
+atípicos e insusceptibles de persecución penal (art. 250 CPP)
+{% elif causal == "no_conforma_delito" %}
+el relato de la {{ tipo_acto }} no constituye delito ni ninguna conducta punible
+prevista en el ordenamiento legal vigente (art. 250 CPP)
+{% endif %}.-
+
+SE RESUELVE:
+
+I. DESESTIMAR la {{ tipo_acto }} presentada en estas actuaciones
+{% if descripcion %}({{ descripcion }}){% endif %}
+por resultar
+{% if causal == "manifiestamente_improcedente" %}manifiestamente improcedente
+{% elif causal == "extincion_accion" %}de acción extinguida
+{% elif causal == "atipicidad" %}manifiestamente atípica
+{% elif causal == "no_conforma_delito" %}constitutiva de hechos que no conforman delito alguno
+{% endif %}
+(art. 250 CPP Ley 8123).-
+
+II. ARCHIVAR las presentes actuaciones.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

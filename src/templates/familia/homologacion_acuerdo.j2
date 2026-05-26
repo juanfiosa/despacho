@@ -1,0 +1,82 @@
+{#
+  Auto que homologa el acuerdo alcanzado en causa de familia
+  (art. 166 inc. 1 CPCC / CPF Ley 10305 / CCyCN)
+  Input: HomologacionAcuerdoFamiliaInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: El acuerdo alcanzado en estas actuaciones entre
+{% if partes | selectattr("rol", "equalto", "actor") | list %}
+{{ partes_por_rol(partes, "actor") }} y {{ partes_por_rol(partes, "demandado") }}
+{% elif partes | selectattr("rol", "equalto", "requirente") | list %}
+{{ partes_por_rol(partes, "requirente") }} y {{ partes_por_rol(partes, "requerido") }}
+{% else %}
+las partes del proceso
+{% endif %}
+sobre
+{% if tipo_acuerdo == "alimentos" %}alimentos
+{% elif tipo_acuerdo == "comunicacion" %}régimen de comunicación
+{% elif tipo_acuerdo == "divorcio" %}divorcio y convenio regulador
+{% elif tipo_acuerdo == "guarda" %}guarda
+{% elif tipo_acuerdo == "otro" %}{{ tipo_acuerdo_descripcion or "acuerdo familiar" }}
+{% endif %}
+(art. 166 inc. 1 CPCC; CPF Ley 10305).-
+
+CONSIDERANDO: I. Que las partes han alcanzado un acuerdo cuyos términos son
+los siguientes:
+
+"{{ descripcion_acuerdo }}".-
+
+II. Que analizado el convenio presentado, el mismo no resulta contrario al
+orden público, no afecta derechos de terceros y satisface adecuadamente los
+derechos de las partes involucradas conforme el ordenamiento jurídico vigente
+(art. 166 inc. 1 CPCC; arts. 1 y ss. CCyCN), razón por la cual corresponde
+homologarlo y conferirle fuerza de sentencia firme.-
+{% if tipo_acuerdo == "alimentos" %}
+
+III. Que el acuerdo sobre alimentos resulta suficiente para cubrir las
+necesidades del alimentado conforme el estándar del art. 659 CCyCN.-
+{% elif tipo_acuerdo == "comunicacion" %}
+
+III. Que el régimen acordado se ajusta al principio del interés superior del
+niño (art. 3 CDN; art. 706 CCyCN) y a las disposiciones del art. 555 CCyCN.-
+{% elif tipo_acuerdo == "divorcio" %}
+
+III. Que el convenio regulador presentado satisface los requisitos del
+art. 439 CCyCN.-
+{% endif %}
+
+SE RESUELVE:
+
+I. HOMOLOGAR el acuerdo alcanzado entre
+{% if partes | selectattr("rol", "equalto", "actor") | list %}
+{{ partes_por_rol(partes, "actor") }} y {{ partes_por_rol(partes, "demandado") }}
+{% elif partes | selectattr("rol", "equalto", "requirente") | list %}
+{{ partes_por_rol(partes, "requirente") }} y {{ partes_por_rol(partes, "requerido") }}
+{% else %}las partes{% endif %}
+sobre
+{% if tipo_acuerdo == "alimentos" %}alimentos
+{% elif tipo_acuerdo == "comunicacion" %}régimen de comunicación
+{% elif tipo_acuerdo == "divorcio" %}divorcio vincular y convenio regulador
+{% elif tipo_acuerdo == "guarda" %}guarda
+{% elif tipo_acuerdo == "otro" %}{{ tipo_acuerdo_descripcion or "acuerdo familiar" }}
+{% endif %},
+en los términos reseñados en los considerandos del presente, confiriéndole
+fuerza de sentencia firme (art. 166 inc. 1 CPCC).-
+
+II. DECLARAR concluido el presente proceso por haber llegado las partes a un
+acuerdo sobre la materia debatida.-
+
+III. Las costas del proceso se imponen en el orden causado.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

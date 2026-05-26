@@ -600,6 +600,26 @@ function buildPayload(fueroId, tipoDoc, expediente, camposDoc, juzgado) {
     medida_adoptada:          camposDoc.medida_adoptada || '',
     motivo_cese:              camposDoc.motivo_cese || 'han cesado las circunstancias que motivaron la medida',
   }
+  if (tipoDoc === 'sobreseimiento') return {
+    ...base,
+    fiscal_nombre:             camposDoc.fiscal_nombre || null,
+    causal:                    camposDoc.causal || 'falta_prueba',
+    calificacion_provisional:  camposDoc.calificacion_provisional || null,
+    descripcion_hecho:         camposDoc.descripcion_hecho || null,
+  }
+  if (tipoDoc === 'desestimacion_denuncia') return {
+    ...base,
+    tipo_acto:    camposDoc.tipo_acto || 'denuncia',
+    fiscal_nombre: camposDoc.fiscal_nombre || null,
+    causal:        camposDoc.causal || 'manifiestamente_improcedente',
+    descripcion:   camposDoc.descripcion || '',
+  }
+  if (tipoDoc === 'homologacion_acuerdo_familia') return {
+    ...base,
+    tipo_acuerdo:               camposDoc.tipo_acuerdo || 'alimentos',
+    descripcion_acuerdo:        camposDoc.descripcion_acuerdo || '',
+    tipo_acuerdo_descripcion:   camposDoc.tipo_acuerdo_descripcion || null,
+  }
   return base
 }
 

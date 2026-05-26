@@ -144,3 +144,8 @@ class TipoDocumento(str, Enum):
     # Niñez — seguimiento y cese
     PRORROGA_MEDIDA_NNA = "prorroga_medida_nna"
     CESE_MEDIDA_NNA = "cese_medida_nna"
+    # Penal — resoluciones definitivas
+    SOBRESEIMIENTO = "sobreseimiento"
+    DESESTIMACION_DENUNCIA = "desestimacion_denuncia"
+    # Familia — homologación
+    HOMOLOGACION_ACUERDO_FAMILIA = "homologacion_acuerdo_familia"

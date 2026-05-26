@@ -1,0 +1,83 @@
+{#
+  Auto de sobreseimiento definitivo (arts. 350-351 CPP Ley 8123, Córdoba)
+  Input: SobreseimientoInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+{% set imputado_list = partes | selectattr("rol", "equalto", "imputado") | list %}
+{% set imputado = imputado_list[0].nombre if imputado_list else "el imputado" %}
+
+AUTOS Y VISTOS: Las actuaciones del presente legajo, la situación procesal de
+{{ imputado }}, la totalidad de los elementos de prueba colectados durante la
+investigación penal preparatoria
+{% if fiscal_nombre %}y el pedido formulado por el/la Sr./Sra. Fiscal
+{{ fiscal_nombre }}{% endif %},
+a fin de resolver sobre el mérito de la causa (art. 350 CPP Ley 8123).-
+
+CONSIDERANDO: I. Que de las constancias obrantes en el legajo de investigación
+fiscal surge que
+{% if causal == "extincion_accion" %}
+la acción penal se encuentra extinguida en los términos del art. 350 inc. 1 del
+Código Procesal Penal de la Provincia de Córdoba (Ley 8123)
+{% if calificacion_provisional %}
+respecto del hecho provisionalmente calificado como {{ calificacion_provisional }}
+{% endif %},
+ya sea por prescripción, muerte del imputado, indulto, amnistía u otra causa
+legal de extinción.-
+{% elif causal == "falta_participacion" %}
+{% if descripcion_hecho %}el hecho investigado ({{ descripcion_hecho }}) {% else %}el hecho investigado {% endif %}
+no ha sido cometido o no ha participado en él {{ imputado }},
+conforme lo establece el art. 350 inc. 2 CPP. Las probanzas reunidas no
+permiten sostener, ni aun de modo probabilístico, la intervención del nombrado
+en el episodio sometido a investigación.-
+{% elif causal == "atipicidad_justificacion" %}
+{% if descripcion_hecho %}el hecho investigado ({{ descripcion_hecho }}) {% else %}el hecho investigado {% endif %}
+no encuadra en figura penal alguna o, subsidiariamente, median en el caso causas
+de justificación, inimputabilidad o inculpabilidad que excluyen la punibilidad
+(art. 350 inc. 3 CPP). El suceso denunciado no reúne los elementos típicos
+{% if calificacion_provisional %}de la figura del {{ calificacion_provisional }}{% endif %}
+o existe una causa que lo justifica con arreglo a derecho.-
+{% elif causal == "falta_prueba" %}
+no existe, razonablemente, posibilidad de incorporar nuevos elementos de prueba
+que permitan fundar la acusación, siendo los existentes insuficientes para ello
+(art. 350 inc. 4 CPP). Agotada la etapa investigativa, el acervo probatorio
+reunido no alcanza el estándar de convicción exigido para elevar la causa a
+juicio oral.-
+{% endif %}
+
+II. Que por ello, encontrándose reunidos los requisitos exigidos por el art. 350
+del Código Procesal Penal, corresponde dictar el sobreseimiento de {{ imputado }}
+{% if calificacion_provisional %}respecto del hecho calificado como {{ calificacion_provisional }}{% endif %}
+con todos los efectos liberatorios que establece el art. 351 CPP, que dispone
+que el sobreseimiento cierra definitiva e irrevocablemente el proceso con
+relación al imputado en cuyo favor se dicta.-
+
+SE RESUELVE:
+
+I. SOBRESEER DEFINITIVAMENTE a {{ imputado }}
+{% if calificacion_provisional %}por el hecho provisionalmente calificado como
+{{ calificacion_provisional }},{% endif %}
+en virtud de lo establecido en el art. 350
+{% if causal == "extincion_accion" %}inc. 1{% elif causal == "falta_participacion" %}inc. 2{% elif causal == "atipicidad_justificacion" %}inc. 3{% elif causal == "falta_prueba" %}inc. 4{% endif %}
+del Código Procesal Penal de la Provincia de Córdoba (Ley 8123).-
+
+II. DECLARAR que el sobreseimiento dispuesto cierra definitiva e irrevocablemente
+el proceso respecto de {{ imputado }} en relación al hecho investigado, con todos
+los efectos establecidos en el art. 351 CPP.-
+
+III. DISPONER la libertad de {{ imputado }} si se encontrare detenido, a cuyos
+fines líbrese la comunicación que corresponda.-
+
+IV. ARCHIVAR las actuaciones una vez firme el presente.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

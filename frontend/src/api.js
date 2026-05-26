@@ -73,6 +73,11 @@ const PATHS_PREVIEW = {
   // Niñez — seguimiento
   prorroga_medida_nna:     '/ninez/prorroga-medida/preview',
   cese_medida_nna:         '/ninez/cese-medida/preview',
+  // Penal — resoluciones definitivas
+  sobreseimiento:                '/penal/sobreseimiento/preview',
+  desestimacion_denuncia:        '/penal/desestimacion-denuncia/preview',
+  // Familia — homologación
+  homologacion_acuerdo_familia:  '/familia/homologacion-acuerdo/preview',
 }
 const PATHS_DOCX = {
   // Ejecutivo
@@ -121,6 +126,11 @@ const PATHS_DOCX = {
   // Niñez — seguimiento
   prorroga_medida_nna:     '/ninez/prorroga-medida/docx',
   cese_medida_nna:         '/ninez/cese-medida/docx',
+  // Penal — resoluciones definitivas
+  sobreseimiento:                '/penal/sobreseimiento/docx',
+  desestimacion_denuncia:        '/penal/desestimacion-denuncia/docx',
+  // Familia — homologación
+  homologacion_acuerdo_familia:  '/familia/homologacion-acuerdo/docx',
 }
 
 export async function previewDocumento(tipo, payload, fechaResolucion) {

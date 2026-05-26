@@ -3,6 +3,7 @@ from .familia import (
     AdmisionAlimentosInput,
     AdmisionDivorcioInput,
     AdmisionComunicacionInput,
+    HomologacionAcuerdoFamiliaInput,
 )
 
 __all__ = [
@@ -10,4 +11,5 @@ __all__ = [
     "AdmisionAlimentosInput",
     "AdmisionDivorcioInput",
     "AdmisionComunicacionInput",
+    "HomologacionAcuerdoFamiliaInput",
 ]

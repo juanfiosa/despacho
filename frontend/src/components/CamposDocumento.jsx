@@ -678,6 +678,77 @@ export default function CamposDocumento({ tipo, valores, onChange }) {
         </Seccion>
       </>}
 
+      {/* ── Sobreseimiento ── */}
+      {tipo === 'sobreseimiento' && <>
+        <Seccion titulo="Ministerio Fiscal">
+          <Campo label="Nombre del/la fiscal (opcional)"
+            placeholder="Dr./Dra. Nombre Apellido"
+            value={valores.fiscal_nombre || ''} onChange={v => set('fiscal_nombre', v)} />
+        </Seccion>
+        <Seccion titulo="Causal de sobreseimiento">
+          <SelectField label="Causal" opciones={[
+            { value: 'extincion_accion',         label: 'Extinción de la acción penal (prescripción, muerte, etc.)' },
+            { value: 'falta_participacion',       label: 'El imputado no participó en el hecho' },
+            { value: 'atipicidad_justificacion',  label: 'El hecho es atípico o está justificado' },
+            { value: 'falta_prueba',              label: 'Falta de prueba suficiente (insuficiencia probatoria)' },
+          ]} value={valores.causal || 'falta_prueba'} onChange={v => set('causal', v)} />
+        </Seccion>
+        <Seccion titulo="Hecho (opcional)">
+          <Campo label="Calificación provisional" placeholder="estafa, art. 172 CP"
+            value={valores.calificacion_provisional || ''} onChange={v => set('calificacion_provisional', v)} />
+          <Campo label="Descripción breve del hecho"
+            placeholder="el hecho por el que fue imputado"
+            value={valores.descripcion_hecho || ''} onChange={v => set('descripcion_hecho', v)} />
+        </Seccion>
+      </>}
+
+      {/* ── Desestimación de denuncia ── */}
+      {tipo === 'desestimacion_denuncia' && <>
+        <Seccion titulo="Tipo de acto">
+          <SelectField label="Tipo de acto" opciones={[
+            { value: 'denuncia',   label: 'Denuncia' },
+            { value: 'querella',   label: 'Querella' },
+          ]} value={valores.tipo_acto || 'denuncia'} onChange={v => set('tipo_acto', v)} />
+          <Campo label="Descripción breve del hecho denunciado"
+            placeholder="lesiones ocurridas el día..."
+            value={valores.descripcion || ''} onChange={v => set('descripcion', v)} />
+          <Campo label="Nombre del/la fiscal (opcional)"
+            placeholder="Dr./Dra. Nombre Apellido"
+            value={valores.fiscal_nombre || ''} onChange={v => set('fiscal_nombre', v)} />
+        </Seccion>
+        <Seccion titulo="Causal de desestimación">
+          <SelectField label="Causal" opciones={[
+            { value: 'manifiestamente_improcedente', label: 'Manifiestamente improcedente (art. 250 CPP)' },
+            { value: 'extincion_accion',             label: 'Acción penal extinguida' },
+            { value: 'atipicidad',                   label: 'Hecho manifiestamente atípico' },
+            { value: 'no_conforma_delito',           label: 'Los hechos no conforman delito alguno' },
+          ]} value={valores.causal || 'manifiestamente_improcedente'} onChange={v => set('causal', v)} />
+        </Seccion>
+      </>}
+
+      {/* ── Homologación de acuerdo (familia) ── */}
+      {tipo === 'homologacion_acuerdo_familia' && <>
+        <Seccion titulo="Tipo de acuerdo">
+          <SelectField label="Tipo de acuerdo" opciones={[
+            { value: 'alimentos',     label: 'Alimentos' },
+            { value: 'comunicacion',  label: 'Régimen de comunicación' },
+            { value: 'divorcio',      label: 'Divorcio vincular y convenio regulador' },
+            { value: 'guarda',        label: 'Guarda' },
+            { value: 'otro',          label: 'Otro (especificar)' },
+          ]} value={valores.tipo_acuerdo || 'alimentos'} onChange={v => set('tipo_acuerdo', v)} />
+          {valores.tipo_acuerdo === 'otro' &&
+            <Campo label="Descripción del tipo de acuerdo"
+              placeholder="ej: liquidación de sociedad conyugal"
+              value={valores.tipo_acuerdo_descripcion || ''} onChange={v => set('tipo_acuerdo_descripcion', v)} />
+          }
+        </Seccion>
+        <Seccion titulo="Contenido del acuerdo">
+          <Campo label="Descripción del acuerdo (transcribir los puntos principales)"
+            placeholder="Las partes acuerdan fijar una cuota alimentaria de $... mensual, pagadera el día..."
+            value={valores.descripcion_acuerdo || ''} onChange={v => set('descripcion_acuerdo', v)} />
+        </Seccion>
+      </>}
+
       {/* ── Decreto de trámite ── */}
       {tipo === 'decreto_tramite' && <>
         <Seccion titulo="Tipo de decreto">

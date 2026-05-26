@@ -5,6 +5,7 @@ Documentos cubiertos:
   - AdmisionAlimentosInput         → decreto de admisión de demanda de alimentos + citación a audiencia
   - AdmisionDivorcioInput          → decreto de admisión de divorcio (arts. 437-438 CCyCN)
   - AdmisionComunicacionInput      → decreto de admisión de régimen de comunicación + citación
+  - HomologacionAcuerdoFamiliaInput → auto homologando acuerdo en causa de familia
 """
 
 from datetime import date
@@ -70,6 +71,29 @@ class AdmisionAlimentosInput(ExpedienteBase):
     sala: str | None = Field(
         default=None,
         description="Sala o número de despacho (opcional)",
+    )
+
+
+class HomologacionAcuerdoFamiliaInput(ExpedienteBase):
+    """
+    Auto que homologa el acuerdo alcanzado entre las partes en una causa
+    de familia (alimentos, régimen de comunicación, divorcio, etc.) y le
+    confiere fuerza de sentencia firme (art. 166 inc. 1 CPCC / CPF Ley 10305).
+    """
+    tipo_acuerdo: Literal["alimentos", "comunicacion", "divorcio", "guarda", "otro"] = Field(
+        default="alimentos",
+        description="Tipo de acuerdo a homologar",
+    )
+    descripcion_acuerdo: str = Field(
+        description=(
+            "Descripción detallada del acuerdo homologado, en texto libre "
+            "(ej: 'cuota alimentaria de $X mensual pagadera los días 5 de cada mes, "
+            "modalidad depósito judicial')"
+        )
+    )
+    tipo_acuerdo_descripcion: str | None = Field(
+        default=None,
+        description="Descripción cuando tipo_acuerdo='otro'",
     )
 
 

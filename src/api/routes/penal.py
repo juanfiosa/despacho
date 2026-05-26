@@ -10,7 +10,13 @@ from fastapi.responses import Response
 
 from ...engine import render
 from ...generador import texto_a_docx
-from ...models.documentos.penal import CitacionImputacionInput, AutoElevacionJuicioInput, FijacionAudienciaDebateInput
+from ...models.documentos.penal import (
+    CitacionImputacionInput,
+    AutoElevacionJuicioInput,
+    FijacionAudienciaDebateInput,
+    SobreseimientoInput,
+    DesestimacionDenunciaInput,
+)
 
 router = APIRouter(prefix="/penal", tags=["Penal"])
 
@@ -113,4 +119,66 @@ def fijacion_debate_docx(
         content=docx,
         media_type=_DOCX_MEDIA,
         headers={"Content-Disposition": 'attachment; filename="fijacion_debate.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Auto de sobreseimiento definitivo
+# ---------------------------------------------------------------------------
+
+@router.post("/sobreseimiento/preview", summary="Vista previa en texto")
+def sobreseimiento_preview(
+    body: SobreseimientoInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/sobreseimiento/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def sobreseimiento_docx(
+    body: SobreseimientoInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="sobreseimiento.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Auto de desestimación de denuncia/querella
+# ---------------------------------------------------------------------------
+
+@router.post("/desestimacion-denuncia/preview", summary="Vista previa en texto")
+def desestimacion_denuncia_preview(
+    body: DesestimacionDenunciaInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/desestimacion-denuncia/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def desestimacion_denuncia_docx(
+    body: DesestimacionDenunciaInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="desestimacion_denuncia.docx"'},
     )

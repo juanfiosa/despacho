@@ -33,10 +33,17 @@ from .models.documentos.familia import (
     AdmisionAlimentosInput,
     AdmisionDivorcioInput,
     AdmisionComunicacionInput,
+    HomologacionAcuerdoFamiliaInput,
 )
 from .models.documentos.laboral import AutoAdmisionLaboralInput, AutoAperturaLaboralInput
 from .models.documentos.concursal import AutoAperturaConcursalInput, AutoDeclaracionQuiebraInput
-from .models.documentos.penal import CitacionImputacionInput, AutoElevacionJuicioInput, FijacionAudienciaDebateInput
+from .models.documentos.penal import (
+    CitacionImputacionInput,
+    AutoElevacionJuicioInput,
+    FijacionAudienciaDebateInput,
+    SobreseimientoInput,
+    DesestimacionDenunciaInput,
+)
 from .models.documentos.ninez import AutoControlLegalidadInput, ProrrogaMedidaNNAInput, CeseMedidaNNAInput
 
 # ---------------------------------------------------------------------------
@@ -110,6 +117,7 @@ _TEMPLATE_MAP: dict[type, str] = {
     AdmisionAlimentosInput:          "familia/admision_alimentos.j2",
     AdmisionDivorcioInput:           "familia/admision_divorcio.j2",
     AdmisionComunicacionInput:       "familia/admision_comunicacion.j2",
+    HomologacionAcuerdoFamiliaInput: "familia/homologacion_acuerdo.j2",
     # Laboral
     AutoAdmisionLaboralInput:    "laboral/auto_admision.j2",
     AutoAperturaLaboralInput:    "laboral/auto_apertura_prueba.j2",
@@ -120,6 +128,8 @@ _TEMPLATE_MAP: dict[type, str] = {
     CitacionImputacionInput:       "penal/citacion_imputacion.j2",
     AutoElevacionJuicioInput:      "penal/auto_elevacion_juicio.j2",
     FijacionAudienciaDebateInput:  "penal/fijacion_debate.j2",
+    SobreseimientoInput:           "penal/sobreseimiento.j2",
+    DesestimacionDenunciaInput:    "penal/desestimacion_denuncia.j2",
     # Niñez
     AutoControlLegalidadInput:     "ninez/auto_control_legalidad.j2",
     ProrrogaMedidaNNAInput:        "ninez/prorroga_medida_nna.j2",
