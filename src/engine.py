@@ -30,6 +30,13 @@ from .models.documentos.civil_comercial.sucesorio import (
     CitacionHerederosAcreedoresInput,
     AprobacionInventarioAvaluoInput,
 )
+from .models.documentos.civil_comercial.incidentes import (
+    CaducidadInstanciaInput,
+    DesignacionPeritoInput,
+    IntimacionCumplimientoSentenciaInput,
+    AutoDesgloseInput,
+    CitacionAudienciaConciliacionInput,
+)
 from .models.documentos.civil_comercial.sumarisimo import AutoSumarisimoCitacionInput
 from .models.documentos.contencioso_administrativo import (
     ContenciosoAdmisibilidadInput,
@@ -235,6 +242,12 @@ _TEMPLATE_MAP: dict[type, str] = {
     # Sucesorio (nuevos)
     CitacionHerederosAcreedoresInput:   "civil_comercial/sucesorio/citacion_herederos_acreedores.j2",
     AprobacionInventarioAvaluoInput:    "civil_comercial/sucesorio/aprobacion_inventario_avaluo.j2",
+    # Incidentes civiles (nuevos)
+    CaducidadInstanciaInput:                "civil_comercial/incidentes/caducidad_instancia.j2",
+    DesignacionPeritoInput:                 "civil_comercial/incidentes/designacion_perito.j2",
+    IntimacionCumplimientoSentenciaInput:   "civil_comercial/incidentes/intimacion_cumplimiento_sentencia.j2",
+    AutoDesgloseInput:                      "civil_comercial/incidentes/auto_desglose.j2",
+    CitacionAudienciaConciliacionInput:     "civil_comercial/incidentes/citacion_audiencia_conciliacion.j2",
 }
 
 # ---------------------------------------------------------------------------

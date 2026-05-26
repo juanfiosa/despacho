@@ -1,0 +1,27 @@
+{#
+  Decreto de citación a audiencia de conciliación civil (art. 58 CPCC Ley 8465)
+  Input: CitacionAudienciaConciliacionInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import fecha_larga %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+CÍTASE a las partes a la AUDIENCIA DE CONCILIACIÓN prevista por el art. 58
+del Código de Procedimiento Civil y Comercial de Córdoba (Ley 8465), a
+celebrarse el día {{ fecha_larga(fecha_audiencia) }}, a las {{ hora_audiencia }} horas,
+{% if sala %}en la {{ sala }},{% endif %}
+con intervención del/la magistrado/a interviniente.-
+{% if con_asistencia_letrada %}
+
+Las partes deberán comparecer con patrocinio letrado obligatorio.-
+{% endif %}
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

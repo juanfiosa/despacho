@@ -1,0 +1,26 @@
+{#
+  Intimación a cumplir sentencia (art. 559 CPCC Ley 8465, Córdoba)
+  Input: IntimacionCumplimientoSentenciaInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol, plazo %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+Atento la sentencia firme dictada en autos, ÍNTIMASE a
+{{ partes_por_rol(partes, "demandado") }} a
+{% if tipo_obligacion == "dar_dinero" %}ABONAR la suma de dinero establecida en la sentencia
+{% elif tipo_obligacion == "dar_cosa" %}ENTREGAR la cosa determinada en la sentencia
+{% elif tipo_obligacion == "hacer" %}EJECUTAR la conducta ordenada en la sentencia
+{% else %}ABSTENERSE de la conducta prohibida en la sentencia{% endif %}{% if descripcion_obligacion %}: {{ descripcion_obligacion }}{% endif %},
+dentro del plazo de {{ plazo(plazo_dias) }}, bajo apercibimiento de
+{{ apercibimiento }} (art. 559 CPCC Ley 8465).-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

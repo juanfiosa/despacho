@@ -1,0 +1,39 @@
+{#
+  Decreto de caducidad de instancia (art. 339 CPCC Ley 8465, Córdoba)
+  Input: CaducidadInstanciaInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: El estado de las presentes actuaciones a los fines de
+resolver sobre la caducidad de instancia{% if parte_peticionante == "de_oficio" %} de oficio{% elif parte_peticionante == "demandado" %} peticionada por la parte demandada{% else %} peticionada por la parte actora{% endif %}
+(art. 339 CPCC Ley 8465, Córdoba).-
+
+CONSIDERANDO: Que desde{% if ultima_actuacion %} {{ ultima_actuacion }}{% else %} la última actuación procesalmente válida{% endif %}
+ha transcurrido un lapso superior a {{ plazo_meses }} ({{ plazo_meses | numero_letras }}) meses sin
+que la parte interesada haya instado el procedimiento, configurándose así la
+caducidad de {% if instancia == "primera" %}primera instancia{% elif instancia == "segunda" %}segunda instancia{% else %}única instancia{% endif %} prevista por el
+art. 339 CPCC, que opera de pleno derecho (art. 341 CPCC).-
+
+SE RESUELVE:
+
+I. DECLARAR OPERADA LA CADUCIDAD DE {{ instancia | upper }} INSTANCIA en los
+presentes autos "{{ identificacion.caratula }}", con los efectos previstos
+por el art. 343 CPCC (art. 339 CPCC Ley 8465).-
+{% if costas_al_actor %}
+
+II. Imponer las costas a la parte actora (art. 343 CPCC).-
+{% endif %}
+
+{{ "III" if costas_al_actor else "II" }}. Archívese el expediente oportunamente.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

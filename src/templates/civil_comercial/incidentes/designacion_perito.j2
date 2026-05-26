@@ -1,0 +1,34 @@
+{#
+  Auto de designación de perito (art. 261 CPCC Ley 8465, Córdoba)
+  Input: DesignacionPeritoInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import plazo %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+DESÍGNASE perito {{ especialidad }} para que dictamine en la presente causa
+{% if perito_nombre %}al/a la Sr./Sra. {{ perito_nombre }},{% else %}al que resulte de la lista oficial de peritos habilitados,{% endif %}
+quien deberá aceptar el cargo dentro del plazo de {{ plazo(plazo_aceptacion_dias) }},
+bajo apercibimiento de designarse nuevo perito (art. 261 CPCC Ley 8465).-
+
+El/La perito designado/a deberá presentar su dictamen dentro del plazo de
+{{ plazo(plazo_dictamen_dias) }} a contar desde la aceptación del cargo.-
+{% if puntos_periciales %}
+
+Puntos de pericia admitidos:
+{% for punto in puntos_periciales %}
+{{ loop.index }}. {{ punto }}
+{% endfor %}
+{% endif %}
+
+Notifíquese al perito y a las partes.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}
