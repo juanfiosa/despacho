@@ -149,3 +149,58 @@ class TipoDocumento(str, Enum):
     DESESTIMACION_DENUNCIA = "desestimacion_denuncia"
     # Familia — homologación
     HOMOLOGACION_ACUERDO_FAMILIA = "homologacion_acuerdo_familia"
+    # Penal — cautelares y trámite
+    PRISION_PREVENTIVA = "prision_preventiva"
+    CESE_PRISION_PREVENTIVA = "cese_prision_preventiva"
+    ADMISION_PARTES_CIVILES = "admision_partes_civiles"
+    TRASLADO_VISTA_FISCAL = "traslado_vista_fiscal"
+    CITACION_TESTIGOS_PERITOS = "citacion_testigos_peritos"
+    SUSPENSION_JUICIO_PRUEBA = "suspension_juicio_prueba"
+    EXTRACCION_TESTIMONIOS = "extraccion_testimonios"
+    ARCHIVO_NOTIFICACION = "archivo_notificacion"
+    # Civil — sucesorio ampliado
+    CITACION_HEREDEROS_ACREEDORES = "citacion_herederos_acreedores"
+    APROBACION_INVENTARIO_AVALUO = "aprobacion_inventario_avaluo"
+    # Civil — incidentes
+    CADUCIDAD_INSTANCIA = "caducidad_instancia"
+    DESIGNACION_PERITO = "designacion_perito"
+    INTIMACION_CUMPLIMIENTO_SENTENCIA = "intimacion_cumplimiento_sentencia"
+    AUTO_DESGLOSE = "auto_desglose"
+    CITACION_AUDIENCIA_CONCILIACION = "citacion_audiencia_conciliacion"
+    # Contencioso Administrativo — ampliado
+    TRASLADO_DEMANDA_CA = "traslado_demanda_ca"
+    APERTURA_PRUEBA_CA = "apertura_prueba_ca"
+    CITACION_AUDIENCIA_PRELIMINAR_CA = "citacion_audiencia_preliminar_ca"
+    SUSPENSION_ACTO_ADMINISTRATIVO = "suspension_acto_administrativo"
+    LLAMAMIENTO_AUTOS_CA = "llamamiento_autos_ca"
+    INTIMACION_ORGANISMO_DEMANDADO = "intimacion_organismo_demandado"
+    # Violencia Familiar — ampliado
+    PRORROGA_MEDIDAS_VF = "prorroga_medidas_vf"
+    CESE_MEDIDAS_VF = "cese_medidas_vf"
+    OFICIO_POLICIA_VF = "oficio_policia_vf"
+    # Familia — ampliado
+    EXCLUSION_HOGAR = "exclusion_hogar"
+    REGIMEN_COMUNICACION_PROVISORIO = "regimen_comunicacion_provisorio"
+    INTIMACION_PAGO_CUOTAS_ALIMENTARIAS = "intimacion_pago_cuotas_alimentarias"
+    ATRIBUCION_HOGAR_CONYUGAL = "atribucion_hogar_conyugal"
+    CITACION_CONCILIACION_FAMILIA = "citacion_conciliacion_familia"
+    # Laboral — ampliado
+    TRASLADO_CONTESTACION_LABORAL = "traslado_contestacion_laboral"
+    CITACION_VISTA_CAUSA = "citacion_vista_causa"
+    INTIMACION_PAGO_LIQUIDACION = "intimacion_pago_liquidacion"
+    HOMOLOGACION_ACUERDO_LABORAL = "homologacion_acuerdo_laboral"
+    AUTO_LIQUIDACION_APROBADA = "auto_liquidacion_aprobada"
+    # Concursal — ampliado
+    DECRETO_PERIODO_EXCLUSIVIDAD = "decreto_periodo_exclusividad"
+    AUTO_HOMOLOGACION_ACUERDO = "auto_homologacion_acuerdo"
+    CITACION_ACREEDORES_EDICTO = "citacion_acreedores_edicto"
+    DESIGNACION_SINDICO = "designacion_sindico"
+    AUTO_VERIFICACION_CREDITOS = "auto_verificacion_creditos"
+    DECRETO_REALIZACION_BIENES = "decreto_realizacion_bienes"
+    # Niñez — ampliado
+    AUTO_MEDIDA_ABRIGO = "auto_medida_abrigo"
+    NOTIFICACION_SENAF = "notificacion_senaf"
+    AUTO_INTERNACION_SALUD_MENTAL = "auto_internacion_salud_mental"
+    DECRETO_VISITAS_SUPERVISADAS = "decreto_visitas_supervisadas"
+    AUTO_REINTEGRO_FAMILIAR = "auto_reintegro_familiar"
+    CITACION_SEGUIMIENTO_NNA = "citacion_seguimiento_nna"
