@@ -6,6 +6,8 @@ Documentos cubiertos:
   - FijacionAudienciaDebateInput    → decreto que fija fecha del debate oral (art. 374 CPP)
   - SobreseimientoInput             → auto de sobreseimiento definitivo (arts. 350-351 CPP)
   - DesestimacionDenunciaInput      → auto desestimando denuncia o querella (art. 250 CPP)
+  - PrisionPreventivaInput          → auto de prisión preventiva (art. 281 CPP)
+  - CesePrisionPreventivaInput      → auto de cese de prisión preventiva (art. 283 CPP)
 """
 
 from datetime import date
@@ -147,4 +149,97 @@ class DesestimacionDenunciaInput(ExpedienteBase):
     descripcion: str = Field(
         default="",
         description="Descripción breve de los hechos denunciados/querellados",
+    )
+
+
+class PrisionPreventivaInput(ExpedienteBase):
+    """
+    Auto que decreta la prisión preventiva del imputado (art. 281 CPP
+    Ley 8123, Córdoba). Requiere semiplena prueba sobre el hecho y
+    la participación, más peligro de fuga o entorpecimiento.
+    """
+    fiscal_nombre: str | None = Field(
+        default=None,
+        description="Nombre del fiscal requirente",
+    )
+    defensor_nombre: str | None = Field(
+        default=None,
+        description="Nombre del defensor (público o particular)",
+    )
+    calificacion_legal: str = Field(
+        description="Calificación legal provisional (ej: 'robo agravado, arts. 164 y 166 inc. 2 CP')",
+    )
+    causal: Literal[
+        "peligro_fuga",
+        "entorpecimiento",
+        "ambas",
+    ] = Field(
+        default="peligro_fuga",
+        description=(
+            "Causal de la medida: "
+            "'peligro_fuga' (art. 281 inc. 1 CPP); "
+            "'entorpecimiento' (art. 281 inc. 2 CPP); "
+            "'ambas' (ambas causales concurrentes)"
+        ),
+    )
+    descripcion_hecho: str | None = Field(
+        default=None,
+        description="Descripción breve del hecho investigado",
+    )
+    escala_minima_pena: str | None = Field(
+        default=None,
+        description="Escala penal mínima del delito imputado (ej: '3 años')",
+    )
+
+
+class CesePrisionPreventivaInput(ExpedienteBase):
+    """
+    Auto que dispone el cese de la prisión preventiva / morigeración
+    (art. 283 CPP Ley 8123, Córdoba).
+    """
+    fiscal_nombre: str | None = Field(
+        default=None,
+        description="Nombre del fiscal interviniente",
+    )
+    defensor_nombre: str | None = Field(
+        default=None,
+        description="Nombre del defensor",
+    )
+    calificacion_legal: str | None = Field(
+        default=None,
+        description="Calificación legal del proceso",
+    )
+    modalidad: Literal[
+        "excarcelacion",
+        "exencion_prision",
+        "morigeracion",
+        "cese_automatico",
+    ] = Field(
+        default="excarcelacion",
+        description=(
+            "Modalidad de libertad: "
+            "'excarcelacion' (liberación del detenido); "
+            "'exencion_prision' (antes de ser aprehendido); "
+            "'morigeracion' (arresto domiciliario u otra modalidad atenuada); "
+            "'cese_automatico' (por vencimiento del plazo legal art. 283 CPP)"
+        ),
+    )
+    causal_cese: Literal[
+        "variacion_circunstancias",
+        "vencimiento_plazo",
+        "sobreseimiento",
+        "absolución",
+        "monto_pena",
+        "otra",
+    ] = Field(
+        default="variacion_circunstancias",
+        description="Causal del cese de la medida cautelar",
+    )
+    causal_descripcion: str | None = Field(
+        default=None,
+        description="Descripción adicional de la causal (opcional)",
+    )
+    condiciones: list[str] = Field(
+        default_factory=list,
+        description="Condiciones impuestas (ej: 'presentarse quincenalmente', 'no salir del país')",
     )

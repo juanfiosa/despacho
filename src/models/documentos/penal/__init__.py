@@ -4,6 +4,8 @@ from .penal import (
     FijacionAudienciaDebateInput,
     SobreseimientoInput,
     DesestimacionDenunciaInput,
+    PrisionPreventivaInput,
+    CesePrisionPreventivaInput,
 )
 
 __all__ = [
@@ -12,4 +14,6 @@ __all__ = [
     "FijacionAudienciaDebateInput",
     "SobreseimientoInput",
     "DesestimacionDenunciaInput",
+    "PrisionPreventivaInput",
+    "CesePrisionPreventivaInput",
 ]
