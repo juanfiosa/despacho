@@ -1,0 +1,39 @@
+{#
+  Mandamiento de intimación de pago y embargo — juicio ejecutivo (art. 531 CPCC Córdoba)
+  Input: MandamientoPagoInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import pesos, fecha_larga, plazo, desc_tasa, partes_por_rol %}
+{% from "macros/pie.j2"        import pie %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+MANDAMIENTO DE INTIMACIÓN DE PAGO Y EMBARGO:
+
+El infrascripto Secretario del {{ identificacion.juzgado }} HACE SABER que en los
+autos caratulados "{{ identificacion.caratula }}" (Expte. Nº {{ identificacion.numero }}),
+este Tribunal ha librado el presente mandamiento para que el Oficial de
+Justicia que resulte designado INTIME a {{ partes_por_rol(partes, "demandado") }}, en el
+domicilio sito en {{ domicilio_diligenciamiento }}, a abonar dentro del plazo de
+{{ plazo(plazo_dias) }}, la suma de {{ pesos(datos_economicos.capital) }} en concepto
+de capital, con más los intereses devengados a la
+{{ desc_tasa(datos_economicos.tasa, datos_economicos.tasa_descripcion) }}
+desde el {{ fecha_larga(datos_economicos.fecha_mora) }}
+{%- if datos_economicos.costas %}, con costas{% endif %}.-
+
+En caso de no verificarse el pago en el acto del diligenciamiento, TRÁBESE
+EMBARGO sobre bienes de propiedad del ejecutado en cantidad suficiente para
+cubrir el capital reclamado, intereses y costas estimadas provisionalmente,
+{% if bienes_a_embargar -%}
+específicamente sobre: {{ bienes_a_embargar }}.-
+{%- else -%}
+o sobre los que se individualicen en el acto.-
+{%- endif %}
+
+Déjese constancia del resultado del diligenciamiento.-
+
+{% if texto_libre %}
+{{ texto_libre }}
+
+{% endif %}
+{{ pie(identificacion.juzgado, identificacion.secretaria) }}

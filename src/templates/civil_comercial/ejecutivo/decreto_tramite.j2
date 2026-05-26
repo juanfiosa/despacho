@@ -1,0 +1,36 @@
+{#
+  Decreto de trámite — traslado, vista, llamamiento de autos, etc.
+  Input: DecretoTramiteInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import plazo %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+{% if tipo == "traslado" %}
+CÓRRASE TRASLADO a la parte {{ destinatario_rol }}{% if plazo_dias %} por el término de {{ plazo(plazo_dias) }}{% endif %}, a fin de que conteste lo que a su derecho convenga.-
+
+{% elif tipo == "vista" %}
+DESE VISTA a la parte {{ destinatario_rol }}{% if plazo_dias %} por el término de {{ plazo(plazo_dias) }}{% endif %}, para que exprese lo que estime pertinente.-
+
+{% elif tipo == "llamamiento_autos" %}
+LLÁMANSE AUTOS para resolver.-
+
+{% elif tipo == "autos_para_resolver" %}
+AUTOS PARA RESOLVER.-
+
+{% elif tipo == "notificacion" %}
+NOTIFÍQUESE a la parte {{ destinatario_rol }} de lo resuelto en autos.-
+
+{% elif tipo == "otro" %}
+{{ tipo_descripcion }}.-
+
+{% endif %}
+{% if texto_libre %}
+{{ texto_libre }}
+
+{% endif %}
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

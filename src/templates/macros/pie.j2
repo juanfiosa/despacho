@@ -1,0 +1,23 @@
+{# Pie de documento judicial — bloque de firma #}
+
+{% macro pie(juzgado, secretaria=None) -%}
+
+
+Regístrese, notifíquese y oportunamente archívese.-
+
+________________________________________
+{{ juzgado | upper }}
+{% if secretaria %}{{ secretaria }}
+{% endif %}Poder Judicial de la Provincia de Córdoba
+{%- endmacro %}
+
+{% macro pie_notifiquese(juzgado, secretaria=None) -%}
+
+
+Notifíquese.-
+
+________________________________________
+{{ juzgado | upper }}
+{% if secretaria %}{{ secretaria }}
+{% endif %}Poder Judicial de la Provincia de Córdoba
+{%- endmacro %}

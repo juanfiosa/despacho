@@ -1,0 +1,31 @@
+{#
+  Intimación de pago — juicio ejecutivo (art. 529 CPCC Córdoba, Ley 8465)
+  Input: IntimacionPagoInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import pesos, fecha_larga, plazo, desc_tasa, partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+Presentada la demanda ejecutiva por {{ partes_por_rol(partes, "actor") }}, y de conformidad
+con lo dispuesto por el art. 529 del Código Procesal Civil y Comercial de la
+Provincia de Córdoba (Ley 8465), INTÍMASE a {{ partes_por_rol(partes, "demandado") }} a
+abonar dentro del plazo de {{ plazo(plazo_dias) }}, en el domicilio
+{{ domicilio_intimacion }}, la suma de {{ pesos(datos_economicos.capital) }} en concepto
+de capital, con más los intereses calculados a la
+{{ desc_tasa(datos_economicos.tasa, datos_economicos.tasa_descripcion) }}
+desde el {{ fecha_larga(datos_economicos.fecha_mora) }} y hasta el efectivo pago
+{%- if datos_economicos.costas %}, con costas a cargo del ejecutado{% endif %}.-
+
+Bajo apercibimiento de ordenarse el embargo de bienes de su propiedad en
+cantidad suficiente para cubrir el capital reclamado, intereses y costas del
+proceso.-
+
+{% if texto_libre %}
+{{ texto_libre }}
+
+{% endif %}
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

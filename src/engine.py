@@ -1,0 +1,132 @@
+"""
+Motor de rendering de documentos judiciales.
+Convierte un modelo de input (Pydantic) en texto renderizado via Jinja2.
+"""
+
+from datetime import date
+from pathlib import Path
+from typing import Any
+
+from jinja2 import Environment, FileSystemLoader, StrictUndefined
+
+from .models.documentos.civil_comercial.ejecutivo import (
+    IntimacionPagoInput,
+    MandamientoPagoInput,
+    AutoAperturaPruebaInput,
+    DecretoTramiteInput,
+)
+
+# ---------------------------------------------------------------------------
+# Filtros personalizados
+# ---------------------------------------------------------------------------
+
+_MESES = [
+    "", "enero", "febrero", "marzo", "abril", "mayo", "junio",
+    "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
+]
+
+_UNIDADES = [
+    "", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete",
+    "ocho", "nueve", "diez", "once", "doce", "trece", "catorce",
+    "quince", "dieciséis", "diecisiete", "dieciocho", "diecinueve",
+]
+
+_DECENAS = [
+    "", "", "veinte", "treinta", "cuarenta", "cincuenta",
+    "sesenta", "setenta", "ochenta", "noventa",
+]
+
+
+def _numero_letras(n: int) -> str:
+    """Convierte entero 1-99 a palabras en español."""
+    if not 1 <= n <= 99:
+        return str(n)
+    if n < 20:
+        return _UNIDADES[n]
+    d, u = divmod(n, 10)
+    if u == 0:
+        return _DECENAS[d]
+    if d == 2:
+        return f"veinti{_UNIDADES[u]}"
+    return f"{_DECENAS[d]} y {_UNIDADES[u]}"
+
+
+def _nombre_mes(d: date) -> str:
+    return _MESES[d.month]
+
+
+# ---------------------------------------------------------------------------
+# Mapa: tipo de modelo → ruta de template
+# ---------------------------------------------------------------------------
+
+_TEMPLATE_MAP: dict[type, str] = {
+    IntimacionPagoInput:     "civil_comercial/ejecutivo/intimacion_pago.j2",
+    MandamientoPagoInput:    "civil_comercial/ejecutivo/mandamiento_pago.j2",
+    AutoAperturaPruebaInput: "civil_comercial/ejecutivo/auto_apertura_prueba.j2",
+    DecretoTramiteInput:     "civil_comercial/ejecutivo/decreto_tramite.j2",
+}
+
+# ---------------------------------------------------------------------------
+# Motor
+# ---------------------------------------------------------------------------
+
+_TEMPLATES_DIR = Path(__file__).parent / "templates"
+
+
+def _build_env() -> Environment:
+    env = Environment(
+        loader=FileSystemLoader(str(_TEMPLATES_DIR)),
+        undefined=StrictUndefined,
+        trim_blocks=True,
+        lstrip_blocks=True,
+        keep_trailing_newline=True,
+    )
+    env.filters["nombre_mes"] = _nombre_mes
+    env.filters["numero_letras"] = _numero_letras
+    return env
+
+
+_env = _build_env()
+
+
+def render(documento: Any, fecha_resolucion: date | None = None) -> str:
+    """
+    Renderiza un documento judicial a partir de su modelo de input.
+
+    Args:
+        documento: instancia de un modelo de input (ej. IntimacionPagoInput)
+        fecha_resolucion: fecha a usar en el encabezado (por defecto: hoy)
+
+    Returns:
+        Texto del documento listo para insertar en DOCX o HTML.
+
+    Raises:
+        KeyError: si el tipo de documento no tiene template registrado.
+        jinja2.UndefinedError: si el template referencia una variable no provista.
+    """
+    tipo = type(documento)
+    template_path = _TEMPLATE_MAP.get(tipo)
+    if template_path is None:
+        raise KeyError(f"No hay template registrado para {tipo.__name__}")
+
+    template = _env.get_template(template_path)
+
+    # Serializar el modelo a dict plano para el contexto de Jinja2
+    ctx: dict[str, Any] = documento.model_dump()
+    ctx["fecha_resolucion"] = fecha_resolucion or date.today()
+
+    # Re-inyectar objetos date reales (model_dump los convierte en date nativos, OK)
+    # Re-inyectar enums como strings para los comparadores en templates
+    ctx = _normalizar_enums(ctx)
+
+    return template.render(**ctx)
+
+
+def _normalizar_enums(obj: Any) -> Any:
+    """Convierte recursivamente enums a su valor string para uso en templates."""
+    if isinstance(obj, dict):
+        return {k: _normalizar_enums(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_normalizar_enums(i) for i in obj]
+    # Los Enum de str ya tienen .value como string; model_dump los entrega como valor
+    return obj

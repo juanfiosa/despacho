@@ -1,0 +1,31 @@
+{# Macros de formato para documentos judiciales de Córdoba #}
+
+{# Formatea un monto en pesos argentinos: $ 150.000,00 #}
+{% macro pesos(monto) -%}
+$ {{ "{:,.2f}".format(monto) | replace(",", "X") | replace(".", ",") | replace("X", ".") }}
+{%- endmacro %}
+
+{# Fecha en formato largo: "22 de mayo de 2026" #}
+{% macro fecha_larga(d) -%}
+{{ d.day }} de {{ d | nombre_mes }} de {{ d.year }}
+{%- endmacro %}
+
+{# Plazo con número y letras: "cinco (5) días hábiles" #}
+{% macro plazo(n) -%}
+{{ n | numero_letras }} ({{ n }}) día{{ "s" if n != 1 else "" }} hábil{{ "es" if n != 1 else "" }}
+{%- endmacro %}
+
+{# Descripción de la tasa de interés #}
+{% macro desc_tasa(tasa, descripcion=None) -%}
+{%- if tasa == "BNA_ACTIVA" -%}tasa activa del Banco de la Nación Argentina
+{%- elif tasa == "BNA_PASIVA" -%}tasa pasiva del Banco de la Nación Argentina
+{%- elif tasa == "BCRA_PASIVA" -%}tasa pasiva del Banco Central de la República Argentina
+{%- elif tasa == "OTRA" -%}{{ descripcion }}
+{%- endif -%}
+{%- endmacro %}
+
+{# Lista de partes por rol #}
+{% macro partes_por_rol(partes, rol) -%}
+{% set encontradas = partes | selectattr("rol", "equalto", rol) | list %}
+{% for p in encontradas %}{{ p.nombre }}{% if not loop.last %}, {% endif %}{% endfor %}
+{%- endmacro %}

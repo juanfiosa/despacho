@@ -1,0 +1,12 @@
+{# Encabezado estándar de documento judicial — Poder Judicial de Córdoba #}
+{% from "macros/formatos.j2" import fecha_larga %}
+
+{% macro encabezado(identificacion, fecha_resolucion) -%}
+{{ identificacion.ciudad }}, {{ fecha_larga(fecha_resolucion) }}.-
+
+AUTOS: "{{ identificacion.caratula }}"
+       (Expte. Nº {{ identificacion.numero }}).-
+
+{{ identificacion.juzgado | upper }}{% if identificacion.secretaria %} — {{ identificacion.secretaria }}{% endif %}
+
+{%- endmacro %}
