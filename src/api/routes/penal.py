@@ -16,6 +16,14 @@ from ...models.documentos.penal import (
     FijacionAudienciaDebateInput,
     SobreseimientoInput,
     DesestimacionDenunciaInput,
+    PrisionPreventivaInput,
+    CesePrisionPreventivaInput,
+    AdmisionPartesCivilesInput,
+    TrasladoVistaFiscalInput,
+    CitacionTestigosPeritosInput,
+    SuspensionJuicioPruebaInput,
+    ExtraccionTestimoniosInput,
+    ArchivoNotificacionInput,
 )
 
 router = APIRouter(prefix="/penal", tags=["Penal"])
@@ -181,4 +189,252 @@ def desestimacion_denuncia_docx(
         content=docx,
         media_type=_DOCX_MEDIA,
         headers={"Content-Disposition": 'attachment; filename="desestimacion_denuncia.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Prisión preventiva
+# ---------------------------------------------------------------------------
+
+@router.post("/prision-preventiva/preview", summary="Vista previa en texto")
+def prision_preventiva_preview(
+    body: PrisionPreventivaInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/prision-preventiva/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def prision_preventiva_docx(
+    body: PrisionPreventivaInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="prision_preventiva.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Cese de prisión preventiva
+# ---------------------------------------------------------------------------
+
+@router.post("/cese-prision-preventiva/preview", summary="Vista previa en texto")
+def cese_prision_preventiva_preview(
+    body: CesePrisionPreventivaInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/cese-prision-preventiva/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def cese_prision_preventiva_docx(
+    body: CesePrisionPreventivaInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="cese_prision_preventiva.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Admisión de partes civiles
+# ---------------------------------------------------------------------------
+
+@router.post("/admision-partes-civiles/preview", summary="Vista previa en texto")
+def admision_partes_civiles_preview(
+    body: AdmisionPartesCivilesInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/admision-partes-civiles/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def admision_partes_civiles_docx(
+    body: AdmisionPartesCivilesInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="admision_partes_civiles.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Traslado para vista fiscal
+# ---------------------------------------------------------------------------
+
+@router.post("/traslado-vista-fiscal/preview", summary="Vista previa en texto")
+def traslado_vista_fiscal_preview(
+    body: TrasladoVistaFiscalInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/traslado-vista-fiscal/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def traslado_vista_fiscal_docx(
+    body: TrasladoVistaFiscalInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="traslado_vista_fiscal.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Citación de testigos y peritos a debate
+# ---------------------------------------------------------------------------
+
+@router.post("/citacion-testigos-peritos/preview", summary="Vista previa en texto")
+def citacion_testigos_peritos_preview(
+    body: CitacionTestigosPeritosInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/citacion-testigos-peritos/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def citacion_testigos_peritos_docx(
+    body: CitacionTestigosPeritosInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="citacion_testigos_peritos.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Auto de suspensión del juicio a prueba (homologación)
+# ---------------------------------------------------------------------------
+
+@router.post("/suspension-juicio-prueba/preview", summary="Vista previa en texto")
+def suspension_juicio_prueba_preview(
+    body: SuspensionJuicioPruebaInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/suspension-juicio-prueba/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def suspension_juicio_prueba_docx(
+    body: SuspensionJuicioPruebaInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="suspension_juicio_prueba.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Decreto de extracción de testimonios
+# ---------------------------------------------------------------------------
+
+@router.post("/extraccion-testimonios/preview", summary="Vista previa en texto")
+def extraccion_testimonios_preview(
+    body: ExtraccionTestimoniosInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/extraccion-testimonios/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def extraccion_testimonios_docx(
+    body: ExtraccionTestimoniosInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="extraccion_testimonios.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Auto de archivo con notificación
+# ---------------------------------------------------------------------------
+
+@router.post("/archivo-notificacion/preview", summary="Vista previa en texto")
+def archivo_notificacion_preview(
+    body: ArchivoNotificacionInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/archivo-notificacion/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def archivo_notificacion_docx(
+    body: ArchivoNotificacionInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="archivo_notificacion.docx"'},
     )

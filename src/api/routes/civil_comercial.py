@@ -23,6 +23,13 @@ from ...models.documentos.civil_comercial import (
     AutoAperturaSuccesorioInput,
     DeclaratoriaHerederosInput,
     AutoSumarisimoCitacionInput,
+    CitacionHerederosAcreedoresInput,
+    AprobacionInventarioAvaluoInput,
+    CaducidadInstanciaInput,
+    DesignacionPeritoInput,
+    IntimacionCumplimientoSentenciaInput,
+    AutoDesgloseInput,
+    CitacionAudienciaConciliacionInput,
 )
 
 router = APIRouter(prefix="/civil-comercial", tags=["Civil y Comercial"])
@@ -380,6 +387,227 @@ def sumarisimo_citacion_docx(
         content=docx,
         media_type=_DOCX_MEDIA,
         headers={"Content-Disposition": 'attachment; filename="citacion_audiencia_sumarisimo.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Decreto de trámite
+# ---------------------------------------------------------------------------
+
+# ---------------------------------------------------------------------------
+# Sucesorio — Citación de herederos y acreedores
+# ---------------------------------------------------------------------------
+
+@router.post("/sucesorio/citacion-herederos/preview", summary="Vista previa en texto")
+def citacion_herederos_acreedores_preview(
+    body: CitacionHerederosAcreedoresInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/sucesorio/citacion-herederos/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def citacion_herederos_acreedores_docx(
+    body: CitacionHerederosAcreedoresInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="citacion_herederos_acreedores.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Sucesorio — Aprobación de inventario y avalúo
+# ---------------------------------------------------------------------------
+
+@router.post("/sucesorio/aprobacion-inventario/preview", summary="Vista previa en texto")
+def aprobacion_inventario_preview(
+    body: AprobacionInventarioAvaluoInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/sucesorio/aprobacion-inventario/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def aprobacion_inventario_docx(
+    body: AprobacionInventarioAvaluoInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="aprobacion_inventario_avaluo.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Incidentes — Caducidad de instancia
+# ---------------------------------------------------------------------------
+
+@router.post("/incidentes/caducidad-instancia/preview", summary="Vista previa en texto")
+def caducidad_instancia_preview(
+    body: CaducidadInstanciaInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/incidentes/caducidad-instancia/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def caducidad_instancia_docx(
+    body: CaducidadInstanciaInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="caducidad_instancia.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Incidentes — Designación de perito
+# ---------------------------------------------------------------------------
+
+@router.post("/incidentes/designacion-perito/preview", summary="Vista previa en texto")
+def designacion_perito_preview(
+    body: DesignacionPeritoInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/incidentes/designacion-perito/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def designacion_perito_docx(
+    body: DesignacionPeritoInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="designacion_perito.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Incidentes — Intimación a cumplir sentencia
+# ---------------------------------------------------------------------------
+
+@router.post("/incidentes/intimacion-cumplimiento-sentencia/preview", summary="Vista previa en texto")
+def intimacion_cumplimiento_sentencia_preview(
+    body: IntimacionCumplimientoSentenciaInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/incidentes/intimacion-cumplimiento-sentencia/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def intimacion_cumplimiento_sentencia_docx(
+    body: IntimacionCumplimientoSentenciaInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="intimacion_cumplimiento_sentencia.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Incidentes — Auto de desglose
+# ---------------------------------------------------------------------------
+
+@router.post("/incidentes/desglose/preview", summary="Vista previa en texto")
+def auto_desglose_preview(
+    body: AutoDesgloseInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/incidentes/desglose/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def auto_desglose_docx(
+    body: AutoDesgloseInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="auto_desglose.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Incidentes — Citación a audiencia de conciliación
+# ---------------------------------------------------------------------------
+
+@router.post("/incidentes/citacion-audiencia-conciliacion/preview", summary="Vista previa en texto")
+def citacion_audiencia_conciliacion_preview(
+    body: CitacionAudienciaConciliacionInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/incidentes/citacion-audiencia-conciliacion/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def citacion_audiencia_conciliacion_docx(
+    body: CitacionAudienciaConciliacionInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="citacion_audiencia_conciliacion.docx"'},
     )
 
 

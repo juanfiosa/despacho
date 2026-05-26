@@ -16,6 +16,11 @@ from ...models.documentos.familia import (
     AdmisionDivorcioInput,
     AdmisionComunicacionInput,
     HomologacionAcuerdoFamiliaInput,
+    ExclusionHogarInput,
+    RegimenComunicacionProvisorioInput,
+    IntimacionPagoCuotasAlimentariasInput,
+    AtribucionHogarConyugalInput,
+    CitacionConciliacionFamiliaInput,
 )
 
 router = APIRouter(prefix="/familia", tags=["Familia"])
@@ -182,4 +187,159 @@ def homologacion_acuerdo_docx(
         content=docx,
         media_type=_DOCX_MEDIA,
         headers={"Content-Disposition": 'attachment; filename="homologacion_acuerdo_familia.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Exclusión del hogar
+# ---------------------------------------------------------------------------
+
+@router.post("/exclusion-hogar/preview", summary="Vista previa en texto")
+def exclusion_hogar_preview(
+    body: ExclusionHogarInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/exclusion-hogar/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def exclusion_hogar_docx(
+    body: ExclusionHogarInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="exclusion_hogar.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Régimen de comunicación provisorio
+# ---------------------------------------------------------------------------
+
+@router.post("/comunicacion/regimen-provisorio/preview", summary="Vista previa en texto")
+def regimen_comunicacion_provisorio_preview(
+    body: RegimenComunicacionProvisorioInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/comunicacion/regimen-provisorio/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def regimen_comunicacion_provisorio_docx(
+    body: RegimenComunicacionProvisorioInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="regimen_comunicacion_provisorio.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Intimación de pago de cuotas alimentarias
+# ---------------------------------------------------------------------------
+
+@router.post("/alimentos/intimacion-pago-cuotas/preview", summary="Vista previa en texto")
+def intimacion_pago_cuotas_preview(
+    body: IntimacionPagoCuotasAlimentariasInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/alimentos/intimacion-pago-cuotas/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def intimacion_pago_cuotas_docx(
+    body: IntimacionPagoCuotasAlimentariasInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="intimacion_pago_cuotas_alimentarias.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Atribución del hogar conyugal
+# ---------------------------------------------------------------------------
+
+@router.post("/atribucion-hogar-conyugal/preview", summary="Vista previa en texto")
+def atribucion_hogar_conyugal_preview(
+    body: AtribucionHogarConyugalInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/atribucion-hogar-conyugal/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def atribucion_hogar_conyugal_docx(
+    body: AtribucionHogarConyugalInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="atribucion_hogar_conyugal.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Citación a audiencia de conciliación (familia)
+# ---------------------------------------------------------------------------
+
+@router.post("/citacion-conciliacion/preview", summary="Vista previa en texto")
+def citacion_conciliacion_familia_preview(
+    body: CitacionConciliacionFamiliaInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/citacion-conciliacion/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def citacion_conciliacion_familia_docx(
+    body: CitacionConciliacionFamiliaInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="citacion_conciliacion_familia.docx"'},
     )
