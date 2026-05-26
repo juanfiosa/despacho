@@ -1,0 +1,65 @@
+{#
+  Auto de declaratoria de herederos (arts. 2353 y ss. CCyCN; art. 655 CPCC Córdoba)
+  Input: DeclaratoriaHerederosInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+{% set herederos_list = partes | selectattr("rol", "equalto", "heredero") | list %}
+{% set requirente_list = partes | selectattr("rol", "equalto", "requirente") | list %}
+{% set actor_list = partes | selectattr("rol", "equalto", "actor") | list %}
+{% set presentantes = herederos_list if herederos_list else (requirente_list if requirente_list else actor_list) %}
+
+AUTOS Y VISTOS: La causa caratulada "{{ identificacion.caratula }}", iniciada
+en razón del fallecimiento de {{ causante_nombre }}, los edictos publicados
+conforme a lo ordenado en el auto de apertura del proceso sucesorio, y la
+documentación acreditante del vínculo presentada por los peticionarios.-
+
+CONSIDERANDO: I. Que vencido el plazo de publicación de edictos sin que se
+hubieran presentado otros interesados con igual o mejor derecho, y habiéndose
+acreditado debidamente el fallecimiento de {{ causante_nombre }} y el vínculo
+{% if vinculos %}{{ vinculos }}{% else %}invocado{% endif %}
+por los presentantes con la documentación acompañada, corresponde dictar la
+declaratoria de herederos en su favor (arts. 2353 y ss. CCyCN).-
+
+II. Que la presente resolución no importa pronunciamiento sobre la
+composición del acervo hereditario ni sobre los derechos y obligaciones de
+los herederos declarados entre sí, los que serán objeto de resolución en la
+etapa pertinente de este proceso.-
+
+SE RESUELVE:
+
+I. DECLARAR HEREDEROS del causante {{ causante_nombre }}
+{% if vinculos %}({{ vinculos }}){% endif %}
+a:
+{% for h in presentantes %}
+  - {{ h.nombre }}
+{% else %}
+  los peticionantes de autos,
+{% endfor %}
+con los derechos que les reconocen los arts. 2353 y concordantes del Código
+Civil y Comercial de la Nación.-
+{% if bienes_inmuebles %}
+
+II. ORDENAR la anotación marginal de la presente declaratoria en los Registros
+que correspondan respecto de los bienes inmuebles que integren el acervo
+hereditario (art. 2353 in fine CCyCN). OFÍCIESE al Registro General de la
+Provincia y a los registros seccionales que corresponda.-
+{% endif %}
+{% if bienes_muebles %}
+
+{{ "III" if bienes_inmuebles else "II" }}. ORDENAR la inscripción de la presente declaratoria ante el Registro
+Nacional del Automotor, Registro de Aeronaves y demás registros de bienes
+muebles registrables que corresponda. OFÍCIESE.-
+{% endif %}
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

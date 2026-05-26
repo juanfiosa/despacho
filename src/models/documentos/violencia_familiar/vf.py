@@ -1,8 +1,12 @@
 """
 Modelos de input para documentos de violencia familiar (Ley 9283, Córdoba).
 Documentos cubiertos:
-  - MedidasUrgentesVFInput → auto de medidas urgentes de protección
+  - MedidasUrgentesVFInput      → auto de medidas urgentes de protección
+  - CitacionAudienciaVFInput    → decreto de citación a audiencia (art. 27 Ley 9283)
 """
+
+from datetime import date
+from typing import Literal
 
 from pydantic import Field
 
@@ -48,3 +52,26 @@ class MedidasUrgentesVFInput(ExpedienteBase):
     def model_post_init(self, __context: object) -> None:
         if self.exclusion_hogar and not self.domicilio_hogar:
             raise ValueError("'domicilio_hogar' es obligatorio cuando exclusion_hogar=True")
+
+
+class CitacionAudienciaVFInput(ExpedienteBase):
+    """
+    Decreto de citación a audiencia en causa de violencia familiar
+    (art. 27 Ley 9283 Córdoba). Se utiliza para la audiencia de conciliación,
+    seguimiento de medidas o revisión periódica.
+    """
+    tipo_audiencia: Literal["conciliacion", "seguimiento", "revision"] = Field(
+        default="conciliacion",
+        description="Tipo de audiencia: conciliación / seguimiento de medidas / revisión periódica",
+    )
+    fecha_audiencia: date = Field(
+        description="Fecha de la audiencia",
+    )
+    hora_audiencia: str = Field(
+        default="09:00",
+        description="Hora de la audiencia en formato HH:MM",
+    )
+    sala: str | None = Field(
+        default=None,
+        description="Sala o número de despacho (opcional)",
+    )

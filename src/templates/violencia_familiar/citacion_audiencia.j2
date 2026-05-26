@@ -1,0 +1,51 @@
+{#
+  Decreto de citación a audiencia en causa de violencia familiar
+  (art. 27 Ley 9283, Córdoba)
+  Input: CitacionAudienciaVFInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+AUTOS Y VISTOS: El estado de la causa y la necesidad de dar cumplimiento con
+lo previsto en el art. 27 de la Ley Provincial N.° 9283 (Ley de Violencia
+Familiar), y
+
+CONSIDERANDO: Que habiendo tomado intervención este juzgado en la presente
+causa, corresponde convocar a las partes a audiencia de
+{% if tipo_audiencia == "conciliacion" %}conciliación
+{% elif tipo_audiencia == "seguimiento" %}seguimiento de las medidas de protección adoptadas
+{% elif tipo_audiencia == "revision" %}revisión periódica de las medidas de protección
+{% endif %}
+conforme lo establece el art. 27 de la Ley 9283.-
+
+SE RESUELVE:
+
+I. CONVOCAR a
+{{ partes_por_rol(partes, "denunciante") if partes | selectattr("rol", "equalto", "denunciante") | list else partes_por_rol(partes, "requirente") }}
+y a
+{{ partes_por_rol(partes, "denunciado") if partes | selectattr("rol", "equalto", "denunciado") | list else partes_por_rol(partes, "requerido") }}
+a audiencia de
+{% if tipo_audiencia == "conciliacion" %}conciliación
+{% elif tipo_audiencia == "seguimiento" %}seguimiento
+{% elif tipo_audiencia == "revision" %}revisión
+{% endif %}
+para el día {{ fecha_audiencia.day }} de {{ fecha_audiencia | nombre_mes }} de
+{{ fecha_audiencia.year }}, a las {{ hora_audiencia }} horas,
+{% if sala %}en Sala {{ sala }},{% endif %}
+con la presencia del Equipo Técnico interdisciplinario del Juzgado.-
+
+II. CITAR PERSONALMENTE a ambas partes con la debida anticipación, haciéndoles
+saber que deberán comparecer en forma personal (sin poder). En caso de
+incomparecencia injustificada de la parte denunciada se estará a lo previsto
+en el art. 27 inc. c) de la Ley 9283.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

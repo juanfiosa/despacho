@@ -1,0 +1,48 @@
+{#
+  Decreto de admisión de demanda sobre régimen de comunicación y citación a audiencia
+  (art. 555 CCyCN; CPF Ley 10305, Córdoba)
+  Input: AdmisionComunicacionInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+AUTOS Y VISTOS: La demanda sobre {{ objeto }} interpuesta por
+{{ partes_por_rol(partes, "actor") if partes | selectattr("rol", "equalto", "actor") | list else partes_por_rol(partes, "requirente") }}
+en contra de
+{{ partes_por_rol(partes, "demandado") if partes | selectattr("rol", "equalto", "demandado") | list else partes_por_rol(partes, "requerido") }}.-
+
+CONSIDERANDO: Que la demanda articulada reúne los requisitos de admisibilidad
+previstos en el Código de Procedimiento de Familia (Ley 10305) y las normas
+de los arts. 555 y concordantes del Código Civil y Comercial de la Nación,
+razón por la cual corresponde admitirla y convocar a las partes a audiencia
+preliminar a efectos de procurar un acuerdo sobre el régimen peticionado.-
+
+SE RESUELVE:
+
+I. ADMITIR la demanda sobre {{ objeto }} articulada por
+{{ partes_por_rol(partes, "actor") if partes | selectattr("rol", "equalto", "actor") | list else partes_por_rol(partes, "requirente") }}
+en contra de
+{{ partes_por_rol(partes, "demandado") if partes | selectattr("rol", "equalto", "demandado") | list else partes_por_rol(partes, "requerido") }}
+(art. 555 CCyCN).-
+
+II. CONVOCAR a las partes a audiencia preliminar para el día
+{{ fecha_audiencia.day }} de {{ fecha_audiencia | nombre_mes }} de
+{{ fecha_audiencia.year }}, a las {{ hora_audiencia }} horas,
+{% if sala %}en Sala {{ sala }},{% endif %}
+a efectos de procurar un acuerdo sobre el régimen de comunicación y, en caso
+de no arribar a él, ordenar la producción de la prueba pertinente.-
+
+III. CITAR Y EMPLAZAR a la parte demandada para que comparezca a la audiencia
+indicada, bajo apercibimiento de celebrarse la misma con prescindencia de su
+presencia. Notifíquese con copias.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

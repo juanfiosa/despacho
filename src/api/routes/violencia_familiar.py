@@ -10,7 +10,7 @@ from fastapi.responses import Response
 
 from ...engine import render
 from ...generador import texto_a_docx
-from ...models.documentos.violencia_familiar import MedidasUrgentesVFInput
+from ...models.documentos.violencia_familiar import MedidasUrgentesVFInput, CitacionAudienciaVFInput
 
 router = APIRouter(prefix="/violencia-familiar", tags=["Violencia Familiar"])
 
@@ -51,4 +51,35 @@ def medidas_urgentes_docx(
         content=docx,
         media_type=_DOCX_MEDIA,
         headers={"Content-Disposition": 'attachment; filename="medidas_urgentes_vf.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Citación a audiencia (art. 27 Ley 9283)
+# ---------------------------------------------------------------------------
+
+@router.post("/citacion-audiencia/preview", summary="Vista previa en texto")
+def citacion_audiencia_vf_preview(
+    body: CitacionAudienciaVFInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/citacion-audiencia/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def citacion_audiencia_vf_docx(
+    body: CitacionAudienciaVFInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="citacion_audiencia_vf.docx"'},
     )

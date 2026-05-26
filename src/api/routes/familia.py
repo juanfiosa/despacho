@@ -10,7 +10,12 @@ from fastapi.responses import Response
 
 from ...engine import render
 from ...generador import texto_a_docx
-from ...models.documentos.familia import AlimentosProvisioriosInput
+from ...models.documentos.familia import (
+    AlimentosProvisioriosInput,
+    AdmisionAlimentosInput,
+    AdmisionDivorcioInput,
+    AdmisionComunicacionInput,
+)
 
 router = APIRouter(prefix="/familia", tags=["Familia"])
 
@@ -51,4 +56,97 @@ def alimentos_provisorios_docx(
         content=docx,
         media_type=_DOCX_MEDIA,
         headers={"Content-Disposition": 'attachment; filename="alimentos_provisorios.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Admisión — alimentos
+# ---------------------------------------------------------------------------
+
+@router.post("/alimentos/admision/preview", summary="Vista previa en texto")
+def admision_alimentos_preview(
+    body: AdmisionAlimentosInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/alimentos/admision/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def admision_alimentos_docx(
+    body: AdmisionAlimentosInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="admision_alimentos.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Admisión — divorcio
+# ---------------------------------------------------------------------------
+
+@router.post("/divorcio/admision/preview", summary="Vista previa en texto")
+def admision_divorcio_preview(
+    body: AdmisionDivorcioInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/divorcio/admision/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def admision_divorcio_docx(
+    body: AdmisionDivorcioInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="admision_divorcio.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Admisión — régimen de comunicación
+# ---------------------------------------------------------------------------
+
+@router.post("/comunicacion/admision/preview", summary="Vista previa en texto")
+def admision_comunicacion_preview(
+    body: AdmisionComunicacionInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/comunicacion/admision/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def admision_comunicacion_docx(
+    body: AdmisionComunicacionInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="admision_comunicacion.docx"'},
     )

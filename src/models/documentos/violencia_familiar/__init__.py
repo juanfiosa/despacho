@@ -1,3 +1,3 @@
-from .vf import MedidasUrgentesVFInput
+from .vf import MedidasUrgentesVFInput, CitacionAudienciaVFInput
 
-__all__ = ["MedidasUrgentesVFInput"]
+__all__ = ["MedidasUrgentesVFInput", "CitacionAudienciaVFInput"]

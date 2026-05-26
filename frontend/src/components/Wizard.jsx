@@ -544,6 +544,39 @@ function buildPayload(fueroId, tipoDoc, expediente, camposDoc, juzgado) {
     plazo_contestacion_dias:              Number(camposDoc.plazo_contestacion_dias) || 30,
     requiere_expediente_administrativo:   camposDoc.requiere_expediente_administrativo !== false,
   }
+  if (tipoDoc === 'admision_alimentos') return {
+    ...base,
+    objeto:           camposDoc.objeto || 'fijación de cuota alimentaria',
+    fecha_audiencia:  camposDoc.fecha_audiencia || new Date().toISOString().split('T')[0],
+    hora_audiencia:   camposDoc.hora_audiencia || '09:00',
+    sala:             camposDoc.sala || null,
+  }
+  if (tipoDoc === 'admision_divorcio') return {
+    ...base,
+    tipo_divorcio:                   camposDoc.tipo_divorcio || 'unilateral',
+    plazo_retiro_documentos_dias:    Number(camposDoc.plazo_retiro_documentos_dias) || 10,
+  }
+  if (tipoDoc === 'admision_comunicacion') return {
+    ...base,
+    objeto:           camposDoc.objeto || 'fijación de régimen de comunicación y contacto',
+    fecha_audiencia:  camposDoc.fecha_audiencia || new Date().toISOString().split('T')[0],
+    hora_audiencia:   camposDoc.hora_audiencia || '09:00',
+    sala:             camposDoc.sala || null,
+  }
+  if (tipoDoc === 'citacion_audiencia_vf') return {
+    ...base,
+    tipo_audiencia:  camposDoc.tipo_audiencia || 'conciliacion',
+    fecha_audiencia: camposDoc.fecha_audiencia || new Date().toISOString().split('T')[0],
+    hora_audiencia:  camposDoc.hora_audiencia || '09:00',
+    sala:            camposDoc.sala || null,
+  }
+  if (tipoDoc === 'declaratoria_herederos') return {
+    ...base,
+    causante_nombre:   camposDoc.causante_nombre || '',
+    vinculos:          camposDoc.vinculos || null,
+    bienes_inmuebles:  camposDoc.bienes_inmuebles !== false,
+    bienes_muebles:    camposDoc.bienes_muebles !== false,
+  }
   return base
 }
 

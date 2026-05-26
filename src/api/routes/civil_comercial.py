@@ -20,6 +20,7 @@ from ...models.documentos.civil_comercial import (
     EmbargoPreventivoInput,
     InhibicionGeneralInput,
     AutoAperturaSuccesorioInput,
+    DeclaratoriaHerederosInput,
     AutoSumarisimoCitacionInput,
 )
 
@@ -285,6 +286,37 @@ def apertura_sucesorio_docx(
         content=docx,
         media_type=_DOCX_MEDIA,
         headers={"Content-Disposition": 'attachment; filename="auto_apertura_sucesorio.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Sucesorio — Declaratoria de herederos
+# ---------------------------------------------------------------------------
+
+@router.post("/sucesorio/declaratoria/preview", summary="Vista previa en texto")
+def declaratoria_herederos_preview(
+    body: DeclaratoriaHerederosInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/sucesorio/declaratoria/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def declaratoria_herederos_docx(
+    body: DeclaratoriaHerederosInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="declaratoria_herederos.docx"'},
     )
 
 

@@ -1,3 +1,13 @@
-from .familia import AlimentosProvisioriosInput
+from .familia import (
+    AlimentosProvisioriosInput,
+    AdmisionAlimentosInput,
+    AdmisionDivorcioInput,
+    AdmisionComunicacionInput,
+)
 
-__all__ = ["AlimentosProvisioriosInput"]
+__all__ = [
+    "AlimentosProvisioriosInput",
+    "AdmisionAlimentosInput",
+    "AdmisionDivorcioInput",
+    "AdmisionComunicacionInput",
+]

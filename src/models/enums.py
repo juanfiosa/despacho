@@ -131,3 +131,11 @@ class TipoDocumento(str, Enum):
     SUMARISIMO_CITACION = "sumarisimo_citacion"
     # Contencioso Administrativo
     ADMISIBILIDAD_CA = "admisibilidad_ca"
+    # Familia
+    ADMISION_ALIMENTOS = "admision_alimentos"
+    ADMISION_DIVORCIO = "admision_divorcio"
+    ADMISION_COMUNICACION = "admision_comunicacion"
+    # Violencia Familiar — audiencia
+    CITACION_AUDIENCIA_VF = "citacion_audiencia_vf"
+    # Civil/Sucesorio — declaratoria
+    DECLARATORIA_HEREDEROS = "declaratoria_herederos"

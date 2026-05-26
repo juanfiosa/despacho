@@ -23,11 +23,16 @@ from .models.documentos.civil_comercial.cautelares import (
     EmbargoPreventivoInput,
     InhibicionGeneralInput,
 )
-from .models.documentos.civil_comercial.sucesorio import AutoAperturaSuccesorioInput
+from .models.documentos.civil_comercial.sucesorio import AutoAperturaSuccesorioInput, DeclaratoriaHerederosInput
 from .models.documentos.civil_comercial.sumarisimo import AutoSumarisimoCitacionInput
 from .models.documentos.contencioso_administrativo import ContenciosoAdmisibilidadInput
-from .models.documentos.violencia_familiar import MedidasUrgentesVFInput
-from .models.documentos.familia import AlimentosProvisioriosInput
+from .models.documentos.violencia_familiar import MedidasUrgentesVFInput, CitacionAudienciaVFInput
+from .models.documentos.familia import (
+    AlimentosProvisioriosInput,
+    AdmisionAlimentosInput,
+    AdmisionDivorcioInput,
+    AdmisionComunicacionInput,
+)
 from .models.documentos.laboral import AutoAdmisionLaboralInput, AutoAperturaLaboralInput
 from .models.documentos.concursal import AutoAperturaConcursalInput, AutoDeclaracionQuiebraInput
 from .models.documentos.penal import CitacionImputacionInput, AutoElevacionJuicioInput, FijacionAudienciaDebateInput
@@ -90,14 +95,19 @@ _TEMPLATE_MAP: dict[type, str] = {
     InhibicionGeneralInput:          "civil_comercial/cautelares/inhibicion_general.j2",
     # Sucesorio
     AutoAperturaSuccesorioInput:     "civil_comercial/sucesorio/auto_apertura_sucesorio.j2",
+    DeclaratoriaHerederosInput:      "civil_comercial/sucesorio/declaratoria_herederos.j2",
     # Sumarísimo
     AutoSumarisimoCitacionInput:     "civil_comercial/sumarisimo/citacion_audiencia.j2",
     # Contencioso Administrativo
     ContenciosoAdmisibilidadInput:   "contencioso_administrativo/admisibilidad.j2",
     # Violencia Familiar
-    MedidasUrgentesVFInput:     "violencia_familiar/medidas_urgentes.j2",
+    MedidasUrgentesVFInput:          "violencia_familiar/medidas_urgentes.j2",
+    CitacionAudienciaVFInput:        "violencia_familiar/citacion_audiencia.j2",
     # Familia
-    AlimentosProvisioriosInput:  "familia/alimentos_provisorios.j2",
+    AlimentosProvisioriosInput:      "familia/alimentos_provisorios.j2",
+    AdmisionAlimentosInput:          "familia/admision_alimentos.j2",
+    AdmisionDivorcioInput:           "familia/admision_divorcio.j2",
+    AdmisionComunicacionInput:       "familia/admision_comunicacion.j2",
     # Laboral
     AutoAdmisionLaboralInput:    "laboral/auto_admision.j2",
     AutoAperturaLaboralInput:    "laboral/auto_apertura_prueba.j2",

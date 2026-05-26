@@ -1,0 +1,51 @@
+{#
+  Decreto de admisión de demanda de alimentos y citación a audiencia
+  (arts. 2 y 3 CPF Ley 10305; art. 544 CCyCN — Córdoba)
+  Input: AdmisionAlimentosInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+AUTOS Y VISTOS: La demanda de alimentos interpuesta por
+{{ partes_por_rol(partes, "actor") if partes | selectattr("rol", "equalto", "actor") | list else partes_por_rol(partes, "requirente") }}
+en contra de
+{{ partes_por_rol(partes, "demandado") if partes | selectattr("rol", "equalto", "demandado") | list else partes_por_rol(partes, "requerido") }},
+por {{ objeto }}.-
+
+CONSIDERANDO: Que la demanda reúne los requisitos de admisibilidad previstos
+en el Código de Procedimiento de Familia de la Provincia de Córdoba (Ley 10305),
+habiéndose acreditado el vínculo y la legitimación de las partes, razón por la
+cual corresponde admitirla y citar a las partes a audiencia preliminar conforme
+al procedimiento contemplado en dicho cuerpo normativo y lo dispuesto por los
+arts. 543 y 544 del Código Civil y Comercial de la Nación.-
+
+SE RESUELVE:
+
+I. ADMITIR la demanda de alimentos articulada por
+{{ partes_por_rol(partes, "actor") if partes | selectattr("rol", "equalto", "actor") | list else partes_por_rol(partes, "requirente") }}
+en contra de
+{{ partes_por_rol(partes, "demandado") if partes | selectattr("rol", "equalto", "demandado") | list else partes_por_rol(partes, "requerido") }},
+por {{ objeto }}.-
+
+II. CONVOCAR a las partes a audiencia preliminar para el día
+{{ fecha_audiencia.day }} de {{ fecha_audiencia | nombre_mes }} de
+{{ fecha_audiencia.year }}, a las {{ hora_audiencia }} horas,
+{% if sala %}en Sala {{ sala }},{% endif %}
+bajo apercibimiento de lo dispuesto en el Código de Procedimiento de Familia en
+caso de incomparecencia injustificada.-
+
+III. CITAR Y EMPLAZAR a la parte demandada para que comparezca a la audiencia
+indicada y, en su caso, ofrezca prueba, bajo apercibimiento de celebrarse la
+misma con prescindencia de su presencia. Notifíquese con copias de la demanda
+y documentación adjunta.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

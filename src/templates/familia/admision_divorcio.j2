@@ -1,0 +1,70 @@
+{#
+  Decreto de admisión formal de divorcio vincular (arts. 437-438 CCyCN)
+  Input: AdmisionDivorcioInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+{% if tipo_divorcio == "bilateral" %}
+AUTOS Y VISTOS: La petición de divorcio vincular presentada de común acuerdo
+por {{ partes_por_rol(partes, "actor") }} y {{ partes_por_rol(partes, "demandado") }},
+con el convenio regulador adjunto (art. 438 CCyCN).-
+
+CONSIDERANDO: Que el pedido conjunto de divorcio presentado por ambos cónyuges
+reúne los requisitos previstos en los arts. 437 y 438 del Código Civil y
+Comercial de la Nación y las normas procesales del Código de Procedimiento de
+Familia (Ley 10305), habiéndose acompañado convenio regulador, razón por la
+cual corresponde admitir la petición y dar trámite conforme a la normativa
+aplicable.-
+{% else %}
+AUTOS Y VISTOS: La demanda de divorcio vincular interpuesta por
+{{ partes_por_rol(partes, "actor") }} contra {{ partes_por_rol(partes, "demandado") }}
+(art. 437 CCyCN).-
+
+CONSIDERANDO: Que la demanda de divorcio reúne los requisitos de admisibilidad
+previstos en los arts. 437 y 438 del Código Civil y Comercial de la Nación y en
+el Código de Procedimiento de Familia de la Provincia de Córdoba (Ley 10305),
+razón por la cual corresponde admitirla y ordenar el traslado a la parte
+demandada para que, en el plazo de ley, plantee el convenio regulador o
+manifieste su oposición al propuesto.-
+{% endif %}
+
+SE RESUELVE:
+
+{% if tipo_divorcio == "bilateral" %}
+I. ADMITIR la petición conjunta de divorcio vincular formulada por
+{{ partes_por_rol(partes, "actor") }} y {{ partes_por_rol(partes, "demandado") }}
+(art. 437 CCyCN).-
+
+II. TENER POR PRESENTADO el convenio regulador adjunto. Oportunamente se
+resolverá sobre su homologación.-
+
+III. ORDENAR que las partes retiren la documentación presentada para su
+protocolización notarial dentro del plazo de {{ plazo_retiro_documentos_dias }}
+({{ plazo_retiro_documentos_dias | numero_letras }}) días hábiles de notificado
+el presente.-
+{% else %}
+I. ADMITIR la demanda de divorcio vincular articulada por
+{{ partes_por_rol(partes, "actor") }} contra {{ partes_por_rol(partes, "demandado") }}
+(art. 437 CCyCN).-
+
+II. CORRER TRASLADO a la parte demandada por el término de ley para que
+conteste la demanda y presente convenio regulador, bajo apercibimiento de lo
+dispuesto en el art. 438 CCyCN. Notifíquese con copias.-
+
+III. ORDENAR que las partes retiren la documentación presentada para su
+protocolización notarial dentro del plazo de {{ plazo_retiro_documentos_dias }}
+({{ plazo_retiro_documentos_dias | numero_letras }}) días hábiles de notificado
+el presente.-
+{% endif %}
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

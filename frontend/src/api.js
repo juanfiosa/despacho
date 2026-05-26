@@ -60,6 +60,14 @@ const PATHS_PREVIEW = {
   sumarisimo_citacion:     '/civil-comercial/sumarisimo/citacion-audiencia/preview',
   // Contencioso Administrativo
   admisibilidad_ca:        '/contencioso-administrativo/admisibilidad/preview',
+  // Familia
+  admision_alimentos:      '/familia/alimentos/admision/preview',
+  admision_divorcio:       '/familia/divorcio/admision/preview',
+  admision_comunicacion:   '/familia/comunicacion/admision/preview',
+  // Violencia Familiar — audiencia
+  citacion_audiencia_vf:   '/violencia-familiar/citacion-audiencia/preview',
+  // Sucesorio — declaratoria
+  declaratoria_herederos:  '/civil-comercial/sucesorio/declaratoria/preview',
 }
 const PATHS_DOCX = {
   // Ejecutivo
@@ -95,6 +103,14 @@ const PATHS_DOCX = {
   sumarisimo_citacion:     '/civil-comercial/sumarisimo/citacion-audiencia/docx',
   // Contencioso Administrativo
   admisibilidad_ca:        '/contencioso-administrativo/admisibilidad/docx',
+  // Familia
+  admision_alimentos:      '/familia/alimentos/admision/docx',
+  admision_divorcio:       '/familia/divorcio/admision/docx',
+  admision_comunicacion:   '/familia/comunicacion/admision/docx',
+  // Violencia Familiar — audiencia
+  citacion_audiencia_vf:   '/violencia-familiar/citacion-audiencia/docx',
+  // Sucesorio — declaratoria
+  declaratoria_herederos:  '/civil-comercial/sucesorio/declaratoria/docx',
 }
 
 export async function previewDocumento(tipo, payload, fechaResolucion) {

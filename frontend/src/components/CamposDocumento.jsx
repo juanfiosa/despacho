@@ -510,6 +510,93 @@ export default function CamposDocumento({ tipo, valores, onChange }) {
         </Seccion>
       </>}
 
+      {/* ── Admisión alimentos ── */}
+      {tipo === 'admision_alimentos' && <>
+        <Seccion titulo="Objeto del proceso">
+          <Campo label="Objeto" placeholder="fijación de cuota alimentaria"
+            value={valores.objeto || ''} onChange={v => set('objeto', v)} />
+        </Seccion>
+        <Seccion titulo="Audiencia de conciliación">
+          <Grilla>
+            <Campo label="Fecha de la audiencia" type="date"
+              value={valores.fecha_audiencia || ''} onChange={v => set('fecha_audiencia', v)} />
+            <Campo label="Hora (HH:MM)" placeholder="09:00"
+              value={valores.hora_audiencia || ''} onChange={v => set('hora_audiencia', v)} />
+          </Grilla>
+          <Campo label="Sala (opcional)" placeholder="Sala 3"
+            value={valores.sala || ''} onChange={v => set('sala', v)} />
+        </Seccion>
+      </>}
+
+      {/* ── Admisión divorcio ── */}
+      {tipo === 'admision_divorcio' && <>
+        <Seccion titulo="Tipo de petición">
+          <SelectField label="Tipo de divorcio" opciones={[
+            { value: 'unilateral', label: 'Unilateral (pedido por uno de los cónyuges)' },
+            { value: 'bilateral',  label: 'Bilateral / Conjunto (ambos cónyuges de común acuerdo)' },
+          ]} value={valores.tipo_divorcio || 'unilateral'} onChange={v => set('tipo_divorcio', v)} />
+          <Campo label="Plazo para retiro de documentación (días hábiles)" type="number" placeholder="10"
+            value={valores.plazo_retiro_documentos_dias || ''} onChange={v => set('plazo_retiro_documentos_dias', v)} />
+        </Seccion>
+      </>}
+
+      {/* ── Admisión régimen de comunicación ── */}
+      {tipo === 'admision_comunicacion' && <>
+        <Seccion titulo="Objeto del proceso">
+          <Campo label="Objeto" placeholder="fijación de régimen de comunicación y contacto"
+            value={valores.objeto || ''} onChange={v => set('objeto', v)} />
+        </Seccion>
+        <Seccion titulo="Audiencia de conciliación">
+          <Grilla>
+            <Campo label="Fecha de la audiencia" type="date"
+              value={valores.fecha_audiencia || ''} onChange={v => set('fecha_audiencia', v)} />
+            <Campo label="Hora (HH:MM)" placeholder="09:00"
+              value={valores.hora_audiencia || ''} onChange={v => set('hora_audiencia', v)} />
+          </Grilla>
+          <Campo label="Sala (opcional)" placeholder="Sala 3"
+            value={valores.sala || ''} onChange={v => set('sala', v)} />
+        </Seccion>
+      </>}
+
+      {/* ── Citación a audiencia VF ── */}
+      {tipo === 'citacion_audiencia_vf' && <>
+        <Seccion titulo="Tipo de audiencia">
+          <SelectField label="Tipo" opciones={[
+            { value: 'conciliacion', label: 'Audiencia de conciliación (art. 27 Ley 9283)' },
+            { value: 'seguimiento',  label: 'Audiencia de seguimiento de medidas' },
+            { value: 'revision',     label: 'Audiencia de revisión periódica' },
+          ]} value={valores.tipo_audiencia || 'conciliacion'} onChange={v => set('tipo_audiencia', v)} />
+        </Seccion>
+        <Seccion titulo="Fecha y lugar">
+          <Grilla>
+            <Campo label="Fecha de la audiencia" type="date"
+              value={valores.fecha_audiencia || ''} onChange={v => set('fecha_audiencia', v)} />
+            <Campo label="Hora (HH:MM)" placeholder="09:00"
+              value={valores.hora_audiencia || ''} onChange={v => set('hora_audiencia', v)} />
+          </Grilla>
+          <Campo label="Sala (opcional)" placeholder="Sala 3"
+            value={valores.sala || ''} onChange={v => set('sala', v)} />
+        </Seccion>
+      </>}
+
+      {/* ── Declaratoria de herederos ── */}
+      {tipo === 'declaratoria_herederos' && <>
+        <Seccion titulo="Causante">
+          <Campo label="Nombre del causante"
+            placeholder="Juan Carlos García"
+            value={valores.causante_nombre || ''} onChange={v => set('causante_nombre', v)} />
+          <Campo label="Vínculo invocado (opcional)"
+            placeholder="en calidad de hijos y cónyuge supérstite"
+            value={valores.vinculos || ''} onChange={v => set('vinculos', v)} />
+        </Seccion>
+        <Seccion titulo="Alcance de la declaratoria">
+          <CheckField label="Incluye bienes inmuebles (se ordena anotación registral)"
+            checked={valores.bienes_inmuebles !== false} onChange={v => set('bienes_inmuebles', v)} />
+          <CheckField label="Incluye bienes muebles registrables"
+            checked={valores.bienes_muebles !== false} onChange={v => set('bienes_muebles', v)} />
+        </Seccion>
+      </>}
+
       {/* ── Admisibilidad Contencioso Administrativo ── */}
       {tipo === 'admisibilidad_ca' && <>
         <Seccion titulo="Objeto de la acción">

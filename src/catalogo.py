@@ -311,13 +311,13 @@ _CIVIL_COMERCIAL = Fuero(
                 Etapa(
                     id="declaratoria",
                     label="Declaratoria de herederos",
-                    descripcion="Trámites previos a la declaratoria de herederos",
+                    descripcion="Auto que reconoce la vocación hereditaria de los presentantes",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="decreto_tramite",
-                            label="Citación de acreedores",
-                            descripcion="Ordena la publicación de edictos para citar acreedores",
-                            norma="Art. 3357 CCyCN / Art. 655 CPCC",
+                            tipo="declaratoria_herederos",
+                            label="Auto de declaratoria de herederos",
+                            descripcion="Declara herederos a los presentantes y ordena anotaciones registrales",
+                            norma="Arts. 2353 y ss. CCyCN",
                         ),
                     ],
                 ),
@@ -437,10 +437,10 @@ _FAMILIA = Fuero(
                     descripcion="Admite la demanda y cita al demandado a audiencia",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="decreto_tramite",
+                            tipo="admision_alimentos",
                             label="Decreto de admisión y citación a audiencia",
-                            descripcion="Admite la demanda de alimentos y fija audiencia",
-                            norma="Art. 638 CCyCN / CPF Ley 10305",
+                            descripcion="Admite la demanda de alimentos y fija audiencia de conciliación",
+                            norma="Art. 544 CCyCN / CPF Ley 10305",
                         ),
                     ],
                 ),
@@ -483,10 +483,10 @@ _FAMILIA = Fuero(
                     descripcion="Tiene por presentada la petición de divorcio",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="decreto_tramite",
+                            tipo="admision_divorcio",
                             label="Decreto de admisión",
-                            descripcion="Admite la petición y fija audiencia si es unilateral",
-                            norma="Art. 437 CCyCN / CPF Ley 10305",
+                            descripcion="Admite la petición de divorcio y corre traslado o tiene por presentado el convenio regulador",
+                            norma="Arts. 437-438 CCyCN",
                         ),
                     ],
                 ),
@@ -503,10 +503,10 @@ _FAMILIA = Fuero(
                     descripcion="Admite y fija audiencia para intentar acuerdo",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="decreto_tramite",
+                            tipo="admision_comunicacion",
                             label="Decreto de admisión y citación",
-                            descripcion="Admite la petición y cita a las partes a audiencia",
-                            norma="Art. 656 CCyCN",
+                            descripcion="Admite la petición y cita a las partes a audiencia de conciliación",
+                            norma="Art. 555 CCyCN / CPF Ley 10305",
                         ),
                     ],
                 ),
@@ -668,13 +668,13 @@ _VIOLENCIA_FAMILIAR = Fuero(
                 Etapa(
                     id="audiencia",
                     label="Audiencia de partes",
-                    descripcion="Citación a audiencia para escuchar a las partes",
+                    descripcion="Citación a audiencia para escuchar a las partes (art. 27 Ley 9283)",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="decreto_tramite",
+                            tipo="citacion_audiencia_vf",
                             label="Citación a audiencia",
-                            descripcion="Cita a ambas partes a audiencia",
-                            norma="Art. 28 Ley 9283",
+                            descripcion="Cita a ambas partes a audiencia de conciliación/seguimiento con el equipo técnico",
+                            norma="Art. 27 Ley 9283",
                         ),
                     ],
                 ),
