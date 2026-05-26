@@ -232,12 +232,12 @@ _CIVIL_COMERCIAL = Fuero(
                 Etapa(
                     id="admision",
                     label="Admisión y citación",
-                    descripcion="Admite la demanda y cita al demandado a audiencia",
+                    descripcion="Admite la demanda y cita al demandado a audiencia única",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="decreto_tramite",
+                            tipo="sumarisimo_citacion",
                             label="Decreto de admisión y citación a audiencia",
-                            descripcion="Admite la demanda y fija audiencia",
+                            descripcion="Admite la demanda sumarísima, emplaza al demandado y fija fecha de audiencia única",
                             norma="Art. 418 CPCC",
                         ),
                     ],
@@ -301,10 +301,10 @@ _CIVIL_COMERCIAL = Fuero(
                     descripcion="Auto que declara abierto el proceso sucesorio",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="decreto_tramite",
+                            tipo="apertura_sucesorio",
                             label="Auto de apertura del sucesorio",
-                            descripcion="Declara abierto el proceso sucesorio y ordena publicación de edictos",
-                            norma="Art. 655 CPCC",
+                            descripcion="Declara abierto el sucesorio, ordena edictos y designa perito valuador",
+                            norma="Art. 655 CPCC / Art. 2340 CCyCN",
                         ),
                     ],
                 ),
@@ -535,9 +535,9 @@ _CONTENCIOSO = Fuero(
                     descripcion="Examen de admisibilidad formal de la demanda",
                     documentos=[
                         DocumentoDisponible(
-                            tipo="decreto_tramite",
+                            tipo="admisibilidad_ca",
                             label="Decreto de admisibilidad",
-                            descripcion="Declara formalmente admisible la acción y corre traslado",
+                            descripcion="Declara admisible la acción, corre traslado y requiere el expediente administrativo",
                             norma="Art. 13 CPCA",
                         ),
                     ],

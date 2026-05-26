@@ -23,6 +23,9 @@ from .models.documentos.civil_comercial.cautelares import (
     EmbargoPreventivoInput,
     InhibicionGeneralInput,
 )
+from .models.documentos.civil_comercial.sucesorio import AutoAperturaSuccesorioInput
+from .models.documentos.civil_comercial.sumarisimo import AutoSumarisimoCitacionInput
+from .models.documentos.contencioso_administrativo import ContenciosoAdmisibilidadInput
 from .models.documentos.violencia_familiar import MedidasUrgentesVFInput
 from .models.documentos.familia import AlimentosProvisioriosInput
 from .models.documentos.laboral import AutoAdmisionLaboralInput, AutoAperturaLaboralInput
@@ -83,8 +86,14 @@ _TEMPLATE_MAP: dict[type, str] = {
     TrasladoDemandaInput:       "civil_comercial/ordinario/traslado_demanda.j2",
     AutoAperturaOrdinarioInput: "civil_comercial/ordinario/auto_apertura_prueba.j2",
     # Cautelares
-    EmbargoPreventivoInput:     "civil_comercial/cautelares/embargo_preventivo.j2",
-    InhibicionGeneralInput:     "civil_comercial/cautelares/inhibicion_general.j2",
+    EmbargoPreventivoInput:          "civil_comercial/cautelares/embargo_preventivo.j2",
+    InhibicionGeneralInput:          "civil_comercial/cautelares/inhibicion_general.j2",
+    # Sucesorio
+    AutoAperturaSuccesorioInput:     "civil_comercial/sucesorio/auto_apertura_sucesorio.j2",
+    # Sumarísimo
+    AutoSumarisimoCitacionInput:     "civil_comercial/sumarisimo/citacion_audiencia.j2",
+    # Contencioso Administrativo
+    ContenciosoAdmisibilidadInput:   "contencioso_administrativo/admisibilidad.j2",
     # Violencia Familiar
     MedidasUrgentesVFInput:     "violencia_familiar/medidas_urgentes.j2",
     # Familia

@@ -19,6 +19,8 @@ from ...models.documentos.civil_comercial import (
     AutoAperturaOrdinarioInput,
     EmbargoPreventivoInput,
     InhibicionGeneralInput,
+    AutoAperturaSuccesorioInput,
+    AutoSumarisimoCitacionInput,
 )
 
 router = APIRouter(prefix="/civil-comercial", tags=["Civil y Comercial"])
@@ -252,6 +254,68 @@ def inhibicion_general_docx(
         content=docx,
         media_type=_DOCX_MEDIA,
         headers={"Content-Disposition": 'attachment; filename="inhibicion_general.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Sucesorio — Auto de apertura
+# ---------------------------------------------------------------------------
+
+@router.post("/sucesorio/apertura/preview", summary="Vista previa en texto")
+def apertura_sucesorio_preview(
+    body: AutoAperturaSuccesorioInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/sucesorio/apertura/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def apertura_sucesorio_docx(
+    body: AutoAperturaSuccesorioInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="auto_apertura_sucesorio.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Sumarísimo — Citación a audiencia
+# ---------------------------------------------------------------------------
+
+@router.post("/sumarisimo/citacion-audiencia/preview", summary="Vista previa en texto")
+def sumarisimo_citacion_preview(
+    body: AutoSumarisimoCitacionInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/sumarisimo/citacion-audiencia/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def sumarisimo_citacion_docx(
+    body: AutoSumarisimoCitacionInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="citacion_audiencia_sumarisimo.docx"'},
     )
 
 

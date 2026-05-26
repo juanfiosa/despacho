@@ -1,0 +1,64 @@
+{#
+  Auto de apertura del proceso sucesorio (art. 655 CPCC Córdoba)
+  Input: AutoAperturaSuccesorioInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+AUTO NÚMERO: _______________
+
+AUTOS Y VISTOS: El pedido de apertura del proceso sucesorio formulado por
+{{ partes_por_rol(partes, "requirente") if partes | selectattr("rol", "equalto", "requirente") | list else partes_por_rol(partes, "actor") }},
+en relación al fallecimiento de {{ fallecido_nombre }}, ocurrido el día
+{{ fallecido_fecha_muerte.day }} de {{ fallecido_fecha_muerte | nombre_mes }} de
+{{ fallecido_fecha_muerte.year }}, con último domicilio en
+{{ fallecido_domicilio }}, y la documentación acompañada.-
+
+CONSIDERANDO: I. Que acreditado el fallecimiento del causante
+{{ fallecido_nombre }}, con último domicilio en esta jurisdicción, y
+habiendo los presentantes acreditado su legitimación para promover el proceso
+sucesorio, corresponde declararlo abierto (arts. 655 y ss. CPCC Córdoba,
+arts. 2335 y 2336 CCyCN).-
+
+II. Que a los efectos de garantizar la publicidad del llamamiento a los
+interesados, corresponde ordenar la publicación de edictos en el Boletín
+Oficial de la Provincia de Córdoba (art. 2340 CCyCN).-
+{% if inventario_judicial %}
+
+III. Que atento las constancias de autos, corresponde disponer el inventario
+y avalúo judicial de los bienes relictos (art. 2341 CCyCN).-
+{% endif %}
+
+SE RESUELVE:
+
+I. DECLARAR ABIERTO el proceso sucesorio de {{ fallecido_nombre }}, fallecido
+el {{ fallecido_fecha_muerte.day }} de {{ fallecido_fecha_muerte | nombre_mes }}
+de {{ fallecido_fecha_muerte.year }}, con último domicilio en
+{{ fallecido_domicilio }} (art. 655 CPCC).-
+
+II. ORDENAR la publicación de edictos por el término de {{ dias_edictos }}
+({{ dias_edictos | numero_letras }}) días en el Boletín Oficial de la Provincia
+de Córdoba, citando a todos los que se crean con derecho a la herencia para
+que comparezcan dentro del plazo de ley a hacer valer sus derechos
+(art. 2340 CCyCN). OFÍCIESE.-
+{% if perito_valuador_nombre %}
+
+III. DESIGNAR al/a la {{ perito_valuador_nombre }} como perito tasador/valuador
+de los bienes del acervo hereditario. Notifíquese y requiérase aceptación
+del cargo.-
+{% endif %}
+{% if inventario_judicial %}
+
+{{ "IV" if perito_valuador_nombre else "III" }}. ORDENAR el inventario y avalúo judicial de los bienes relictos
+(art. 2341 CCyCN), a practicarse por el perito designado dentro del plazo de
+treinta (30) días de aceptado el cargo.-
+{% endif %}
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

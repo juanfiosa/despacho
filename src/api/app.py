@@ -18,6 +18,7 @@ from .routes import (
     concursal_router,
     penal_router,
     ninez_router,
+    contencioso_router,
     calculadora_router,
     catalogo_router,
 )
@@ -42,15 +43,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(catalogo_router,           prefix="/api/v1")
-app.include_router(civil_comercial_router,    prefix="/api/v1")
-app.include_router(violencia_familiar_router, prefix="/api/v1")
-app.include_router(familia_router,            prefix="/api/v1")
-app.include_router(laboral_router,            prefix="/api/v1")
-app.include_router(concursal_router,          prefix="/api/v1")
-app.include_router(penal_router,              prefix="/api/v1")
-app.include_router(ninez_router,              prefix="/api/v1")
-app.include_router(calculadora_router,        prefix="/api/v1")
+app.include_router(catalogo_router,             prefix="/api/v1")
+app.include_router(civil_comercial_router,      prefix="/api/v1")
+app.include_router(violencia_familiar_router,   prefix="/api/v1")
+app.include_router(familia_router,              prefix="/api/v1")
+app.include_router(laboral_router,              prefix="/api/v1")
+app.include_router(concursal_router,            prefix="/api/v1")
+app.include_router(penal_router,                prefix="/api/v1")
+app.include_router(ninez_router,                prefix="/api/v1")
+app.include_router(contencioso_router,          prefix="/api/v1")
+app.include_router(calculadora_router,          prefix="/api/v1")
 
 
 @app.get("/health", tags=["Sistema"])

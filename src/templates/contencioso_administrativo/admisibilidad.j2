@@ -1,0 +1,52 @@
+{#
+  Decreto de admisibilidad formal de la acción contencioso administrativa
+  (art. 13 CPCA Ley 7182, Córdoba)
+  Input: ContenciosoAdmisibilidadInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+AUTOS Y VISTOS: La acción contencioso administrativa articulada por
+{{ partes_por_rol(partes, "actor") }} contra {{ organismo_demandado }},
+por {{ objeto_accion }}, y la documentación adjunta.-
+
+CONSIDERANDO: I. Que examinada la demanda en los términos del art. 13 del
+Código de Procedimiento Contencioso Administrativo de la Provincia de Córdoba
+(Ley 7182), la acción reúne en forma aparente los requisitos de admisibilidad
+formal previstos en dicha norma y concordantes, razón por la cual corresponde
+declararla formalmente admisible.-
+
+II. Que en consecuencia corresponde correr traslado al organismo demandado y
+requerir la remisión del expediente administrativo que motivó la acción, a
+fin de que obre en autos como prueba.-
+
+SE RESUELVE:
+
+I. DECLARAR FORMALMENTE ADMISIBLE la acción contencioso administrativa
+articulada por {{ partes_por_rol(partes, "actor") }} contra
+{{ organismo_demandado }}, por {{ objeto_accion }} (art. 13 CPCA).-
+
+II. CORRER TRASLADO DE LA DEMANDA a {{ organismo_demandado }} por el plazo
+de {{ plazo_contestacion_dias }} ({{ plazo_contestacion_dias | numero_letras }})
+días hábiles, a fin de que comparezca y la conteste, bajo apercibimiento de
+ser declarado rebelde. Notifíquese mediante oficio.-
+{% if requiere_expediente_administrativo %}
+
+III. REQUERIR a {{ organismo_demandado }} la remisión del expediente
+administrativo original que motivó la acción, dentro del plazo de
+{{ plazo_contestacion_dias }} días hábiles, bajo apercibimiento de tenerlo
+por reconocido en su contenido (art. 14 CPCA). OFÍCIESE.-
+{% endif %}
+
+{{ "IV" if requiere_expediente_administrativo else "III" }}. Notifíquese a la parte actora en el domicilio constituido.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

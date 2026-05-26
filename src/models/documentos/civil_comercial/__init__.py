@@ -15,6 +15,8 @@ from .cautelares import (
     EmbargoPreventivoInput,
     InhibicionGeneralInput,
 )
+from .sucesorio import AutoAperturaSuccesorioInput
+from .sumarisimo import AutoSumarisimoCitacionInput
 
 __all__ = [
     "IntimacionPagoInput",
@@ -28,4 +30,6 @@ __all__ = [
     "AutoAperturaOrdinarioInput",
     "EmbargoPreventivoInput",
     "InhibicionGeneralInput",
+    "AutoAperturaSuccesorioInput",
+    "AutoSumarisimoCitacionInput",
 ]

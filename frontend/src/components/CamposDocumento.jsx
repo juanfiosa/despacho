@@ -462,6 +462,72 @@ export default function CamposDocumento({ tipo, valores, onChange }) {
         </Seccion>
       </>}
 
+      {/* ── Auto apertura sucesorio ── */}
+      {tipo === 'apertura_sucesorio' && <>
+        <Seccion titulo="Datos del causante">
+          <Campo label="Nombre del causante"
+            placeholder="Juan Carlos García"
+            value={valores.fallecido_nombre || ''} onChange={v => set('fallecido_nombre', v)} />
+          <Grilla>
+            <Campo label="Fecha de fallecimiento" type="date"
+              value={valores.fallecido_fecha_muerte || ''} onChange={v => set('fallecido_fecha_muerte', v)} />
+            <Campo label="Último domicilio"
+              placeholder="Av. Colón 123, Córdoba"
+              value={valores.fallecido_domicilio || ''} onChange={v => set('fallecido_domicilio', v)} />
+          </Grilla>
+        </Seccion>
+        <Seccion titulo="Perito valuador">
+          <Campo label="Nombre del perito valuador (opcional — vacío = a designar)"
+            placeholder="Contador/a María López"
+            value={valores.perito_valuador_nombre || ''} onChange={v => set('perito_valuador_nombre', v)} />
+        </Seccion>
+        <Seccion titulo="Publicación de edictos">
+          <Campo label="Días de publicación de edictos (art. 2340 CCyCN)" type="number" placeholder="5"
+            value={valores.dias_edictos || ''} onChange={v => set('dias_edictos', v)} />
+          <CheckField label="Inventario judicial (art. 2341 CCyCN)"
+            checked={valores.inventario_judicial === true} onChange={v => set('inventario_judicial', v)} />
+        </Seccion>
+      </>}
+
+      {/* ── Sumarísimo — Citación a audiencia ── */}
+      {tipo === 'sumarisimo_citacion' && <>
+        <Seccion titulo="Objeto del proceso">
+          <Campo label="Objeto"
+            placeholder="desalojo por falta de pago / daños y perjuicios"
+            value={valores.objeto || ''} onChange={v => set('objeto', v)} />
+          <Campo label="Plazo para contestar (días hábiles)" type="number" placeholder="3"
+            value={valores.plazo_contestacion_dias || ''} onChange={v => set('plazo_contestacion_dias', v)} />
+        </Seccion>
+        <Seccion titulo="Audiencia">
+          <Grilla>
+            <Campo label="Fecha de la audiencia" type="date"
+              value={valores.fecha_audiencia || ''} onChange={v => set('fecha_audiencia', v)} />
+            <Campo label="Hora (HH:MM)" placeholder="09:00"
+              value={valores.hora_audiencia || ''} onChange={v => set('hora_audiencia', v)} />
+          </Grilla>
+          <Campo label="Sala (opcional)" placeholder="Sala 3"
+            value={valores.sala || ''} onChange={v => set('sala', v)} />
+        </Seccion>
+      </>}
+
+      {/* ── Admisibilidad Contencioso Administrativo ── */}
+      {tipo === 'admisibilidad_ca' && <>
+        <Seccion titulo="Objeto de la acción">
+          <Campo label="Objeto de la acción contencioso-administrativa"
+            placeholder="nulidad del Decreto N.° 1234/2025 del Poder Ejecutivo Provincial"
+            value={valores.objeto_accion || ''} onChange={v => set('objeto_accion', v)} />
+          <Campo label="Organismo / Estado demandado"
+            placeholder="la Provincia de Córdoba"
+            value={valores.organismo_demandado || ''} onChange={v => set('organismo_demandado', v)} />
+        </Seccion>
+        <Seccion titulo="Traslado y expediente administrativo">
+          <Campo label="Plazo de contestación (días hábiles)" type="number" placeholder="30"
+            value={valores.plazo_contestacion_dias || ''} onChange={v => set('plazo_contestacion_dias', v)} />
+          <CheckField label="Requerir remisión del expediente administrativo (art. 13 CPCA)"
+            checked={valores.requiere_expediente_administrativo !== false} onChange={v => set('requiere_expediente_administrativo', v)} />
+        </Seccion>
+      </>}
+
       {/* ── Decreto de trámite ── */}
       {tipo === 'decreto_tramite' && <>
         <Seccion titulo="Tipo de decreto">

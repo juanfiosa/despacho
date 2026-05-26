@@ -54,6 +54,12 @@ const PATHS_PREVIEW = {
   fijacion_debate:         '/penal/fijacion-debate/preview',
   // Niñez
   control_legalidad_nna:   '/ninez/control-legalidad/preview',
+  // Sucesorio
+  apertura_sucesorio:      '/civil-comercial/sucesorio/apertura/preview',
+  // Sumarísimo
+  sumarisimo_citacion:     '/civil-comercial/sumarisimo/citacion-audiencia/preview',
+  // Contencioso Administrativo
+  admisibilidad_ca:        '/contencioso-administrativo/admisibilidad/preview',
 }
 const PATHS_DOCX = {
   // Ejecutivo
@@ -83,6 +89,12 @@ const PATHS_DOCX = {
   fijacion_debate:         '/penal/fijacion-debate/docx',
   // Niñez
   control_legalidad_nna:   '/ninez/control-legalidad/docx',
+  // Sucesorio
+  apertura_sucesorio:      '/civil-comercial/sucesorio/apertura/docx',
+  // Sumarísimo
+  sumarisimo_citacion:     '/civil-comercial/sumarisimo/citacion-audiencia/docx',
+  // Contencioso Administrativo
+  admisibilidad_ca:        '/contencioso-administrativo/admisibilidad/docx',
 }
 
 export async function previewDocumento(tipo, payload, fechaResolucion) {

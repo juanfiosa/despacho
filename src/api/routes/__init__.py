@@ -5,6 +5,7 @@ from .laboral import router as laboral_router
 from .concursal import router as concursal_router
 from .penal import router as penal_router
 from .ninez import router as ninez_router
+from .contencioso_administrativo import router as contencioso_router
 from .calculadora import router as calculadora_router
 from .catalogo import router as catalogo_router
 
@@ -16,6 +17,7 @@ __all__ = [
     "concursal_router",
     "penal_router",
     "ninez_router",
+    "contencioso_router",
     "calculadora_router",
     "catalogo_router",
 ]

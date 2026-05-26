@@ -1,0 +1,50 @@
+{#
+  Decreto de admisión y citación a audiencia en el juicio sumarísimo
+  (art. 418 CPCC Córdoba)
+  Input: AutoSumarisimoCitacionInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import partes_por_rol %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+AUTOS Y VISTOS: La demanda sumarísima articulada por
+{{ partes_por_rol(partes, "actor") }} en contra de
+{{ partes_por_rol(partes, "demandado") }}, por {{ objeto }}.-
+
+CONSIDERANDO: Que la demanda reúne los requisitos formales de admisibilidad
+y la pretensión es de aquellas que deben tramitar por la vía del juicio
+sumarísimo (art. 418 y ss. del CPCC Córdoba), por lo que corresponde admitirla
+y citar a las partes a la audiencia prevista en el art. 418 CPCC, con los
+efectos allí establecidos.-
+
+SE RESUELVE:
+
+I. ADMITIR la demanda sumarísima articulada por
+{{ partes_por_rol(partes, "actor") }} en contra de
+{{ partes_por_rol(partes, "demandado") }}, por {{ objeto }}.-
+
+II. CITAR Y EMPLAZAR a la parte demandada {{ partes_por_rol(partes, "demandado") }}
+para que comparezca y conteste la demanda dentro del plazo de
+{{ plazo_contestacion_dias }} ({{ plazo_contestacion_dias | numero_letras }})
+días hábiles, bajo apercibimiento de continuarse el proceso en rebeldía.-
+
+III. FIJAR AUDIENCIA para el día {{ fecha_audiencia.day }} de
+{{ fecha_audiencia | nombre_mes }} de {{ fecha_audiencia.year }},
+a las {{ hora_audiencia }} horas,
+{% if sala %}en {{ sala }},{% endif %}
+para la sustanciación de la audiencia prevista en el art. 418 CPCC, en la que
+las partes deberán comparecer con toda la prueba de que intenten valerse,
+bajo apercibimiento de ley.-
+
+IV. Notifíquese a la parte actora en el domicilio constituido; y a la parte
+demandada, por cédula con copias de la demanda y documental adjunta.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

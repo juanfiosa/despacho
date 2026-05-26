@@ -520,6 +520,30 @@ function buildPayload(fueroId, tipoDoc, expediente, camposDoc, juzgado) {
     prohibicion_contacto:     camposDoc.prohibicion_contacto !== false,
     plazo_dias:               Number(camposDoc.plazo_dias) || 90,
   }
+  if (tipoDoc === 'apertura_sucesorio') return {
+    ...base,
+    fallecido_nombre:       camposDoc.fallecido_nombre || '',
+    fallecido_fecha_muerte: camposDoc.fallecido_fecha_muerte || new Date().toISOString().split('T')[0],
+    fallecido_domicilio:    camposDoc.fallecido_domicilio || '',
+    perito_valuador_nombre: camposDoc.perito_valuador_nombre || null,
+    dias_edictos:           Number(camposDoc.dias_edictos) || 5,
+    inventario_judicial:    camposDoc.inventario_judicial === true,
+  }
+  if (tipoDoc === 'sumarisimo_citacion') return {
+    ...base,
+    objeto:                    camposDoc.objeto || '',
+    fecha_audiencia:           camposDoc.fecha_audiencia || new Date().toISOString().split('T')[0],
+    hora_audiencia:            camposDoc.hora_audiencia || '09:00',
+    sala:                      camposDoc.sala || null,
+    plazo_contestacion_dias:   Number(camposDoc.plazo_contestacion_dias) || 3,
+  }
+  if (tipoDoc === 'admisibilidad_ca') return {
+    ...base,
+    objeto_accion:                        camposDoc.objeto_accion || '',
+    organismo_demandado:                  camposDoc.organismo_demandado || 'la Provincia de Córdoba',
+    plazo_contestacion_dias:              Number(camposDoc.plazo_contestacion_dias) || 30,
+    requiere_expediente_administrativo:   camposDoc.requiere_expediente_administrativo !== false,
+  }
   return base
 }
 

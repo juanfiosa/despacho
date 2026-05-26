@@ -125,3 +125,9 @@ class TipoDocumento(str, Enum):
     FIJACION_DEBATE = "fijacion_debate"
     # Niñez
     CONTROL_LEGALIDAD_NNA = "control_legalidad_nna"
+    # Civil y Comercial — sucesorio
+    APERTURA_SUCESORIO = "apertura_sucesorio"
+    # Civil y Comercial — sumarísimo
+    SUMARISIMO_CITACION = "sumarisimo_citacion"
+    # Contencioso Administrativo
+    ADMISIBILIDAD_CA = "admisibilidad_ca"
