@@ -1,0 +1,210 @@
+{
+  "meta": {
+    "id": "caso_penal",
+    "titulo": "Robo agravado — Gómez, Pablo Sebastián",
+    "descripcion": "IPP por robo agravado con armas. Recorre el ciclo completo: imputación, prisión preventiva, vista fiscal, elevación a juicio y resolución por suspensión del juicio a prueba.",
+    "fuero": "penal",
+    "fuero_label": "Penal",
+    "tribunal": "Juzgado de Control de 3ª Nominación — Córdoba",
+    "expediente": "1234567/2026",
+    "caratula": "GÓMEZ, PABLO SEBASTIÁN p.s.a. Robo Agravado"
+  },
+  "pasos": [
+    {
+      "orden": 1,
+      "titulo": "Citación al acto de imputación",
+      "descripcion": "El juez de control ordena la citación del imputado a comparecer ante el fiscal de instrucción al acto formal de imputación (art. 271 CPP).",
+      "tipo": "citacion_imputacion",
+      "fecha": "2026-05-15",
+      "input": {
+        "identificacion": {
+          "numero": "1234567/2026",
+          "caratula": "GÓMEZ, PABLO SEBASTIÁN p.s.a. Robo Agravado",
+          "fuero": "penal",
+          "juzgado": "Juzgado de Control de 3ª Nominación",
+          "secretaria": null,
+          "ciudad": "Córdoba"
+        },
+        "partes": [
+          {
+            "rol": "imputado",
+            "nombre": "Gómez, Pablo Sebastián",
+            "dni_cuit": "38.456.789",
+            "domicilio_real": "Barrio Müller, Calle Las Rosas 234, Córdoba",
+            "domicilio_constituido": "Defensoría Pública, San Jerónimo 600, Córdoba",
+            "letrado": {
+              "nombre": "Dr. Jorge Luis Domínguez",
+              "matricula": "CAC 56.789",
+              "domicilio_constituido": "Defensoría Pública, San Jerónimo 600, Córdoba"
+            }
+          }
+        ],
+        "fiscal_nombre": "Dr. Hernán Alejandro Pereyra",
+        "fiscal_unidad": "Fiscalía de Instrucción N.° 3 — Turno Mañana",
+        "objeto_imputacion": "robo agravado por el uso de armas en grado de tentativa (arts. 164, 166 inc. 2 y 42 CP), hecho ocurrido el día 12/05/2026 en Av. Colón 890 de esta ciudad",
+        "fecha_citacion": "2026-05-20",
+        "hora_citacion": "09:30"
+      }
+    },
+    {
+      "orden": 2,
+      "titulo": "Auto de prisión preventiva",
+      "descripcion": "Cumplido el acto de imputación, el fiscal requirente solicita prisión preventiva. El tribunal la decreta por peligro de fuga: el imputado fue aprehendido en flagrancia, porta antecedentes y carece de arraigo.",
+      "tipo": "prision_preventiva",
+      "fecha": "2026-05-21",
+      "input": {
+        "identificacion": {
+          "numero": "1234567/2026",
+          "caratula": "GÓMEZ, PABLO SEBASTIÁN p.s.a. Robo Agravado",
+          "fuero": "penal",
+          "juzgado": "Juzgado de Control de 3ª Nominación",
+          "secretaria": null,
+          "ciudad": "Córdoba"
+        },
+        "partes": [
+          {
+            "rol": "imputado",
+            "nombre": "Gómez, Pablo Sebastián",
+            "dni_cuit": "38.456.789",
+            "domicilio_real": "Barrio Müller, Calle Las Rosas 234, Córdoba",
+            "domicilio_constituido": "Defensoría Pública, San Jerónimo 600, Córdoba",
+            "letrado": {
+              "nombre": "Dr. Jorge Luis Domínguez",
+              "matricula": "CAC 56.789",
+              "domicilio_constituido": "Defensoría Pública, San Jerónimo 600, Córdoba"
+            }
+          },
+          {
+            "rol": "fiscal",
+            "nombre": "Pereyra, Hernán Alejandro",
+            "domicilio_constituido": "Fiscalía de Instrucción N.° 3, Caseros 300, Córdoba"
+          }
+        ],
+        "fiscal_nombre": "Dr. Hernán Alejandro Pereyra",
+        "defensor_nombre": "Dr. Jorge Luis Domínguez",
+        "calificacion_legal": "robo agravado por el uso de armas en grado de tentativa (arts. 164, 166 inc. 2 y 42 CP)",
+        "causal": "peligro_fuga",
+        "descripcion_hecho": "aprehensión en flagrancia el 12/05/2026 portando arma de fuego; registros delictivos previos; carece de domicilio estable y arraigo familiar en la ciudad",
+        "escala_minima_pena": "5 años de prisión"
+      }
+    },
+    {
+      "orden": 3,
+      "titulo": "Vista al fiscal — petición de sobreseimiento de la defensa",
+      "descripcion": "La defensa plantea la nulidad del procedimiento policial y solicita el sobreseimiento. El tribunal corre traslado al fiscal de instrucción para que dictamine en 5 días.",
+      "tipo": "traslado_vista_fiscal",
+      "fecha": "2026-06-10",
+      "input": {
+        "identificacion": {
+          "numero": "1234567/2026",
+          "caratula": "GÓMEZ, PABLO SEBASTIÁN p.s.a. Robo Agravado",
+          "fuero": "penal",
+          "juzgado": "Juzgado de Control de 3ª Nominación",
+          "secretaria": null,
+          "ciudad": "Córdoba"
+        },
+        "partes": [
+          {
+            "rol": "imputado",
+            "nombre": "Gómez, Pablo Sebastián",
+            "dni_cuit": "38.456.789",
+            "domicilio_constituido": "Defensoría Pública, San Jerónimo 600, Córdoba",
+            "letrado": {
+              "nombre": "Dr. Jorge Luis Domínguez",
+              "matricula": "CAC 56.789",
+              "domicilio_constituido": "Defensoría Pública, San Jerónimo 600, Córdoba"
+            }
+          },
+          {
+            "rol": "fiscal",
+            "nombre": "Pereyra, Hernán Alejandro",
+            "domicilio_constituido": "Fiscalía de Instrucción N.° 3, Caseros 300, Córdoba"
+          }
+        ],
+        "tipo_vista": "fiscal_instruccion",
+        "objeto_vista": "petición de sobreseimiento y nulidad del procedimiento policial interpuesta por la defensa del imputado Gómez",
+        "plazo_dias": 5
+      }
+    },
+    {
+      "orden": 4,
+      "titulo": "Auto de elevación a juicio oral",
+      "descripcion": "El fiscal rechaza la nulidad y requiere la elevación a juicio. El tribunal clausura la investigación preparatoria y eleva la causa a la Cámara en lo Criminal para juicio oral.",
+      "tipo": "auto_elevacion_juicio",
+      "fecha": "2026-07-15",
+      "input": {
+        "identificacion": {
+          "numero": "1234567/2026",
+          "caratula": "GÓMEZ, PABLO SEBASTIÁN p.s.a. Robo Agravado",
+          "fuero": "penal",
+          "juzgado": "Juzgado de Control de 3ª Nominación",
+          "secretaria": null,
+          "ciudad": "Córdoba"
+        },
+        "partes": [
+          {
+            "rol": "imputado",
+            "nombre": "Gómez, Pablo Sebastián",
+            "dni_cuit": "38.456.789",
+            "domicilio_constituido": "Defensoría Pública, San Jerónimo 600, Córdoba",
+            "letrado": {
+              "nombre": "Dr. Jorge Luis Domínguez",
+              "matricula": "CAC 56.789",
+              "domicilio_constituido": "Defensoría Pública, San Jerónimo 600, Córdoba"
+            }
+          },
+          {
+            "rol": "fiscal",
+            "nombre": "Pereyra, Hernán Alejandro",
+            "domicilio_constituido": "Fiscalía de Instrucción N.° 3, Caseros 300, Córdoba"
+          }
+        ],
+        "fiscal_nombre": "Dr. Hernán Alejandro Pereyra",
+        "calificacion_legal": "robo agravado por el uso de armas en grado de tentativa (arts. 164, 166 inc. 2 y 42 CP)",
+        "tipo_juicio": "oral"
+      }
+    },
+    {
+      "orden": 5,
+      "titulo": "Suspensión del juicio a prueba (probation)",
+      "descripcion": "Al inicio del debate oral, el imputado y el fiscal acuerdan la suspensión del juicio a prueba. El tribunal la homologa e impone reglas de conducta por 18 meses, con reparación del daño a la víctima.",
+      "tipo": "suspension_juicio_prueba",
+      "fecha": "2026-09-08",
+      "input": {
+        "identificacion": {
+          "numero": "1234567/2026",
+          "caratula": "GÓMEZ, PABLO SEBASTIÁN p.s.a. Robo Agravado",
+          "fuero": "penal",
+          "juzgado": "Juzgado de Control de 3ª Nominación",
+          "secretaria": null,
+          "ciudad": "Córdoba"
+        },
+        "partes": [
+          {
+            "rol": "imputado",
+            "nombre": "Gómez, Pablo Sebastián",
+            "dni_cuit": "38.456.789",
+            "domicilio_real": "Barrio Müller, Calle Las Rosas 234, Córdoba",
+            "domicilio_constituido": "Defensoría Pública, San Jerónimo 600, Córdoba",
+            "letrado": {
+              "nombre": "Dr. Jorge Luis Domínguez",
+              "matricula": "CAC 56.789",
+              "domicilio_constituido": "Defensoría Pública, San Jerónimo 600, Córdoba"
+            }
+          }
+        ],
+        "fiscal_nombre": "Dr. Hernán Alejandro Pereyra",
+        "defensor_nombre": "Dr. Jorge Luis Domínguez",
+        "calificacion_legal": "robo agravado por el uso de armas en grado de tentativa (arts. 164, 166 inc. 2 y 42 CP)",
+        "plazo_suspension_meses": 18,
+        "reglas_conducta": [
+          "residir en el domicilio declarado en autos y no mudarse sin autorización judicial",
+          "presentarse mensualmente ante la sede del juzgado a firmar el libro de presentaciones",
+          "realizar 80 horas de tareas comunitarias en el Centro Vecinal Barrio Müller",
+          "abstenerse de portar o tener armas de cualquier tipo"
+        ],
+        "reparacion_danio": "suma de pesos doscientos mil ($200.000) a favor de la víctima, pagadera en cuatro cuotas mensuales de cincuenta mil pesos ($50.000) los días 10 de cada mes"
+      }
+    }
+  ]
+}

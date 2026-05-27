@@ -1,0 +1,216 @@
+{
+  "meta": {
+    "id": "caso_civil",
+    "titulo": "Daños y perjuicios — Fernández c/ Municipalidad de Córdoba",
+    "descripcion": "Juicio ordinario civil por caída en vía pública. Desde el traslado de demanda hasta la ejecución de sentencia, con embargo preventivo, apertura a prueba y designación de perito médico.",
+    "fuero": "civil_comercial",
+    "fuero_label": "Civil y Comercial",
+    "tribunal": "Juzgado Civil y Comercial de 5ª Nominación — Córdoba",
+    "expediente": "2345678/2026",
+    "caratula": "FERNÁNDEZ, CLAUDIA BEATRIZ c/ MUNICIPALIDAD DE CÓRDOBA — Ordinario (Daños y Perjuicios)"
+  },
+  "pasos": [
+    {
+      "orden": 1,
+      "titulo": "Traslado de la demanda",
+      "descripcion": "El juzgado admite la demanda por daños y perjuicios derivados de caída en la vía pública y corre traslado a la Municipalidad para que conteste en 30 días hábiles.",
+      "tipo": "traslado_demanda",
+      "fecha": "2026-02-20",
+      "input": {
+        "identificacion": {
+          "numero": "2345678/2026",
+          "caratula": "FERNÁNDEZ, CLAUDIA BEATRIZ c/ MUNICIPALIDAD DE CÓRDOBA — Ordinario (Daños y Perjuicios)",
+          "fuero": "civil_comercial",
+          "juzgado": "Juzgado Civil y Comercial de 5ª Nominación",
+          "secretaria": null,
+          "ciudad": "Córdoba"
+        },
+        "partes": [
+          {
+            "rol": "actor",
+            "nombre": "Fernández, Claudia Beatriz",
+            "dni_cuit": "29.456.789",
+            "domicilio_real": "Barrio Nueva Córdoba, Calle Chacabuco 678, Córdoba",
+            "domicilio_constituido": "Santa Rosa 456, 1° piso, Córdoba",
+            "letrado": {
+              "nombre": "Dr. Martín Eduardo Castillo",
+              "matricula": "CAC 52.341",
+              "domicilio_constituido": "Santa Rosa 456, 1° piso, Córdoba"
+            }
+          },
+          {
+            "rol": "demandado",
+            "nombre": "Municipalidad de Córdoba",
+            "domicilio_real": "Marqués de Sobremonte 100, Córdoba",
+            "domicilio_constituido": "Departamento Judicial de la Municipalidad, Marcelo T. de Alvear 120, Córdoba"
+          }
+        ],
+        "tipo": "demanda",
+        "objeto": "indemnización por daños y perjuicios derivados de caída en la vía pública (acera en mal estado, Bv. San Juan esq. Lima) — daño emergente, lucro cesante y daño moral",
+        "plazo_dias": 30
+      }
+    },
+    {
+      "orden": 2,
+      "titulo": "Embargo preventivo sobre fondos municipales",
+      "descripcion": "Ante el riesgo de insolvencia procesal, la actora solicita y el tribunal decreta un embargo preventivo sobre fondas de la Municipalidad por el monto reclamado más un 30% de intereses estimados.",
+      "tipo": "embargo_preventivo",
+      "fecha": "2026-02-25",
+      "input": {
+        "identificacion": {
+          "numero": "2345678/2026",
+          "caratula": "FERNÁNDEZ, CLAUDIA BEATRIZ c/ MUNICIPALIDAD DE CÓRDOBA — Ordinario (Daños y Perjuicios)",
+          "fuero": "civil_comercial",
+          "juzgado": "Juzgado Civil y Comercial de 5ª Nominación",
+          "secretaria": null,
+          "ciudad": "Córdoba"
+        },
+        "partes": [
+          {
+            "rol": "actor",
+            "nombre": "Fernández, Claudia Beatriz",
+            "dni_cuit": "29.456.789",
+            "domicilio_constituido": "Santa Rosa 456, 1° piso, Córdoba",
+            "letrado": {
+              "nombre": "Dr. Martín Eduardo Castillo",
+              "matricula": "CAC 52.341",
+              "domicilio_constituido": "Santa Rosa 456, 1° piso, Córdoba"
+            }
+          },
+          {
+            "rol": "demandado",
+            "nombre": "Municipalidad de Córdoba",
+            "domicilio_constituido": "Departamento Judicial de la Municipalidad, Marcelo T. de Alvear 120, Córdoba"
+          }
+        ],
+        "monto": 3500000,
+        "domicilio_diligenciamiento": "Tesorería Municipal, Marcelo T. de Alvear 120, Córdoba",
+        "bienes": "fondos y cuentas bancarias de la Municipalidad de Córdoba hasta cubrir la suma embargada"
+      }
+    },
+    {
+      "orden": 3,
+      "titulo": "Apertura del período probatorio",
+      "descripcion": "Contestada la demanda por la Municipalidad, el tribunal abre la causa a prueba por 40 días. Se admite la pericial médica y testimonial; se rechaza la absolución de posiciones por ser la demandada una persona jurídica pública.",
+      "tipo": "auto_apertura_ordinario",
+      "fecha": "2026-04-15",
+      "input": {
+        "identificacion": {
+          "numero": "2345678/2026",
+          "caratula": "FERNÁNDEZ, CLAUDIA BEATRIZ c/ MUNICIPALIDAD DE CÓRDOBA — Ordinario (Daños y Perjuicios)",
+          "fuero": "civil_comercial",
+          "juzgado": "Juzgado Civil y Comercial de 5ª Nominación",
+          "secretaria": null,
+          "ciudad": "Córdoba"
+        },
+        "partes": [
+          {
+            "rol": "actor",
+            "nombre": "Fernández, Claudia Beatriz",
+            "dni_cuit": "29.456.789",
+            "domicilio_constituido": "Santa Rosa 456, 1° piso, Córdoba",
+            "letrado": {
+              "nombre": "Dr. Martín Eduardo Castillo",
+              "matricula": "CAC 52.341",
+              "domicilio_constituido": "Santa Rosa 456, 1° piso, Córdoba"
+            }
+          },
+          {
+            "rol": "demandado",
+            "nombre": "Municipalidad de Córdoba",
+            "domicilio_constituido": "Departamento Judicial de la Municipalidad, Marcelo T. de Alvear 120, Córdoba"
+          }
+        ],
+        "plazo_dias": 40,
+        "fecha_inicio_prueba": "2026-04-16",
+        "prueba_admitida": ["pericial médica", "testimonial de los testigos ofrecidos por ambas partes", "informativa al Hospital Privado"],
+        "prueba_rechazada": ["absolución de posiciones de la demandada"],
+        "fundamento_rechazo": "la Municipalidad de Córdoba es una persona jurídica pública que no puede absolver posiciones en forma personal; el conocimiento de los hechos se acreditará mediante la prueba testimonial de los funcionarios intervinientes"
+      }
+    },
+    {
+      "orden": 4,
+      "titulo": "Designación de perito médico",
+      "descripcion": "El tribunal designa al perito médico de oficio para que dictamine sobre las lesiones sufridas, el nexo causal con la caída y las secuelas incapacitantes.",
+      "tipo": "designacion_perito",
+      "fecha": "2026-04-20",
+      "input": {
+        "identificacion": {
+          "numero": "2345678/2026",
+          "caratula": "FERNÁNDEZ, CLAUDIA BEATRIZ c/ MUNICIPALIDAD DE CÓRDOBA — Ordinario (Daños y Perjuicios)",
+          "fuero": "civil_comercial",
+          "juzgado": "Juzgado Civil y Comercial de 5ª Nominación",
+          "secretaria": null,
+          "ciudad": "Córdoba"
+        },
+        "partes": [
+          {
+            "rol": "actor",
+            "nombre": "Fernández, Claudia Beatriz",
+            "dni_cuit": "29.456.789",
+            "domicilio_constituido": "Santa Rosa 456, 1° piso, Córdoba",
+            "letrado": {
+              "nombre": "Dr. Martín Eduardo Castillo",
+              "matricula": "CAC 52.341",
+              "domicilio_constituido": "Santa Rosa 456, 1° piso, Córdoba"
+            }
+          },
+          {
+            "rol": "demandado",
+            "nombre": "Municipalidad de Córdoba",
+            "domicilio_constituido": "Departamento Judicial de la Municipalidad, Marcelo T. de Alvear 120, Córdoba"
+          }
+        ],
+        "especialidad": "médica — traumatología y ortopedia",
+        "perito_nombre": "Dr. Ricardo Fabián Molina (Mat. Prof. 18.432)",
+        "plazo_aceptacion_dias": 5,
+        "plazo_dictamen_dias": 30,
+        "puntos_periciales": [
+          "Determinar las lesiones sufridas por la actora como consecuencia de la caída denunciada",
+          "Establecer el tratamiento médico requerido y los gastos correspondientes",
+          "Determinar si existe incapacidad permanente y, en su caso, el porcentaje",
+          "Pronunciarse sobre el nexo causal entre las lesiones y el mecanismo de caída descripto"
+        ]
+      }
+    },
+    {
+      "orden": 5,
+      "titulo": "Intimación de cumplimiento de sentencia",
+      "descripcion": "Dictada la sentencia condenando a la Municipalidad, el tribunal intima al organismo a pagar en el plazo de 10 días hábiles bajo apercibimiento de ejecución forzada.",
+      "tipo": "intimacion_cumplimiento_sentencia",
+      "fecha": "2026-09-10",
+      "input": {
+        "identificacion": {
+          "numero": "2345678/2026",
+          "caratula": "FERNÁNDEZ, CLAUDIA BEATRIZ c/ MUNICIPALIDAD DE CÓRDOBA — Ordinario (Daños y Perjuicios)",
+          "fuero": "civil_comercial",
+          "juzgado": "Juzgado Civil y Comercial de 5ª Nominación",
+          "secretaria": null,
+          "ciudad": "Córdoba"
+        },
+        "partes": [
+          {
+            "rol": "actor",
+            "nombre": "Fernández, Claudia Beatriz",
+            "dni_cuit": "29.456.789",
+            "domicilio_constituido": "Santa Rosa 456, 1° piso, Córdoba",
+            "letrado": {
+              "nombre": "Dr. Martín Eduardo Castillo",
+              "matricula": "CAC 52.341",
+              "domicilio_constituido": "Santa Rosa 456, 1° piso, Córdoba"
+            }
+          },
+          {
+            "rol": "demandado",
+            "nombre": "Municipalidad de Córdoba",
+            "domicilio_constituido": "Departamento Judicial de la Municipalidad, Marcelo T. de Alvear 120, Córdoba"
+          }
+        ],
+        "plazo_dias": 10,
+        "tipo_obligacion": "dar_dinero",
+        "descripcion_obligacion": "el monto de condena fijado en sentencia con más los intereses devengados desde la mora hasta el efectivo pago",
+        "apercibimiento": "ejecución forzada de sentencia con costas a cargo del incumplidor"
+      }
+    }
+  ]
+}

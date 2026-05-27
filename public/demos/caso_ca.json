@@ -1,0 +1,224 @@
+{
+  "meta": {
+    "id": "caso_ca",
+    "titulo": "Cesantía impugnada — Suárez c/ Municipalidad de Córdoba",
+    "descripcion": "Acción contencioso-administrativa por impugnación de un decreto de cesantía. Cubre desde la admisibilidad y la suspensión cautelar del acto hasta la audiencia preliminar y el llamamiento de autos para sentencia.",
+    "fuero": "contencioso_administrativo",
+    "fuero_label": "Contencioso Administrativo",
+    "tribunal": "Cámara Contencioso Administrativa de 1ª Nominación — Córdoba",
+    "expediente": "9012345/2026",
+    "caratula": "SUÁREZ, MARÍA CLAUDIA c/ MUNICIPALIDAD DE CÓRDOBA — Acción Contencioso Administrativa"
+  },
+  "pasos": [
+    {
+      "orden": 1,
+      "titulo": "Admisibilidad de la acción",
+      "descripcion": "El tribunal declara formalmente admisible la acción que impugna el Decreto Municipal de cesantía y ordena la remisión del expediente administrativo original.",
+      "tipo": "admisibilidad_ca",
+      "fecha": "2026-03-10",
+      "input": {
+        "identificacion": {
+          "numero": "9012345/2026",
+          "caratula": "SUÁREZ, MARÍA CLAUDIA c/ MUNICIPALIDAD DE CÓRDOBA — Acción Contencioso Administrativa",
+          "fuero": "contencioso_administrativo",
+          "juzgado": "Cámara Contencioso Administrativa de 1ª Nominación",
+          "secretaria": null,
+          "ciudad": "Córdoba"
+        },
+        "partes": [
+          {
+            "rol": "actor",
+            "nombre": "Suárez, María Claudia",
+            "dni_cuit": "28.345.678",
+            "domicilio_real": "Barrio Pueyrredón, Calle Santiago del Estero 1234, Córdoba",
+            "domicilio_constituido": "Dean Funes 320, Of. 5, Córdoba",
+            "letrado": {
+              "nombre": "Dr. Leandro Facundo Moreno",
+              "matricula": "CAC 47.890",
+              "domicilio_constituido": "Dean Funes 320, Of. 5, Córdoba"
+            }
+          },
+          {
+            "rol": "demandado",
+            "nombre": "Municipalidad de Córdoba",
+            "domicilio_constituido": "Departamento Judicial de la Municipalidad, Marcelo T. de Alvear 120, Córdoba"
+          }
+        ],
+        "objeto_accion": "impugnación del Decreto Municipal N.° 1458/2026 que dispuso la cesantía de la actora del cargo de Inspectora de Habilitaciones Comerciales sin sumario previo, en violación al art. 14 bis CN y arts. 47 y 48 del Estatuto del Empleado Municipal",
+        "organismo_demandado": "la Municipalidad de Córdoba",
+        "plazo_contestacion_dias": 30,
+        "requiere_expediente_administrativo": true
+      }
+    },
+    {
+      "orden": 2,
+      "titulo": "Suspensión cautelar del decreto de cesantía",
+      "descripcion": "La actora solicita la suspensión urgente del acto que la dejó sin empleo. El tribunal la concede por verosimilitud del derecho y peligro en la demora: la cesantía sin sumario previo viola el debido proceso.",
+      "tipo": "suspension_acto_administrativo",
+      "fecha": "2026-03-15",
+      "input": {
+        "identificacion": {
+          "numero": "9012345/2026",
+          "caratula": "SUÁREZ, MARÍA CLAUDIA c/ MUNICIPALIDAD DE CÓRDOBA — Acción Contencioso Administrativa",
+          "fuero": "contencioso_administrativo",
+          "juzgado": "Cámara Contencioso Administrativa de 1ª Nominación",
+          "secretaria": null,
+          "ciudad": "Córdoba"
+        },
+        "partes": [
+          {
+            "rol": "actor",
+            "nombre": "Suárez, María Claudia",
+            "dni_cuit": "28.345.678",
+            "domicilio_constituido": "Dean Funes 320, Of. 5, Córdoba",
+            "letrado": {
+              "nombre": "Dr. Leandro Facundo Moreno",
+              "matricula": "CAC 47.890",
+              "domicilio_constituido": "Dean Funes 320, Of. 5, Córdoba"
+            }
+          },
+          {
+            "rol": "demandado",
+            "nombre": "Municipalidad de Córdoba",
+            "domicilio_constituido": "Departamento Judicial de la Municipalidad, Marcelo T. de Alvear 120, Córdoba"
+          }
+        ],
+        "acto_impugnado": "Decreto Municipal N.° 1458/2026 de la Municipalidad de Córdoba que dispuso la cesantía de la Sra. Suárez del cargo de Inspectora de Habilitaciones Comerciales sin la sustanciación del sumario administrativo previo que exige el Estatuto del Empleado Municipal",
+        "organismo_emisor": "la Municipalidad de Córdoba",
+        "causal_suspension": "verosimilitud_derecho_peligro_demora",
+        "contracautela": "caución juratoria ofrecida por la actora"
+      }
+    },
+    {
+      "orden": 3,
+      "titulo": "Traslado de la demanda al organismo",
+      "descripcion": "Con la cautelar concedida, el tribunal corre traslado de la demanda a la Municipalidad para que conteste dentro del plazo de 30 días hábiles.",
+      "tipo": "traslado_demanda_ca",
+      "fecha": "2026-03-20",
+      "input": {
+        "identificacion": {
+          "numero": "9012345/2026",
+          "caratula": "SUÁREZ, MARÍA CLAUDIA c/ MUNICIPALIDAD DE CÓRDOBA — Acción Contencioso Administrativa",
+          "fuero": "contencioso_administrativo",
+          "juzgado": "Cámara Contencioso Administrativa de 1ª Nominación",
+          "secretaria": null,
+          "ciudad": "Córdoba"
+        },
+        "partes": [
+          {
+            "rol": "actor",
+            "nombre": "Suárez, María Claudia",
+            "dni_cuit": "28.345.678",
+            "domicilio_constituido": "Dean Funes 320, Of. 5, Córdoba",
+            "letrado": {
+              "nombre": "Dr. Leandro Facundo Moreno",
+              "matricula": "CAC 47.890",
+              "domicilio_constituido": "Dean Funes 320, Of. 5, Córdoba"
+            }
+          },
+          {
+            "rol": "demandado",
+            "nombre": "Municipalidad de Córdoba",
+            "domicilio_constituido": "Departamento Judicial de la Municipalidad, Marcelo T. de Alvear 120, Córdoba",
+            "letrado": {
+              "nombre": "Dr. Sergio Andrés Medina",
+              "matricula": "CAC 71.234",
+              "domicilio_constituido": "Marcelo T. de Alvear 120, Córdoba"
+            }
+          }
+        ],
+        "organismo_demandado": "la Municipalidad de Córdoba",
+        "plazo_contestacion_dias": 30,
+        "domicilio_notificacion": "Departamento Judicial de la Municipalidad de Córdoba, calle Marcelo T. de Alvear 120, Córdoba",
+        "con_remision_expediente": true
+      }
+    },
+    {
+      "orden": 4,
+      "titulo": "Citación a audiencia preliminar",
+      "descripcion": "Contestada la demanda, el tribunal cita a las partes a la audiencia preliminar para la fijación de hechos controvertidos, saneamiento procesal y ofrecimiento de prueba.",
+      "tipo": "citacion_audiencia_preliminar_ca",
+      "fecha": "2026-06-15",
+      "input": {
+        "identificacion": {
+          "numero": "9012345/2026",
+          "caratula": "SUÁREZ, MARÍA CLAUDIA c/ MUNICIPALIDAD DE CÓRDOBA — Acción Contencioso Administrativa",
+          "fuero": "contencioso_administrativo",
+          "juzgado": "Cámara Contencioso Administrativa de 1ª Nominación",
+          "secretaria": null,
+          "ciudad": "Córdoba"
+        },
+        "partes": [
+          {
+            "rol": "actor",
+            "nombre": "Suárez, María Claudia",
+            "dni_cuit": "28.345.678",
+            "domicilio_constituido": "Dean Funes 320, Of. 5, Córdoba",
+            "letrado": {
+              "nombre": "Dr. Leandro Facundo Moreno",
+              "matricula": "CAC 47.890",
+              "domicilio_constituido": "Dean Funes 320, Of. 5, Córdoba"
+            }
+          },
+          {
+            "rol": "demandado",
+            "nombre": "Municipalidad de Córdoba",
+            "domicilio_constituido": "Departamento Judicial de la Municipalidad, Marcelo T. de Alvear 120, Córdoba",
+            "letrado": {
+              "nombre": "Dr. Sergio Andrés Medina",
+              "matricula": "CAC 71.234",
+              "domicilio_constituido": "Marcelo T. de Alvear 120, Córdoba"
+            }
+          }
+        ],
+        "fecha_audiencia": "2026-08-12",
+        "hora_audiencia": "10:00",
+        "sala": "Sala de Audiencias N.° 2, piso 3",
+        "objeto_audiencia": "fijación de hechos controvertidos, saneamiento procesal y ofrecimiento de prueba (art. 46 CPCA)"
+      }
+    },
+    {
+      "orden": 5,
+      "titulo": "Llamamiento de autos para sentencia definitiva",
+      "descripcion": "Vencido el período de prueba y presentados los alegatos de ambas partes, el tribunal llama los autos para dictar sentencia definitiva sobre la legalidad del decreto de cesantía.",
+      "tipo": "llamamiento_autos_ca",
+      "fecha": "2026-11-03",
+      "input": {
+        "identificacion": {
+          "numero": "9012345/2026",
+          "caratula": "SUÁREZ, MARÍA CLAUDIA c/ MUNICIPALIDAD DE CÓRDOBA — Acción Contencioso Administrativa",
+          "fuero": "contencioso_administrativo",
+          "juzgado": "Cámara Contencioso Administrativa de 1ª Nominación",
+          "secretaria": null,
+          "ciudad": "Córdoba"
+        },
+        "partes": [
+          {
+            "rol": "actor",
+            "nombre": "Suárez, María Claudia",
+            "dni_cuit": "28.345.678",
+            "domicilio_constituido": "Dean Funes 320, Of. 5, Córdoba",
+            "letrado": {
+              "nombre": "Dr. Leandro Facundo Moreno",
+              "matricula": "CAC 47.890",
+              "domicilio_constituido": "Dean Funes 320, Of. 5, Córdoba"
+            }
+          },
+          {
+            "rol": "demandado",
+            "nombre": "Municipalidad de Córdoba",
+            "domicilio_constituido": "Departamento Judicial de la Municipalidad, Marcelo T. de Alvear 120, Córdoba",
+            "letrado": {
+              "nombre": "Dr. Sergio Andrés Medina",
+              "matricula": "CAC 71.234",
+              "domicilio_constituido": "Marcelo T. de Alvear 120, Córdoba"
+            }
+          }
+        ],
+        "etapa": "sentencia_definitiva",
+        "vencio_prueba": true,
+        "presentaron_alegatos": true
+      }
+    }
+  ]
+}
