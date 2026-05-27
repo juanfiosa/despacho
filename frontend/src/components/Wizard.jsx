@@ -30,7 +30,7 @@ const PARTES_DEFAULT = {
 }
 const partesDefault = (fid) => (PARTES_DEFAULT[fid] || PARTES_DEFAULT.civil_comercial).map(p => ({...p}))
 
-export default function Wizard({ juzgado, onCambiarJuzgado }) {
+export default function Wizard({ juzgado, onCambiarJuzgado, favoritos, toggleFavorito, esFavorito }) {
   const [paso,     setPaso]     = useState(0)
   const [catalogo, setCatalogo] = useState(null)
   const [error,    setError]    = useState(null)
@@ -206,6 +206,16 @@ export default function Wizard({ juzgado, onCambiarJuzgado }) {
         {/* PASO 0: Fuero */}
         {paso === 0 && (
           <Paso titulo="Fuero" subtitulo="Confirmá o cambiá el fuero para esta causa">
+            {/* Panel de documentos frecuentes */}
+            {favoritos?.length > 0 && (
+              <PanelFrecuentes
+                favoritos={favoritos}
+                catalogo={catalogo}
+                onSeleccionar={seleccionarDesdeSearch}
+                onToggleFav={toggleFavorito}
+                esFavorito={esFavorito}
+              />
+            )}
             <div style={gridFueroStyle}>
               {catalogo.map(f => (
                 <TarjetaSeleccion
@@ -290,16 +300,20 @@ export default function Wizard({ juzgado, onCambiarJuzgado }) {
         {paso === 4 && (
           <Paso titulo="Documento a generar" subtitulo={`${proceso?.label} › ${etapa?.label}`}>
             <div style={listaStyle}>
-              {etapa?.documentos.map(d => (
-                <TarjetaSeleccion
-                  key={d.tipo}
-                  label={d.label}
-                  sub={`${d.descripcion} — ${d.norma}`}
-                  seleccionada={d.tipo === tipoDoc}
-                  onClick={() => seleccionarDocumento(d.tipo)}
-                  flecha
-                />
-              ))}
+              {(etapa?.documentos ?? [])
+                .slice()
+                .sort((a, b) => (esFavorito?.(b.tipo) ? 1 : 0) - (esFavorito?.(a.tipo) ? 1 : 0))
+                .map(d => (
+                  <TarjetaConEstrella
+                    key={d.tipo}
+                    label={d.label}
+                    sub={`${d.descripcion} — ${d.norma}`}
+                    seleccionada={d.tipo === tipoDoc}
+                    favorita={esFavorito?.(d.tipo) ?? false}
+                    onClick={() => seleccionarDocumento(d.tipo)}
+                    onToggleFav={() => toggleFavorito?.(d.tipo)}
+                  />
+                ))}
             </div>
             <BotonesNav onAnterior={retroceder} />
           </Paso>
@@ -331,11 +345,18 @@ export default function Wizard({ juzgado, onCambiarJuzgado }) {
         {paso === 6 && (
           <div style={previewWrapStyle}>
             <div style={previewHeaderStyle}>
-              <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                 <strong>{etapa?.documentos.find(d => d.tipo === tipoDoc)?.label}</strong>
-                <span style={{ color: '#888', marginLeft: 12, fontSize: 13 }}>
-                  {expediente.caratula}
-                </span>
+                {toggleFavorito && (
+                  <button
+                    onClick={() => toggleFavorito(tipoDoc)}
+                    title={esFavorito?.(tipoDoc) ? 'Quitar de frecuentes' : 'Marcar como frecuente'}
+                    style={btnEstrellaPreviewStyle}
+                  >
+                    {esFavorito?.(tipoDoc) ? '⭐' : '☆'}
+                  </button>
+                )}
+                <span style={{ color: '#888', fontSize: 13 }}>{expediente.caratula}</span>
               </div>
               <div style={{ display: 'flex', gap: 10 }}>
                 <button onClick={retroceder} style={btnSecStyle}>← Volver</button>
@@ -431,6 +452,99 @@ function Campo({ label, value, onChange, placeholder = '', type = 'text', disabl
       <input type={type} value={value} onChange={e => onChange?.(e.target.value)}
         placeholder={placeholder} disabled={disabled}
         style={{ ...inputStyle, background: disabled ? '#f5f5f5' : '#fff' }} />
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Helper: buscar metadatos de un documento por tipo en el catálogo
+// ---------------------------------------------------------------------------
+
+function encontrarDocumento(catalogo, tipo) {
+  for (const fuero of catalogo) {
+    for (const proceso of fuero.procesos) {
+      for (const etapa of proceso.etapas) {
+        const doc = etapa.documentos.find(d => d.tipo === tipo)
+        if (doc) return {
+          ...doc,
+          fuero_id:     fuero.id,
+          fuero_label:  fuero.label,
+          proceso_id:   proceso.id,
+          proceso_label: proceso.label,
+          etapa_id:     etapa.id,
+          etapa_label:  etapa.label,
+        }
+      }
+    }
+  }
+  return null
+}
+
+// ---------------------------------------------------------------------------
+// PanelFrecuentes — acceso directo a documentos marcados como frecuentes
+// ---------------------------------------------------------------------------
+
+function PanelFrecuentes({ favoritos, catalogo, onSeleccionar, onToggleFav, esFavorito }) {
+  const docs = favoritos
+    .map(tipo => encontrarDocumento(catalogo, tipo))
+    .filter(Boolean)
+
+  if (!docs.length) return null
+
+  return (
+    <div style={panelFrecuentesStyle}>
+      <div style={frecuentesTituloStyle}>⭐ Mis documentos frecuentes</div>
+      <div style={frecuentesGridStyle}>
+        {docs.map(doc => (
+          <div key={doc.tipo} style={frecuentesCardStyle}>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontSize: 11, color: '#999', marginBottom: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {doc.fuero_label} › {doc.proceso_label}
+              </div>
+              <button
+                onClick={() => onSeleccionar({ fuero_id: doc.fuero_id, proceso_id: doc.proceso_id, etapa_id: doc.etapa_id, tipo: doc.tipo })}
+                style={frecuentesDocBtnStyle}
+                title="Ir directo a este documento"
+              >
+                {doc.label}
+              </button>
+            </div>
+            <button
+              onClick={() => onToggleFav(doc.tipo)}
+              title="Quitar de frecuentes"
+              style={btnQuitarFavStyle}
+            >⭐</button>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// TarjetaConEstrella — tarjeta de documento con botón de favorito
+// ---------------------------------------------------------------------------
+
+function TarjetaConEstrella({ label, sub, seleccionada, favorita, onClick, onToggleFav }) {
+  return (
+    <div style={{
+      ...tarjetaStyle,
+      borderColor: seleccionada ? '#0047AB' : '#e0e0e8',
+      background:  seleccionada ? '#f0f4ff' : '#fff',
+      paddingRight: 8,
+    }}>
+      <button onClick={onClick} style={{ flex: 1, textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: '0 8px 0 0' }}>
+        <div style={{ fontWeight: 600, fontSize: 14, color: '#1a1a2e', marginBottom: 2 }}>{label}</div>
+        {sub && <div style={{ fontSize: 12, color: '#777', lineHeight: 1.4 }}>{sub}</div>}
+      </button>
+      <button
+        onClick={e => { e.stopPropagation(); onToggleFav() }}
+        title={favorita ? 'Quitar de frecuentes' : 'Marcar como frecuente'}
+        style={{ ...btnEstrellaStyle, color: favorita ? '#f5a623' : '#ccc' }}
+      >
+        {favorita ? '⭐' : '☆'}
+      </button>
+      <span style={{ color: '#0047AB', fontSize: 18, paddingLeft: 4 }}>›</span>
     </div>
   )
 }
@@ -1103,3 +1217,13 @@ const searchInputStyle  = { width: '100%', padding: '6px 12px', borderRadius: 20
 const searchDropdownStyle = { position: 'absolute', top: '100%', left: 0, right: 0, background: '#fff', borderRadius: 8, boxShadow: '0 4px 20px rgba(0,0,0,0.15)', zIndex: 1000, marginTop: 4, maxHeight: 320, overflowY: 'auto', border: '1px solid #e0e0e8' }
 const searchItemStyle   = { display: 'block', width: '100%', padding: '8px 12px', background: '#fff', border: 'none', cursor: 'pointer', textAlign: 'left', borderBottom: '1px solid #f0f0f8', transition: 'background 0.1s' }
 const searchSpinnerStyle = { position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.7)', fontSize: 13 }
+
+// Favoritos
+const panelFrecuentesStyle   = { background: '#fffbea', border: '1.5px solid #f5e03a', borderRadius: 10, padding: '14px 16px', marginBottom: 22 }
+const frecuentesTituloStyle  = { fontSize: 11, fontWeight: 700, color: '#b8860b', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 10 }
+const frecuentesGridStyle    = { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 8 }
+const frecuentesCardStyle    = { display: 'flex', alignItems: 'center', gap: 6, background: '#fff', borderRadius: 7, padding: '8px 10px', border: '1px solid #f0e68c' }
+const frecuentesDocBtnStyle  = { display: 'block', width: '100%', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontSize: 13, fontWeight: 600, color: '#0047AB', padding: 0 }
+const btnQuitarFavStyle      = { background: 'none', border: 'none', cursor: 'pointer', fontSize: 14, padding: '0 2px', flexShrink: 0, opacity: 0.7 }
+const btnEstrellaStyle       = { background: 'none', border: 'none', cursor: 'pointer', fontSize: 16, padding: '0 4px', flexShrink: 0, transition: 'color 0.15s' }
+const btnEstrellaPreviewStyle = { background: 'none', border: 'none', cursor: 'pointer', fontSize: 18, padding: '0 2px', lineHeight: 1 }

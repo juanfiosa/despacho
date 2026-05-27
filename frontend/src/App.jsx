@@ -6,7 +6,7 @@ import Calculadora from './components/Calculadora.jsx'
 import Demos from './components/Demos.jsx'
 
 export default function App() {
-  const { juzgado, setJuzgado, limpiarJuzgado } = useJuzgado()
+  const { juzgado, setJuzgado, limpiarJuzgado, favoritos, toggleFavorito, esFavorito } = useJuzgado()
   // Demos is the default tab so visitors see it immediately, no setup required
   const [tab, setTab] = useState('demos')
 
@@ -53,7 +53,13 @@ export default function App() {
           <ConfigJuzgado onGuardar={(j) => { setJuzgado(j); }} />
         )}
         {tab === 'generador' && juzgado && (
-          <Wizard juzgado={juzgado} onCambiarJuzgado={limpiarJuzgado} />
+          <Wizard
+            juzgado={juzgado}
+            onCambiarJuzgado={limpiarJuzgado}
+            favoritos={favoritos}
+            toggleFavorito={toggleFavorito}
+            esFavorito={esFavorito}
+          />
         )}
 
         {tab === 'calculadora' && !juzgado && (
