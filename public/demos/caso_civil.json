@@ -123,8 +123,8 @@
         ],
         "plazo_dias": 40,
         "fecha_inicio_prueba": "2026-04-16",
-        "prueba_admitida": ["pericial médica", "testimonial de los testigos ofrecidos por ambas partes", "informativa al Hospital Privado"],
-        "prueba_rechazada": ["absolución de posiciones de la demandada"],
+        "prueba_admitida": ["pericial", "testimonial", "informativa"],
+        "prueba_rechazada": ["confesional"],
         "fundamento_rechazo": "la Municipalidad de Córdoba es una persona jurídica pública que no puede absolver posiciones en forma personal; el conocimiento de los hechos se acreditará mediante la prueba testimonial de los funcionarios intervinientes"
       }
     },

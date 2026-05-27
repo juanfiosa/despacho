@@ -14,7 +14,16 @@ async function post(path, body) {
   })
   if (!res.ok) {
     const err = await res.json().catch(() => ({ detail: res.statusText }))
-    throw new Error(err.detail || JSON.stringify(err))
+    // Pydantic validation errors come as an array of { loc, msg, type }
+    const detail = Array.isArray(err.detail)
+      ? err.detail.map(d => {
+          const loc = Array.isArray(d.loc)
+            ? d.loc.filter(l => l !== 'body').join('.')
+            : String(d.loc ?? '')
+          return loc ? `${loc}: ${d.msg}` : d.msg
+        }).join(' | ')
+      : err.detail
+    throw new Error(detail || JSON.stringify(err))
   }
   return res
 }

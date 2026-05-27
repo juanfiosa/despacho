@@ -142,8 +142,8 @@
         ],
         "plazo_dias": 40,
         "fecha_inicio_prueba": "2026-05-11",
-        "prueba_admitida": ["pericial contable", "testimonial de los testigos ofrecidos por ambas partes"],
-        "prueba_rechazada": ["informativa a la AFIP"],
+        "prueba_admitida": ["pericial", "testimonial"],
+        "prueba_rechazada": ["informativa"],
         "fundamento_rechazo": "resulta redundante con la prueba pericial contable admitida, que comprende el análisis de los mismos registros tributarios"
       }
     },
