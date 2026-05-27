@@ -7,17 +7,20 @@ import Demos from './components/Demos.jsx'
 
 export default function App() {
   const { juzgado, setJuzgado, limpiarJuzgado } = useJuzgado()
-  const [tab, setTab] = useState('generador')
+  // Demos is the default tab so visitors see it immediately, no setup required
+  const [tab, setTab] = useState('demos')
 
-  if (!juzgado) {
-    return <ConfigJuzgado onGuardar={setJuzgado} />
-  }
+  const TABS = [
+    ['demos',       '🎬 Demos'],
+    ['generador',   '📄 Generador'],
+    ['calculadora', '🧮 Calculadora'],
+  ]
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
-      {/* Tab bar encima del header */}
+      {/* Tab bar — always visible */}
       <div style={{ display: 'flex', background: '#003a8c', paddingLeft: 16, gap: 2, flexShrink: 0 }}>
-        {[['generador', '📄 Generador'], ['calculadora', '🧮 Calculadora'], ['demos', '🎬 Demos']].map(([id, label]) => (
+        {TABS.map(([id, label]) => (
           <button
             key={id}
             onClick={() => setTab(id)}
@@ -39,15 +42,27 @@ export default function App() {
 
       {/* Contenido de la pestaña activa */}
       <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-        {tab === 'generador' && (
-          <Wizard juzgado={juzgado} onCambiarJuzgado={limpiarJuzgado} />
-        )}
-        {tab === 'calculadora' && (
-          <Calculadora juzgado={juzgado} />
-        )}
+
+        {/* Demos: no juzgado needed */}
         {tab === 'demos' && (
           <Demos juzgado={juzgado} />
         )}
+
+        {/* Generador y Calculadora: piden configuración si no hay juzgado */}
+        {tab === 'generador' && !juzgado && (
+          <ConfigJuzgado onGuardar={(j) => { setJuzgado(j); }} />
+        )}
+        {tab === 'generador' && juzgado && (
+          <Wizard juzgado={juzgado} onCambiarJuzgado={limpiarJuzgado} />
+        )}
+
+        {tab === 'calculadora' && !juzgado && (
+          <ConfigJuzgado onGuardar={(j) => { setJuzgado(j); }} />
+        )}
+        {tab === 'calculadora' && juzgado && (
+          <Calculadora juzgado={juzgado} />
+        )}
+
       </div>
     </div>
   )
