@@ -1,0 +1,55 @@
+{
+  "meta": {
+    "id": "laboral_05",
+    "titulo": "Intimación de pago de liquidación aprobada",
+    "descripcion": "La perita contadora practicó liquidación. El tribunal la aprueba e intima al condenado a pagar en 5 días hábiles bajo apercibimiento de embargo (art. 132 CPT).",
+    "tipo": "intimacion_pago_liquidacion",
+    "fuero": "laboral",
+    "fuero_label": "Laboral",
+    "proceso": "Ejecución de Sentencia Laboral",
+    "etapa": "Intimación de pago"
+  },
+  "input": {
+    "identificacion": {
+      "numero": "0765432/2024",
+      "caratula": "ROMERO, CLAUDIO DANIEL c/ TRANSPORTE ANDINO SA — Accidente de Trabajo",
+      "fuero": "laboral",
+      "juzgado": "Juzgado Laboral de 3ª Nominación",
+      "secretaria": "Secretaría N° 2",
+      "ciudad": "Córdoba"
+    },
+    "partes": [
+      {
+        "rol": "actor",
+        "nombre": "Romero, Claudio Daniel",
+        "dni_cuit": "22.345.678",
+        "domicilio_real": "Barrio Los Naranjos, Pasaje Gardel 89, Córdoba",
+        "domicilio_constituido": "Colón 520, 2° piso, Córdoba",
+        "letrado": {
+          "nombre": "Dra. Valeria Susana Morales",
+          "matricula": "CAC 45.678",
+          "domicilio_constituido": "Colón 520, 2° piso, Córdoba"
+        }
+      },
+      {
+        "rol": "demandado",
+        "nombre": "Transporte Andino SA",
+        "dni_cuit": "30-68765432-1",
+        "domicilio_constituido": "Marcelo T. de Alvear 312, Córdoba",
+        "letrado": {
+          "nombre": "Dr. Gustavo Hernán Peralta",
+          "matricula": "CAC 56.789",
+          "domicilio_constituido": "Marcelo T. de Alvear 312, Córdoba"
+        }
+      }
+    ],
+    "datos_economicos": {
+      "capital": 12500000,
+      "tasa": "BNA_ACTIVA",
+      "fecha_mora": "2024-03-01",
+      "costas": true
+    },
+    "plazo_dias": 5,
+    "incluye_intereses_moratorios": true
+  }
+}

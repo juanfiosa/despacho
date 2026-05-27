@@ -1,0 +1,51 @@
+{
+  "meta": {
+    "id": "civil_02",
+    "titulo": "Embargo preventivo",
+    "descripcion": "En el marco de un juicio ejecutivo por pagaré, el acreedor solicita embargo preventivo sobre créditos del deudor en entidades bancarias. El tribunal hace lugar a la medida (art. 466 CPCC).",
+    "tipo": "embargo_preventivo",
+    "fuero": "civil_comercial",
+    "fuero_label": "Civil y Comercial",
+    "proceso": "Medidas Cautelares",
+    "etapa": "Embargo preventivo"
+  },
+  "input": {
+    "identificacion": {
+      "numero": "3456789/2026",
+      "caratula": "BANCO CÓRDOBA SA c/ EMPRESA INDUSTRIAL DEL SUR SRL — Ejecutivo",
+      "fuero": "civil_comercial",
+      "juzgado": "Juzgado Civil y Comercial de 12ª Nominación",
+      "secretaria": "Secretaría N° 1",
+      "ciudad": "Córdoba"
+    },
+    "partes": [
+      {
+        "rol": "actor",
+        "nombre": "Banco Córdoba SA",
+        "dni_cuit": "30-50512276-3",
+        "domicilio_real": "San Jerónimo 166, Córdoba",
+        "domicilio_constituido": "San Jerónimo 166, Córdoba",
+        "letrado": {
+          "nombre": "Dr. Andrés Leonardo Castro",
+          "matricula": "CAC 89.012",
+          "domicilio_constituido": "San Jerónimo 166, 3er piso, Córdoba"
+        }
+      },
+      {
+        "rol": "demandado",
+        "nombre": "Empresa Industrial del Sur SRL",
+        "dni_cuit": "30-71987654-5",
+        "domicilio_real": "Parque Industrial Ferreyra, Lote 42, Córdoba",
+        "domicilio_constituido": "27 de Abril 345, Córdoba",
+        "letrado": {
+          "nombre": "Dr. Pablo Sebastián Vargas",
+          "matricula": "CAC 90.123",
+          "domicilio_constituido": "27 de Abril 345, 2° piso, Córdoba"
+        }
+      }
+    ],
+    "monto": 2500000,
+    "bienes": "créditos y depósitos del demandado en el Banco de la Nación Argentina, Banco Córdoba SA y Banco BBVA Argentina SA, sucursales de la ciudad de Córdoba",
+    "domicilio_diligenciamiento": "Parque Industrial Ferreyra, Lote 42, Córdoba"
+  }
+}

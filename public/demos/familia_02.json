@@ -1,0 +1,50 @@
+{
+  "meta": {
+    "id": "familia_02",
+    "titulo": "Admisión de divorcio vincular bilateral",
+    "descripcion": "Ambos cónyuges peticionan el divorcio de común acuerdo y acompañan convenio regulador. El tribunal admite la petición y dispone el trámite para la homologación (arts. 437-438 CCyCN).",
+    "tipo": "admision_divorcio",
+    "fuero": "familia",
+    "fuero_label": "Familia",
+    "proceso": "Divorcio Vincular",
+    "etapa": "Admisión de la petición"
+  },
+  "input": {
+    "identificacion": {
+      "numero": "6789012/2026",
+      "caratula": "GARCÍA, ANA LUCÍA y LÓPEZ, LUIS ERNESTO — Divorcio Vincular",
+      "fuero": "familia",
+      "juzgado": "Juzgado de Familia de 4ª Nominación",
+      "secretaria": null,
+      "ciudad": "Córdoba"
+    },
+    "partes": [
+      {
+        "rol": "requirente",
+        "nombre": "García, Ana Lucía",
+        "dni_cuit": "31.234.567",
+        "domicilio_real": "Barrio Residencial Cofico, Jerónimo Luis de Cabrera 789, Córdoba",
+        "domicilio_constituido": "Bv. San Juan 600, Of. 7, Córdoba",
+        "letrado": {
+          "nombre": "Dra. Florencia Jimena Acosta",
+          "matricula": "CAC 67.890",
+          "domicilio_constituido": "Bv. San Juan 600, Of. 7, Córdoba"
+        }
+      },
+      {
+        "rol": "requerido",
+        "nombre": "López, Luis Ernesto",
+        "dni_cuit": "27.890.123",
+        "domicilio_real": "Barrio Jardín del Pilar, Mza. 12 Lote 5, Córdoba",
+        "domicilio_constituido": "Av. Poeta Lugones 1234, Córdoba",
+        "letrado": {
+          "nombre": "Dr. Rodrigo Marcelo Vega",
+          "matricula": "CAC 78.901",
+          "domicilio_constituido": "Av. Poeta Lugones 1234, 1° piso, Córdoba"
+        }
+      }
+    ],
+    "tipo_divorcio": "bilateral",
+    "plazo_retiro_documentos_dias": 10
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "id": "civil_04",
+    "titulo": "Apertura a prueba — Juicio Ordinario",
+    "descripcion": "Trabada la litis en juicio ordinario de daños, el tribunal abre el período probatorio de 40 días hábiles. Se admite la prueba documental, testimonial, pericial e informativa (art. 493 CPCC).",
+    "tipo": "auto_apertura_ordinario",
+    "fuero": "civil_comercial",
+    "fuero_label": "Civil y Comercial",
+    "proceso": "Juicio Ordinario",
+    "etapa": "Apertura a prueba"
+  },
+  "input": {
+    "identificacion": {
+      "numero": "2345678/2026",
+      "caratula": "FERNÁNDEZ, ROBERTO OSCAR c/ MUNICIPALIDAD DE CÓRDOBA — Daños y Perjuicios",
+      "fuero": "civil_comercial",
+      "juzgado": "Juzgado Civil y Comercial de 5ª Nominación",
+      "secretaria": "Secretaría N° 2",
+      "ciudad": "Córdoba"
+    },
+    "partes": [
+      {
+        "rol": "actor",
+        "nombre": "Fernández, Roberto Oscar",
+        "dni_cuit": "18.765.432",
+        "domicilio_constituido": "Caseros 680, 1° piso, Córdoba",
+        "letrado": {
+          "nombre": "Dra. Marcela Andrea Suárez",
+          "matricula": "CAC 78.901",
+          "domicilio_constituido": "Caseros 680, 1° piso, Córdoba"
+        }
+      },
+      {
+        "rol": "demandado",
+        "nombre": "Municipalidad de Córdoba",
+        "domicilio_constituido": "Marqués de Sobremonte s/n, Córdoba"
+      }
+    ],
+    "plazo_dias": 40,
+    "fecha_inicio_prueba": "2026-09-01",
+    "prueba_admitida": ["documental", "testimonial", "pericial", "informativa"],
+    "prueba_rechazada": ["confesional"],
+    "fundamento_rechazo": "La prueba de posiciones resulta improcedente respecto de la demandada, conforme a la naturaleza jurídica de la Municipalidad de Córdoba"
+  }
+}

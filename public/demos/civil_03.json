@@ -1,0 +1,51 @@
+{
+  "meta": {
+    "id": "civil_03",
+    "titulo": "Intimación de pago — Juicio Ejecutivo",
+    "descripcion": "El demandado no se presentó. Se libra mandamiento de intimación de pago por la suma reclamada más intereses. Plazo de 5 días hábiles bajo apercibimiento de embargo (art. 529 CPCC).",
+    "tipo": "intimacion_pago",
+    "fuero": "civil_comercial",
+    "fuero_label": "Civil y Comercial",
+    "proceso": "Juicio Ejecutivo",
+    "etapa": "Intimación de pago"
+  },
+  "input": {
+    "identificacion": {
+      "numero": "4567890/2025",
+      "caratula": "COMERCIAL NORTE SA c/ PÉREZ, JUAN MANUEL — Ejecutivo (Pagaré)",
+      "fuero": "civil_comercial",
+      "juzgado": "Juzgado Civil y Comercial de 8ª Nominación",
+      "secretaria": "Secretaría N° 2",
+      "ciudad": "Córdoba"
+    },
+    "partes": [
+      {
+        "rol": "actor",
+        "nombre": "Comercial Norte SA",
+        "dni_cuit": "30-64321987-6",
+        "domicilio_real": "Av. Colón 1450, Córdoba",
+        "domicilio_constituido": "Av. Colón 1450, 1° piso, Córdoba",
+        "letrado": {
+          "nombre": "Dr. Jorge Alberto Méndez",
+          "matricula": "CAC 11.234",
+          "domicilio_constituido": "Av. Colón 1450, 1° piso, Córdoba"
+        }
+      },
+      {
+        "rol": "demandado",
+        "nombre": "Pérez, Juan Manuel",
+        "dni_cuit": "27.890.123",
+        "domicilio_real": "Bv. Las Heras 234, Córdoba",
+        "domicilio_constituido": "Bv. Las Heras 234, Córdoba"
+      }
+    ],
+    "datos_economicos": {
+      "capital": 850000,
+      "tasa": "BNA_ACTIVA",
+      "fecha_mora": "2024-06-01",
+      "costas": true
+    },
+    "plazo_dias": 5,
+    "domicilio_intimacion": "Bv. Las Heras 234, Córdoba"
+  }
+}

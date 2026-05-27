@@ -3,6 +3,7 @@ import { useJuzgado } from './useJuzgado.js'
 import ConfigJuzgado from './components/ConfigJuzgado.jsx'
 import Wizard from './components/Wizard.jsx'
 import Calculadora from './components/Calculadora.jsx'
+import Demos from './components/Demos.jsx'
 
 export default function App() {
   const { juzgado, setJuzgado, limpiarJuzgado } = useJuzgado()
@@ -16,7 +17,7 @@ export default function App() {
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
       {/* Tab bar encima del header */}
       <div style={{ display: 'flex', background: '#003a8c', paddingLeft: 16, gap: 2, flexShrink: 0 }}>
-        {[['generador', '📄 Generador'], ['calculadora', '🧮 Calculadora']].map(([id, label]) => (
+        {[['generador', '📄 Generador'], ['calculadora', '🧮 Calculadora'], ['demos', '🎬 Demos']].map(([id, label]) => (
           <button
             key={id}
             onClick={() => setTab(id)}
@@ -43,6 +44,9 @@ export default function App() {
         )}
         {tab === 'calculadora' && (
           <Calculadora juzgado={juzgado} />
+        )}
+        {tab === 'demos' && (
+          <Demos juzgado={juzgado} />
         )}
       </div>
     </div>

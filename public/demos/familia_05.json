@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "id": "familia_05",
+    "titulo": "Homologación de convenio regulador",
+    "descripcion": "Las partes acuerdan divorcio vincular bilateral con convenio regulador que incluye alimentos, distribución de bienes y régimen de comunicación. El tribunal homologa el acuerdo (arts. 437-439 CCyCN).",
+    "tipo": "homologacion_acuerdo_familia",
+    "fuero": "familia",
+    "fuero_label": "Familia",
+    "proceso": "Divorcio Vincular",
+    "etapa": "Homologación del convenio regulador"
+  },
+  "input": {
+    "identificacion": {
+      "numero": "6789012/2026",
+      "caratula": "GARCÍA, ANA LUCÍA y LÓPEZ, LUIS ERNESTO — Divorcio Vincular",
+      "fuero": "familia",
+      "juzgado": "Juzgado de Familia de 4ª Nominación",
+      "secretaria": null,
+      "ciudad": "Córdoba"
+    },
+    "partes": [
+      {
+        "rol": "requirente",
+        "nombre": "García, Ana Lucía",
+        "dni_cuit": "31.234.567",
+        "domicilio_constituido": "Bv. San Juan 600, Of. 7, Córdoba",
+        "letrado": {
+          "nombre": "Dra. Florencia Jimena Acosta",
+          "matricula": "CAC 67.890",
+          "domicilio_constituido": "Bv. San Juan 600, Of. 7, Córdoba"
+        }
+      },
+      {
+        "rol": "requerido",
+        "nombre": "López, Luis Ernesto",
+        "dni_cuit": "27.890.123",
+        "domicilio_constituido": "Av. Poeta Lugones 1234, Córdoba",
+        "letrado": {
+          "nombre": "Dr. Rodrigo Marcelo Vega",
+          "matricula": "CAC 78.901",
+          "domicilio_constituido": "Av. Poeta Lugones 1234, 1° piso, Córdoba"
+        }
+      }
+    ],
+    "tipo_acuerdo": "divorcio",
+    "descripcion_acuerdo": "a) Alimentos: el Sr. López abonará en concepto de alimentos para los hijos menores la suma de pesos ciento ochenta mil ($180.000) mensuales, pagaderos los días 5 de cada mes mediante depósito judicial; b) Uso del hogar conyugal: se atribuye el uso del inmueble sito en Barrio Residencial Cofico, Jerónimo Luis de Cabrera 789, a la Sra. García hasta que los hijos alcancen la mayoría de edad; c) Régimen de comunicación: fines de semana alternos de sábado a las 10 hs. a domingo a las 19 hs.; d) Vehículo: el automóvil Volkswagen Gol dominio AB123CD se adjudica al Sr. López en pleno dominio"
+  }
+}

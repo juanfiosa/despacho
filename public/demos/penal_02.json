@@ -1,0 +1,47 @@
+{
+  "meta": {
+    "id": "penal_02",
+    "titulo": "Auto de prisión preventiva",
+    "descripcion": "El tribunal decreta la prisión preventiva del imputado por peligro de fuga, dada la escala penal del delito y la ausencia de arraigo (art. 281 CPP Ley 8123).",
+    "tipo": "prision_preventiva",
+    "fuero": "penal",
+    "fuero_label": "Penal",
+    "proceso": "Investigación Penal Preparatoria",
+    "etapa": "Medida cautelar personal"
+  },
+  "input": {
+    "identificacion": {
+      "numero": "1234567/2026",
+      "caratula": "GÓMEZ, PABLO SEBASTIÁN p.s.a. Robo Agravado",
+      "fuero": "penal",
+      "juzgado": "Juzgado de Control de 3ª Nominación",
+      "secretaria": null,
+      "ciudad": "Córdoba"
+    },
+    "partes": [
+      {
+        "rol": "imputado",
+        "nombre": "Gómez, Pablo Sebastián",
+        "dni_cuit": "38.456.789",
+        "domicilio_real": "Barrio Müller, Calle Las Rosas 234, Córdoba",
+        "domicilio_constituido": "Defensoría Pública, San Jerónimo 600, Córdoba",
+        "letrado": {
+          "nombre": "Dr. Jorge Luis Domínguez",
+          "matricula": "CAC 56.789",
+          "domicilio_constituido": "Defensoría Pública, San Jerónimo 600, Córdoba"
+        }
+      },
+      {
+        "rol": "fiscal",
+        "nombre": "Pereyra, Hernán Alejandro",
+        "domicilio_constituido": "Fiscalía de Instrucción N.° 3, Caseros 300, Córdoba"
+      }
+    ],
+    "fiscal_nombre": "Dr. Hernán Alejandro Pereyra",
+    "defensor_nombre": "Dr. Jorge Luis Domínguez",
+    "calificacion_legal": "robo agravado por el uso de armas en grado de tentativa (arts. 164, 166 inc. 2 y 42 CP)",
+    "causal": "peligro_fuga",
+    "descripcion_hecho": "aprehensión en flagrancia el 12/05/2026 en Av. Colón 890, portando arma de fuego y con registros delictivos previos; carece de domicilio estable y arraigo familiar en la ciudad",
+    "escala_minima_pena": "5 años de prisión"
+  }
+}
