@@ -415,7 +415,7 @@ const sidebarStyle      = { width: 248, flexShrink: 0, background: '#fff', borde
 const sidebarTitleStyle = { fontSize: 10, fontWeight: 700, color: '#aaa', textTransform: 'uppercase', letterSpacing: '0.08em', padding: '0 16px 12px' }
 const sidebarItemStyle  = { display: 'flex', alignItems: 'flex-start', width: '100%', padding: '12px 16px', border: 'none', cursor: 'pointer', borderRadius: 0, marginBottom: 2 }
 const sidebarNotaStyle      = { margin: '12px 16px 0', padding: '10px 12px', background: '#f7f8fa', borderRadius: 8, fontSize: 11, color: '#888', lineHeight: 1.55 }
-const sidebarNuevoCasoStyle = { display: 'flex', alignItems: 'center', width: '100%', padding: '12px 16px', border: '1px dashed #0047AB44', background: '#f0f4ff', cursor: 'pointer', borderRadius: 8, margin: '0 8px', width: 'calc(100% - 16px)', gap: 10 }
+const sidebarNuevoCasoStyle = { display: 'flex', alignItems: 'center', width: 'calc(100% - 16px)', padding: '12px 16px', border: '1px dashed #0047AB44', background: '#f0f4ff', cursor: 'pointer', borderRadius: 8, margin: '0 8px', gap: 10 }
 
 const mainStyle         = { flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column', background: '#f4f5f7' }
 const timelineWrapStyle = { flex: 1, overflowY: 'auto', padding: '28px 32px' }
