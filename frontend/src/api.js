@@ -143,6 +143,11 @@ const PATHS_PREVIEW = {
   intimacion_cumplimiento_sentencia:    '/civil-comercial/incidentes/intimacion-cumplimiento-sentencia/preview',
   auto_desglose:                        '/civil-comercial/incidentes/desglose/preview',
   citacion_audiencia_conciliacion:      '/civil-comercial/incidentes/citacion-audiencia-conciliacion/preview',
+  // Ordinario — nuevos
+  llamamiento_autos_civil:              '/civil-comercial/ordinario/llamamiento-autos/preview',
+  // Incidentes — nuevos
+  decreto_vista:                        '/civil-comercial/incidentes/decreto-vista/preview',
+  providencia_agregacion:               '/civil-comercial/incidentes/providencia-agregacion/preview',
 }
 const PATHS_DOCX = {
   // Ejecutivo
@@ -251,6 +256,11 @@ const PATHS_DOCX = {
   intimacion_cumplimiento_sentencia:    '/civil-comercial/incidentes/intimacion-cumplimiento-sentencia/docx',
   auto_desglose:                        '/civil-comercial/incidentes/desglose/docx',
   citacion_audiencia_conciliacion:      '/civil-comercial/incidentes/citacion-audiencia-conciliacion/docx',
+  // Ordinario — nuevos
+  llamamiento_autos_civil:              '/civil-comercial/ordinario/llamamiento-autos/docx',
+  // Incidentes — nuevos
+  decreto_vista:                        '/civil-comercial/incidentes/decreto-vista/docx',
+  providencia_agregacion:               '/civil-comercial/incidentes/providencia-agregacion/docx',
 }
 
 export async function previewDocumento(tipo, payload, fechaResolucion) {

@@ -7,6 +7,8 @@ Documentos cubiertos:
   - IntimacionCumplimientoSentenciaInput → intimación a cumplir sentencia (art. 559 CPCC)
   - AutoDesgloseInput                   → decreto de desglose de documentación (art. 75 CPCC)
   - CitacionAudienciaConciliacionInput  → citación a audiencia de conciliación (art. 58 CPCC)
+  - DecretoVistaInput                   → decreto de vista/traslado a la contraria (art. 107 CPCC)
+  - ProvidenciaAgregacionInput          → providencia de agregación de escrito (art. 107 CPCC)
 """
 
 from datetime import date
@@ -166,4 +168,56 @@ class CitacionAudienciaConciliacionInput(ExpedienteBase):
     con_asistencia_letrada: bool = Field(
         default=True,
         description="Si True, se intima a las partes a concurrir con patrocinio letrado",
+    )
+
+
+class DecretoVistaInput(ExpedienteBase):
+    """
+    Decreto que corre vista o traslado a la parte contraria para que tome
+    conocimiento y conteste dentro del plazo (art. 107 CPCC Ley 8465, Córdoba).
+    Usado para vistas de pericias, informes, excepciones, documentos, etc.
+    """
+    objeto_vista: str = Field(
+        description=(
+            "Objeto de la vista (ej: 'pericia contable presentada', "
+            "'excepción de prescripción', 'informe de la AFIP')"
+        )
+    )
+    destinatario: str = Field(
+        default="la parte contraria",
+        description=(
+            "Parte a quien se corre la vista "
+            "(ej: 'la parte actora', 'la parte demandada', 'ambas partes')"
+        ),
+    )
+    plazo_dias: int = Field(
+        default=5,
+        gt=0,
+        description="Plazo en días hábiles para contestar la vista (art. 107 CPCC)",
+    )
+
+
+class ProvidenciaAgregacionInput(ExpedienteBase):
+    """
+    Providencia de trámite que tiene por presentado un escrito o documento
+    y ordena su agregación al expediente (art. 107 CPCC Ley 8465, Córdoba).
+    """
+    tipo_escrito: str = Field(
+        description=(
+            "Tipo de escrito o documento presentado "
+            "(ej: 'contestación de demanda', 'pericia médica', "
+            "'factura de honorarios del perito', 'informe del Registro de la Propiedad')"
+        )
+    )
+    presentado_por: str = Field(
+        default="la parte actora",
+        description="Parte o sujeto que presenta el escrito",
+    )
+    instruccion_adicional: str | None = Field(
+        default=None,
+        description=(
+            "Instrucción adicional a agregar luego de 'Agréguese' "
+            "(ej: 'Dése vista a la contraria por cinco días', "
+            "'Cítese al perito a aceptar el cargo')"
+        ),
     )

@@ -11,6 +11,7 @@ from .ordinario import (
     TrasladoDemandaInput,
     TipoTrasladoDemanda,
     AutoAperturaOrdinarioInput,
+    LlamamientoAutosCivilInput,
 )
 from .cautelares import (
     EmbargoPreventivoInput,
@@ -29,6 +30,8 @@ from .incidentes import (
     IntimacionCumplimientoSentenciaInput,
     AutoDesgloseInput,
     CitacionAudienciaConciliacionInput,
+    DecretoVistaInput,
+    ProvidenciaAgregacionInput,
 )
 
 __all__ = [
@@ -54,4 +57,7 @@ __all__ = [
     "IntimacionCumplimientoSentenciaInput",
     "AutoDesgloseInput",
     "CitacionAudienciaConciliacionInput",
+    "LlamamientoAutosCivilInput",
+    "DecretoVistaInput",
+    "ProvidenciaAgregacionInput",
 ]

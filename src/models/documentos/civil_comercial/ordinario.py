@@ -1,11 +1,13 @@
 """
 Modelos de input para documentos del juicio ordinario (CPCC Ley 8465, Córdoba).
 Documentos cubiertos:
-  - TrasladoDemandaInput      → traslado de demanda, post-contestación, reconvención
-  - AutoAperturaOrdinarioInput → auto de apertura a prueba (art. 493 CPCC, 40 días)
+  - TrasladoDemandaInput        → traslado de demanda, post-contestación, reconvención
+  - AutoAperturaOrdinarioInput  → auto de apertura a prueba (art. 493 CPCC, 40 días)
+  - LlamamientoAutosCivilInput  → decreto de llamamiento de autos para sentencia (art. 493/498 CPCC)
 """
 
 from enum import Enum
+from typing import Literal
 
 from pydantic import Field
 
@@ -63,3 +65,23 @@ class AutoAperturaOrdinarioInput(AutoAperturaPruebaInput):
     que referencia el art. 493 y el plazo de cuarenta (40) días hábiles.
     """
     pass
+
+
+class LlamamientoAutosCivilInput(ExpedienteBase):
+    """
+    Decreto de llamamiento de autos para dictar sentencia definitiva o
+    resolver un incidente en el proceso civil ordinario
+    (arts. 121 / 493 / 498 CPCC Ley 8465, Córdoba).
+    """
+    etapa: Literal["sentencia_definitiva", "resolucion_incidente", "otro"] = Field(
+        default="sentencia_definitiva",
+        description="Etapa para la que se llaman los autos",
+    )
+    vencio_prueba: bool = Field(
+        default=True,
+        description="Si True, se deja constancia del vencimiento del período de prueba",
+    )
+    presentaron_alegatos: bool = Field(
+        default=False,
+        description="Si True, las partes presentaron alegatos antes del llamamiento",
+    )

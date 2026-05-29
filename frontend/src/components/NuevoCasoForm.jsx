@@ -77,6 +77,7 @@ export default function NuevoCasoForm({ juzgado, onCrear, onCancelar }) {
 
     onCrear({
       procesoId,
+      fuero:      proceso.fuero,   // necesario para IdentificacionExpediente.fuero
       expediente: expediente.trim(),
       caratula:   caratula.trim(),
       partes:     partesObj,

@@ -20,19 +20,35 @@ export const TIPOS_PRUEBA = [
 // Helpers
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** Construye el bloque identificacion desde el caso */
+/**
+ * Construye el bloque identificacion desde el caso.
+ * El fuero se incluye desde cd.fuero (seteado en NuevoCasoForm al crear el caso).
+ * Nombres de campo exactos que espera IdentificacionExpediente en Pydantic.
+ */
 const ident = (cd) => ({
-  numero_expediente: cd.expediente,
-  caratula:          cd.caratula,
-  ...(cd.juzgado ? {
-    tribunal:   cd.juzgado.nombre   || '',
-    secretaria: cd.juzgado.secretaria || '',
-    ciudad:     cd.juzgado.ciudad   || 'Córdoba',
-  } : {}),
+  numero:     cd.expediente,
+  caratula:   cd.caratula,
+  fuero:      cd.fuero || 'civil_comercial',
+  juzgado:    cd.juzgado?.nombre    || 'Juzgado',
+  secretaria: cd.juzgado?.secretaria || null,
+  ciudad:     cd.juzgado?.ciudad    || 'Córdoba',
 })
 
-/** Construye el bloque partes desde el caso */
-const partes = (cd) => cd.partes || {}
+/**
+ * Convierte el objeto de partes {rol: {nombre, cuit, domicilio, letrado}}
+ * a la lista [{rol, nombre, dni_cuit, domicilio_constituido, letrado}]
+ * que espera list[Parte] en Pydantic.
+ */
+const partes = (cd) => {
+  const obj = cd.partes || {}
+  return Object.entries(obj).map(([rol, p]) => ({
+    rol,
+    nombre: p.nombre || '',
+    ...(p.cuit     ? { dni_cuit: p.cuit }                         : {}),
+    ...(p.domicilio ? { domicilio_constituido: p.domicilio }       : {}),
+    ...(p.letrado  ? { letrado: { nombre: p.letrado } }           : {}),
+  }))
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Procesos
@@ -729,4 +745,454 @@ export const PROCESOS = [
       },
     ],
   },
+
+  // ─── EJECUTIVO CIVIL ──────────────────────────────────────────────────────
+  {
+    id:     'ejecutivo_civil',
+    nombre: 'Civil — Ejecutivo',
+    fuero:  'civil_comercial',
+    icono:  '💰',
+    color:  '#1b5e20',
+    bg:     '#f1f8e9',
+    roles_partes: ['actor', 'demandado'],
+    campos_caso: [
+      { key: 'titulo_ejecutivo', label: 'Título ejecutivo', type: 'text',
+        placeholder: 'Ej: pagaré, cheque, sentencia firme, escritura hipotecaria…' },
+    ],
+    etapas: [
+      {
+        id: 'admision_ejecutiva', nombre: 'Admisión y mandamiento', orden: 1,
+        descripcion: 'Apertura del proceso ejecutivo e intimación de pago.',
+        documentos: [
+          {
+            tipo: 'admision_ejecutivo', nombre: 'Auto de apertura del proceso ejecutivo',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'monto_reclamado',    label: 'Monto reclamado ($)', type: 'number', required: true },
+              { key: 'titulo_ejecutivo',   label: 'Título ejecutivo', type: 'text', required: true,
+                placeholder: 'Ej: pagaré de fecha…' },
+              { key: 'plazo_pago_dias',    label: 'Plazo para pagar (días hábiles)', type: 'number', required: false, default: 3 },
+            ],
+          },
+          {
+            tipo: 'intimacion_pago', nombre: 'Intimación de pago',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'monto_intimado',   label: 'Monto intimado ($)', type: 'number', required: true },
+              { key: 'plazo_pago_dias',  label: 'Plazo (días hábiles)', type: 'number', required: false, default: 3 },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'cautelar_ejecutiva', nombre: 'Embargo', orden: 2,
+        descripcion: 'Traba del embargo y mandamiento de pago.',
+        documentos: [
+          {
+            tipo: 'embargo_preventivo', nombre: 'Embargo (bienes del deudor)',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'monto_embargo',      label: 'Monto del embargo ($)', type: 'number', required: true },
+              { key: 'bienes_embargados',  label: 'Bienes embargados', type: 'textarea', required: true,
+                placeholder: 'Ej: cuentas bancarias del demandado en todas las entidades financieras del país' },
+              { key: 'contracautela',      label: 'Contracautela (opcional)', type: 'text', required: false },
+            ],
+          },
+          {
+            tipo: 'mandamiento_pago', nombre: 'Mandamiento de pago y embargo',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'monto_mandamiento', label: 'Monto ($)', type: 'number', required: true },
+              { key: 'bienes_afectados',  label: 'Bienes afectados (opcional)', type: 'textarea', required: false },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'prueba_ejecutiva', nombre: 'Prueba (si hay excepciones)', orden: 3,
+        descripcion: 'Apertura a prueba si el ejecutado opuso excepciones.',
+        documentos: [
+          {
+            tipo: 'auto_apertura_prueba', nombre: 'Auto de apertura a prueba (ejecutivo)',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'plazo_dias',          label: 'Plazo (días hábiles)', type: 'number', required: false, default: 20 },
+              { key: 'fecha_inicio_prueba', label: 'Fecha de inicio', type: 'date', required: true },
+              { key: 'prueba_admitida',     label: 'Prueba admitida', type: 'multi_prueba', required: false },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'ejecucion_sentencia', nombre: 'Ejecución de sentencia', orden: 4,
+        descripcion: 'Intimación de pago de la condena y ejecución forzada.',
+        documentos: [
+          {
+            tipo: 'intimacion_cumplimiento_sentencia', nombre: 'Intimación de pago de sentencia',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'plazo_dias',            label: 'Plazo (días hábiles)', type: 'number', required: false, default: 5 },
+              { key: 'tipo_obligacion',        label: 'Tipo de obligación', type: 'select', required: false,
+                default: 'dar_dinero',
+                options: [
+                  { value: 'dar_dinero', label: 'Pagar suma de dinero' },
+                  { value: 'dar_cosa',   label: 'Entregar bien' },
+                  { value: 'hacer',      label: 'Ejecutar conducta' },
+                  { value: 'no_hacer',   label: 'Abstenerse' },
+                ]},
+              { key: 'descripcion_obligacion', label: 'Descripción (opcional)', type: 'text', required: false },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+
+  // ─── SUCESORIO ────────────────────────────────────────────────────────────
+  {
+    id:     'sucesorio',
+    nombre: 'Civil — Sucesorio',
+    fuero:  'civil_comercial',
+    icono:  '🏠',
+    color:  '#4527a0',
+    bg:     '#ede7f6',
+    roles_partes: ['actor'],
+    campos_caso: [
+      { key: 'causante', label: 'Nombre del causante', type: 'text',
+        placeholder: 'Ej: Juan Carlos Pérez' },
+    ],
+    etapas: [
+      {
+        id: 'apertura', nombre: 'Apertura del sucesorio', orden: 1,
+        descripcion: 'Auto de apertura del proceso sucesorio y citación.',
+        documentos: [
+          {
+            tipo: 'apertura_sucesorio', nombre: 'Auto de apertura del proceso sucesorio',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'nombre_causante',   label: 'Nombre completo del causante', type: 'text', required: true },
+              { key: 'fecha_fallecimiento', label: 'Fecha de fallecimiento', type: 'date', required: true },
+              { key: 'tipo_sucesion',     label: 'Tipo de sucesión', type: 'select', required: false,
+                default: 'intestada',
+                options: [
+                  { value: 'intestada',  label: 'Intestada (ab intestato)' },
+                  { value: 'testamentaria', label: 'Testamentaria' },
+                ]},
+            ],
+          },
+          {
+            tipo: 'citacion_herederos_acreedores', nombre: 'Citación de herederos y acreedores (edictos)',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'nombre_causante',   label: 'Nombre del causante', type: 'text', required: true },
+              { key: 'plazo_edictos_dias', label: 'Plazo de publicación de edictos (días)', type: 'number', required: false, default: 5 },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'declaratoria', nombre: 'Declaratoria de herederos', orden: 2,
+        descripcion: 'Auto de declaratoria de herederos.',
+        documentos: [
+          {
+            tipo: 'declaratoria_herederos', nombre: 'Auto de declaratoria de herederos',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'nombre_causante', label: 'Nombre del causante', type: 'text', required: true },
+              { key: 'herederos',       label: 'Herederos declarados (uno por línea)', type: 'textarea_list', required: true,
+                placeholder: 'Pérez, María Elena\nPérez, Luis Carlos' },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'inventario', nombre: 'Inventario y avalúo', orden: 3,
+        descripcion: 'Aprobación del inventario y avalúo del acervo hereditario.',
+        documentos: [
+          {
+            tipo: 'aprobacion_inventario_avaluo', nombre: 'Decreto de aprobación de inventario y avalúo',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'valor_total_acervo', label: 'Valor total del acervo ($)', type: 'number', required: true },
+              { key: 'descripcion_bienes', label: 'Descripción de los bienes (opcional)', type: 'textarea', required: false },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+
+  // ─── CONCURSAL ────────────────────────────────────────────────────────────
+  {
+    id:     'concursal',
+    nombre: 'Concursal — Concurso preventivo',
+    fuero:  'concursal',
+    icono:  '🏢',
+    color:  '#bf360c',
+    bg:     '#fbe9e7',
+    roles_partes: ['concursado'],
+    campos_caso: [
+      { key: 'actividad_concursado', label: 'Actividad / rubro del concursado', type: 'text',
+        placeholder: 'Ej: comercio minorista, industria textil, prestación de servicios…' },
+    ],
+    etapas: [
+      {
+        id: 'apertura_concurso', nombre: 'Apertura del concurso', orden: 1,
+        descripcion: 'Auto de apertura del concurso preventivo (art. 14 LCQ).',
+        documentos: [
+          {
+            tipo: 'auto_apertura_concurso', nombre: 'Auto de apertura del concurso preventivo',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'monto_pasivo_denunciado', label: 'Pasivo denunciado ($)', type: 'number', required: false },
+              { key: 'plazo_verificacion_dias', label: 'Plazo para verificar créditos (días hábiles)', type: 'number', required: false, default: 60 },
+            ],
+          },
+          {
+            tipo: 'designacion_sindico', nombre: 'Designación del síndico',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'nombre_sindico',     label: 'Nombre del síndico designado', type: 'text', required: true },
+              { key: 'tipo_sindico',       label: 'Tipo', type: 'select', required: false,
+                default: 'contador',
+                options: [
+                  { value: 'contador',   label: 'Contador público' },
+                  { value: 'abogado',    label: 'Abogado' },
+                  { value: 'estudio',    label: 'Estudio profesional' },
+                ]},
+            ],
+          },
+        ],
+      },
+      {
+        id: 'verificacion', nombre: 'Verificación de créditos', orden: 2,
+        descripcion: 'Citación de acreedores para verificar créditos.',
+        documentos: [
+          {
+            tipo: 'citacion_acreedores_edicto', nombre: 'Citación de acreedores por edictos',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'fecha_limite_verificacion', label: 'Fecha límite para verificar', type: 'date', required: true },
+              { key: 'domicilio_sindico',          label: 'Domicilio del síndico', type: 'text', required: false },
+            ],
+          },
+          {
+            tipo: 'verificacion_creditos', nombre: 'Auto de verificación de créditos',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'total_verificado',    label: 'Total verificado ($)', type: 'number', required: false },
+              { key: 'cantidad_acreedores', label: 'Cantidad de acreedores verificados', type: 'number', required: false },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'exclusividad', nombre: 'Período de exclusividad', orden: 3,
+        descripcion: 'Fijación del período de exclusividad para negociar el acuerdo.',
+        documentos: [
+          {
+            tipo: 'periodo_exclusividad', nombre: 'Decreto de período de exclusividad',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'fecha_inicio_exclusividad', label: 'Fecha de inicio', type: 'date', required: true },
+              { key: 'plazo_dias',                label: 'Plazo (días hábiles)', type: 'number', required: false, default: 90 },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'homologacion_concursal', nombre: 'Homologación del acuerdo', orden: 4,
+        descripcion: 'Auto de homologación del acuerdo preventivo.',
+        documentos: [
+          {
+            tipo: 'homologacion_acuerdo_concursal', nombre: 'Auto de homologación del acuerdo preventivo',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'descripcion_acuerdo', label: 'Descripción del acuerdo homologado', type: 'textarea', required: true,
+                placeholder: 'Ej: quita del 40%, espera de 5 años en 10 cuotas semestrales…' },
+              { key: 'mayoria_obtenida',    label: 'Mayoría obtenida', type: 'text', required: false,
+                placeholder: 'Ej: 75% del capital quirografario' },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+
+  // ─── VIOLENCIA FAMILIAR ───────────────────────────────────────────────────
+  {
+    id:     'violencia_familiar',
+    nombre: 'Violencia Familiar (Ley 9283)',
+    fuero:  'violencia_familiar',
+    icono:  '🛡️',
+    color:  '#880e4f',
+    bg:     '#fce4ec',
+    roles_partes: ['requirente', 'requerido'],
+    campos_caso: [
+      { key: 'descripcion_hechos', label: 'Hechos denunciados (breve resumen)', type: 'textarea',
+        placeholder: 'Ej: violencia física y psicológica reiterada en el ámbito doméstico…' },
+    ],
+    etapas: [
+      {
+        id: 'medidas_urgentes', nombre: 'Medidas urgentes de protección', orden: 1,
+        descripcion: 'Auto de medidas urgentes de protección (art. 26 Ley 9283).',
+        documentos: [
+          {
+            tipo: 'medidas_urgentes_vf', nombre: 'Auto de medidas urgentes de protección',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'medidas_dispuestas', label: 'Medidas dispuestas (una por línea)', type: 'textarea_list', required: true,
+                placeholder: 'Exclusión del hogar del requerido\nProhibición de acercamiento a menos de 300 metros' },
+              { key: 'plazo_medidas_dias', label: 'Plazo de las medidas (días)', type: 'number', required: false, default: 90 },
+            ],
+          },
+          {
+            tipo: 'oficio_policia_vf', nombre: 'Oficio a la policía (custodia / control)',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'domicilio_victima',   label: 'Domicilio de la víctima', type: 'text', required: true },
+              { key: 'instrucciones',       label: 'Instrucciones al personal policial', type: 'textarea', required: false,
+                placeholder: 'Ej: hacer efectiva la exclusión del hogar; brindar custodia policial…' },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'audiencia_vf', nombre: 'Audiencia de seguimiento', orden: 2,
+        descripcion: 'Citación a audiencia de seguimiento de medidas.',
+        documentos: [
+          {
+            tipo: 'citacion_audiencia_vf', nombre: 'Citación a audiencia (art. 26 Ley 9283)',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'fecha_audiencia', label: 'Fecha de la audiencia', type: 'date', required: true },
+              { key: 'hora_audiencia',  label: 'Hora (HH:MM)', type: 'time', required: false, default: '09:00' },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'seguimiento_vf', nombre: 'Prórroga o cese de medidas', orden: 3,
+        descripcion: 'Prórroga de las medidas de protección o cese.',
+        documentos: [
+          {
+            tipo: 'prorroga_medidas_vf', nombre: 'Auto de prórroga de medidas de protección',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'plazo_prorroga_dias', label: 'Plazo de la prórroga (días)', type: 'number', required: false, default: 90 },
+              { key: 'motivo_prorroga',     label: 'Fundamento de la prórroga', type: 'textarea', required: false,
+                placeholder: 'Ej: subsiste el riesgo para la víctima según informe…' },
+            ],
+          },
+          {
+            tipo: 'cese_medidas_vf', nombre: 'Auto de cese de medidas',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'motivo_cese', label: 'Motivo del cese', type: 'textarea', required: true,
+                placeholder: 'Ej: desaparición del riesgo, acuerdo de partes, vencimiento del plazo…' },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+
+  // ─── NIÑEZ Y ADOLESCENCIA ─────────────────────────────────────────────────
+  {
+    id:     'ninez_adolescencia',
+    nombre: 'Niñez y Adolescencia (Ley 9944)',
+    fuero:  'ninez',
+    icono:  '👶',
+    color:  '#0277bd',
+    bg:     '#e1f5fe',
+    roles_partes: ['progenitor', 'menor'],
+    campos_caso: [
+      { key: 'descripcion_situacion', label: 'Descripción de la situación', type: 'textarea',
+        placeholder: 'Ej: niño en situación de vulnerabilidad, sin cuidados parentales adecuados…' },
+    ],
+    etapas: [
+      {
+        id: 'medida_excepcional', nombre: 'Medida excepcional', orden: 1,
+        descripcion: 'Adopción de medida de abrigo o excepcional (art. 52 Ley 9944).',
+        documentos: [
+          {
+            tipo: 'auto_medida_abrigo', nombre: 'Auto de medida de abrigo',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'nombre_nna',         label: 'Nombre del NNA', type: 'text', required: true },
+              { key: 'edad_nna',           label: 'Edad', type: 'text', required: false },
+              { key: 'lugar_alojamiento',  label: 'Lugar de alojamiento dispuesto', type: 'text', required: true,
+                placeholder: 'Ej: hogar convivencial del SENAF, familia ampliada…' },
+              { key: 'plazo_medida_dias',  label: 'Plazo de la medida (días)', type: 'number', required: false, default: 90 },
+            ],
+          },
+          {
+            tipo: 'notificacion_senaf', nombre: 'Notificación al SENAF',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'nombre_nna',    label: 'Nombre del NNA', type: 'text', required: true },
+              { key: 'motivo',        label: 'Motivo de la notificación', type: 'textarea', required: true,
+                placeholder: 'Ej: adopción de medida de abrigo; solicitud de informe…' },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'control_legalidad', nombre: 'Control de legalidad', orden: 2,
+        descripcion: 'Auto de control de legalidad de la medida excepcional.',
+        documentos: [
+          {
+            tipo: 'control_legalidad_nna', nombre: 'Auto de control de legalidad',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'nombre_nna',         label: 'Nombre del NNA', type: 'text', required: true },
+              { key: 'tipo_medida',        label: 'Tipo de medida controlada', type: 'text', required: true,
+                placeholder: 'Ej: medida de abrigo, internación en salud mental…' },
+              { key: 'resultado_control',  label: 'Resultado del control', type: 'select', required: false,
+                default: 'confirma',
+                options: [
+                  { value: 'confirma',  label: 'Confirma la medida' },
+                  { value: 'revoca',    label: 'Revoca la medida' },
+                  { value: 'modifica',  label: 'Modifica la medida' },
+                ]},
+            ],
+          },
+        ],
+      },
+      {
+        id: 'seguimiento_nna', nombre: 'Seguimiento', orden: 3,
+        descripcion: 'Prórroga, citación de seguimiento o reintegro familiar.',
+        documentos: [
+          {
+            tipo: 'prorroga_medida_nna', nombre: 'Prórroga de medida excepcional',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'nombre_nna',         label: 'Nombre del NNA', type: 'text', required: true },
+              { key: 'plazo_prorroga_dias', label: 'Plazo de prórroga (días)', type: 'number', required: false, default: 90 },
+              { key: 'motivo_prorroga',     label: 'Motivo', type: 'textarea', required: false },
+            ],
+          },
+          {
+            tipo: 'citacion_seguimiento_nna', nombre: 'Citación a audiencia de seguimiento',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'fecha_audiencia', label: 'Fecha', type: 'date', required: true },
+              { key: 'hora_audiencia',  label: 'Hora (HH:MM)', type: 'time', required: false, default: '09:00' },
+              { key: 'nombre_nna',      label: 'Nombre del NNA', type: 'text', required: false },
+            ],
+          },
+          {
+            tipo: 'auto_reintegro_familiar', nombre: 'Auto de reintegro familiar',
+            fixed: (cd) => ({ identificacion: ident(cd), partes: partes(cd) }),
+            campos_extra: [
+              { key: 'nombre_nna',     label: 'Nombre del NNA', type: 'text', required: true },
+              { key: 'motivo_reintegro', label: 'Fundamento del reintegro', type: 'textarea', required: true,
+                placeholder: 'Ej: superación de la situación de vulnerabilidad, informe positivo del SENAF…' },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+
 ]

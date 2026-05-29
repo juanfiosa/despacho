@@ -27,15 +27,20 @@ function coerceCampo(campo, raw) {
   if (raw === undefined || raw === null || raw === '') {
     return campo.default !== undefined ? campo.default : undefined
   }
+  // Booleanos nativos (vienen del estado inicial con default boolean) — pasarlos tal cual
+  if (typeof raw === 'boolean') return raw
   if (campo.type === 'number') {
     const n = Number(raw)
     return isNaN(n) ? undefined : n
   }
   if (campo.type === 'select') {
-    if (raw === 'true')  return true
-    if (raw === 'false') return false
-    const n = Number(raw)
-    if (!isNaN(n) && raw !== '') return n
+    if (raw === 'true'  || raw === true)  return true
+    if (raw === 'false' || raw === false) return false
+    // Intentar número solo si no es cadena vacía
+    if (typeof raw === 'string' && raw.trim() !== '') {
+      const n = Number(raw)
+      if (!isNaN(n)) return n
+    }
     return raw
   }
   if (campo.type === 'multi_prueba') {

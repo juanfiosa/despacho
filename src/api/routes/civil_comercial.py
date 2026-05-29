@@ -18,6 +18,7 @@ from ...models.documentos.civil_comercial import (
     DecretoTramiteInput,
     TrasladoDemandaInput,
     AutoAperturaOrdinarioInput,
+    LlamamientoAutosCivilInput,
     EmbargoPreventivoInput,
     InhibicionGeneralInput,
     AutoAperturaSuccesorioInput,
@@ -30,6 +31,8 @@ from ...models.documentos.civil_comercial import (
     IntimacionCumplimientoSentenciaInput,
     AutoDesgloseInput,
     CitacionAudienciaConciliacionInput,
+    DecretoVistaInput,
+    ProvidenciaAgregacionInput,
 )
 
 router = APIRouter(prefix="/civil-comercial", tags=["Civil y Comercial"])
@@ -387,6 +390,99 @@ def sumarisimo_citacion_docx(
         content=docx,
         media_type=_DOCX_MEDIA,
         headers={"Content-Disposition": 'attachment; filename="citacion_audiencia_sumarisimo.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Ordinario — Llamamiento de autos para sentencia
+# ---------------------------------------------------------------------------
+
+@router.post("/ordinario/llamamiento-autos/preview", summary="Vista previa en texto")
+def llamamiento_autos_civil_preview(
+    body: LlamamientoAutosCivilInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/ordinario/llamamiento-autos/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def llamamiento_autos_civil_docx(
+    body: LlamamientoAutosCivilInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="llamamiento_autos.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Incidentes — Decreto de vista
+# ---------------------------------------------------------------------------
+
+@router.post("/incidentes/decreto-vista/preview", summary="Vista previa en texto")
+def decreto_vista_preview(
+    body: DecretoVistaInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/incidentes/decreto-vista/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def decreto_vista_docx(
+    body: DecretoVistaInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="decreto_vista.docx"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Incidentes — Providencia de agregación
+# ---------------------------------------------------------------------------
+
+@router.post("/incidentes/providencia-agregacion/preview", summary="Vista previa en texto")
+def providencia_agregacion_preview(
+    body: ProvidenciaAgregacionInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    return {"documento": texto}
+
+
+@router.post(
+    "/incidentes/providencia-agregacion/docx",
+    summary="Descarga DOCX",
+    response_class=Response,
+)
+def providencia_agregacion_docx(
+    body: ProvidenciaAgregacionInput,
+    fecha_resolucion: Annotated[str | None, Query(description="YYYY-MM-DD")] = None,
+):
+    texto = render(body, _fecha_param(fecha_resolucion))
+    docx = texto_a_docx(texto)
+    return Response(
+        content=docx,
+        media_type=_DOCX_MEDIA,
+        headers={"Content-Disposition": 'attachment; filename="providencia_agregacion.docx"'},
     )
 
 

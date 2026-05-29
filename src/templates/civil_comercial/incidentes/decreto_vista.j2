@@ -1,0 +1,21 @@
+{#
+  Decreto de vista/traslado a la parte contraria (art. 107 CPCC Ley 8465, Córdoba)
+  Input: DecretoVistaInput
+#}
+{% from "macros/encabezado.j2" import encabezado %}
+{% from "macros/formatos.j2"   import plazo %}
+{% from "macros/pie.j2"        import pie_notifiquese %}
+
+{{ encabezado(identificacion, fecha_resolucion) }}
+
+DECRETO:
+
+Agréguese. Córrase vista de {{ objeto_vista }} a {{ destinatario }} por el
+término de {{ plazo(plazo_dias) }}, bajo apercibimiento de ley
+(art. 107 CPCC).- Notifíquese.-
+{% if texto_libre %}
+
+{{ texto_libre }}
+{% endif %}
+
+{{ pie_notifiquese(identificacion.juzgado, identificacion.secretaria) }}

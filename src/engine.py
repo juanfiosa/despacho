@@ -19,6 +19,7 @@ from .models.documentos.civil_comercial.ejecutivo import (
 from .models.documentos.civil_comercial.ordinario import (
     TrasladoDemandaInput,
     AutoAperturaOrdinarioInput,
+    LlamamientoAutosCivilInput,
 )
 from .models.documentos.civil_comercial.cautelares import (
     EmbargoPreventivoInput,
@@ -36,6 +37,8 @@ from .models.documentos.civil_comercial.incidentes import (
     IntimacionCumplimientoSentenciaInput,
     AutoDesgloseInput,
     CitacionAudienciaConciliacionInput,
+    DecretoVistaInput,
+    ProvidenciaAgregacionInput,
 )
 from .models.documentos.civil_comercial.sumarisimo import AutoSumarisimoCitacionInput
 from .models.documentos.contencioso_administrativo import (
@@ -163,8 +166,9 @@ _TEMPLATE_MAP: dict[type, str] = {
     AutoAperturaPruebaInput:    "civil_comercial/ejecutivo/auto_apertura_prueba.j2",
     DecretoTramiteInput:        "civil_comercial/ejecutivo/decreto_tramite.j2",
     # Ordinario
-    TrasladoDemandaInput:       "civil_comercial/ordinario/traslado_demanda.j2",
-    AutoAperturaOrdinarioInput: "civil_comercial/ordinario/auto_apertura_prueba.j2",
+    TrasladoDemandaInput:         "civil_comercial/ordinario/traslado_demanda.j2",
+    AutoAperturaOrdinarioInput:   "civil_comercial/ordinario/auto_apertura_prueba.j2",
+    LlamamientoAutosCivilInput:   "civil_comercial/ordinario/llamamiento_autos.j2",
     # Cautelares
     EmbargoPreventivoInput:          "civil_comercial/cautelares/embargo_preventivo.j2",
     InhibicionGeneralInput:          "civil_comercial/cautelares/inhibicion_general.j2",
@@ -242,12 +246,14 @@ _TEMPLATE_MAP: dict[type, str] = {
     # Sucesorio (nuevos)
     CitacionHerederosAcreedoresInput:   "civil_comercial/sucesorio/citacion_herederos_acreedores.j2",
     AprobacionInventarioAvaluoInput:    "civil_comercial/sucesorio/aprobacion_inventario_avaluo.j2",
-    # Incidentes civiles (nuevos)
+    # Incidentes civiles
     CaducidadInstanciaInput:                "civil_comercial/incidentes/caducidad_instancia.j2",
     DesignacionPeritoInput:                 "civil_comercial/incidentes/designacion_perito.j2",
     IntimacionCumplimientoSentenciaInput:   "civil_comercial/incidentes/intimacion_cumplimiento_sentencia.j2",
     AutoDesgloseInput:                      "civil_comercial/incidentes/auto_desglose.j2",
     CitacionAudienciaConciliacionInput:     "civil_comercial/incidentes/citacion_audiencia_conciliacion.j2",
+    DecretoVistaInput:                      "civil_comercial/incidentes/decreto_vista.j2",
+    ProvidenciaAgregacionInput:             "civil_comercial/incidentes/providencia_agregacion.j2",
 }
 
 # ---------------------------------------------------------------------------
