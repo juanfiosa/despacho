@@ -18,56 +18,85 @@ import CamposDocumento from './CamposDocumento.jsx'
 
 const PASOS = ['Fuero', 'Expediente', 'Proceso', 'Etapa', 'Documento', 'Datos', 'Preview']
 
-// ─── Casos de demo para pre-rellenar el Wizard ────────────────────────────────
+// ─── Casos de demo — uno por fuero, se filtra según el juzgado configurado ───
 const CASOS_DEMO = [
   {
-    id: 'laboral', icono: '⚖️', label: 'Laboral', sub: 'González c/ ABC SA',
+    id: 'laboral',
     fuero: 'laboral',
     numero: '1234567/2026',
-    caratula: 'GONZÁLEZ, ROBERTO H. c/ ABC SA — Ordinario Laboral',
+    caratula: 'GONZÁLEZ, ROBERTO HERNÁN c/ ABC SA — Ordinario Laboral',
     partes: [
-      { rol: 'actor',    nombre: 'González, Roberto Hernán', dni_cuit: '25.678.901',   domicilio_real: 'Barrio Urca, Los Pinos 234, Córdoba' },
-      { rol: 'demandado',nombre: 'ABC SA',                   dni_cuit: '30-70123456-9', domicilio_real: 'Av. Colón 1234, Córdoba' },
+      { rol: 'actor',     nombre: 'González, Roberto Hernán', dni_cuit: '25.678.901',    domicilio_real: 'Barrio Urca, Los Pinos 234, Córdoba' },
+      { rol: 'demandado', nombre: 'ABC SA',                    dni_cuit: '30-70123456-9', domicilio_real: 'Av. Colón 1234, Córdoba' },
     ],
   },
   {
-    id: 'civil', icono: '📋', label: 'Civil', sub: 'Fernández c/ Rodríguez',
+    id: 'civil',
     fuero: 'civil_comercial',
     numero: '2345878/2026',
-    caratula: 'FERNÁNDEZ, CLAUDIA P. c/ RODRÍGUEZ, MARCOS A. — Daños y Perjuicios',
+    caratula: 'FERNÁNDEZ, CLAUDIA P. c/ RODRÍGUEZ, MARCOS A. — Ordinario — Daños y Perjuicios',
     partes: [
-      { rol: 'actor',    nombre: 'Fernández, Claudia Patricia', dni_cuit: '28.456.789', domicilio_real: 'Bv. Chacabuco 890, Córdoba' },
-      { rol: 'demandado',nombre: 'Rodríguez, Marcos Alejandro', dni_cuit: '24.321.098', domicilio_real: 'Av. Vélez Sarsfield 543, Córdoba' },
+      { rol: 'actor',     nombre: 'Fernández, Claudia Patricia',  dni_cuit: '28.456.789', domicilio_real: 'Bv. Chacabuco 890, Córdoba' },
+      { rol: 'demandado', nombre: 'Rodríguez, Marcos Alejandro',  dni_cuit: '24.321.098', domicilio_real: 'Av. Vélez Sarsfield 543, Córdoba' },
     ],
   },
   {
-    id: 'familia', icono: '👨‍👩‍👧', label: 'Familia', sub: 'Gómez / Torres',
+    id: 'familia',
     fuero: 'familia',
     numero: '6789012/2026',
-    caratula: 'GÓMEZ, SOFÍA L. c/ TORRES, DIEGO M. — Divorcio Vincular',
+    caratula: 'GÓMEZ, SOFÍA LAURA c/ TORRES, DIEGO MANUEL — Divorcio Vincular (art. 437 CCyCN)',
     partes: [
-      { rol: 'actor',    nombre: 'Gómez, Sofía Laura',  dni_cuit: '30.123.456', domicilio_real: 'Rondeau 234, Córdoba' },
-      { rol: 'demandado',nombre: 'Torres, Diego Manuel', dni_cuit: '27.654.321', domicilio_real: 'Dean Funes 789, Córdoba' },
+      { rol: 'actor',     nombre: 'Gómez, Sofía Laura',   dni_cuit: '30.123.456', domicilio_real: 'Rondeau 234, Córdoba' },
+      { rol: 'demandado', nombre: 'Torres, Diego Manuel',  dni_cuit: '27.654.321', domicilio_real: 'Dean Funes 789, Córdoba' },
     ],
   },
   {
-    id: 'penal', icono: '🔒', label: 'Penal', sub: 'Gómez, Pablo (Robo agravado)',
+    id: 'penal',
     fuero: 'penal',
-    numero: '1234567/2026',
-    caratula: 'GÓMEZ, PABLO ARIEL s/ Robo Agravado (art. 166 inc. 2 CP)',
+    numero: '5678901/2026',
+    caratula: 'GÓMEZ, PABLO ARIEL s/ Robo Agravado (art. 166 inc. 2 CP) — IPP',
     partes: [
-      { rol: 'imputado', nombre: 'Gómez, Pablo Ariel',    dni_cuit: '35.987.654', domicilio_real: 'Villa El Libertador, Mza. 12, Córdoba' },
-      { rol: 'victima',  nombre: 'Ramírez, Carlos Alberto', dni_cuit: '22.111.333', domicilio_real: 'Barrio General Paz, Córdoba' },
+      { rol: 'imputado', nombre: 'Gómez, Pablo Ariel',     dni_cuit: '35.987.654', domicilio_real: 'B.º El Libertador, Mza. 12, Córdoba' },
+      { rol: 'victima',  nombre: 'Ramírez, Carlos Alberto', dni_cuit: '22.111.333', domicilio_real: 'B.º General Paz, Córdoba' },
     ],
   },
   {
-    id: 'ca', icono: '🏛️', label: 'Contencioso Adm.', sub: 'Suárez c/ Provincia',
+    id: 'ca',
     fuero: 'contencioso_administrativo',
     numero: '0012345/2026',
-    caratula: 'SUÁREZ, ELENA BEATRIZ c/ PROVINCIA DE CÓRDOBA — Plena Jurisdicción',
+    caratula: 'SUÁREZ, ELENA BEATRIZ c/ PROVINCIA DE CÓRDOBA — Plena Jurisdicción (art. 1 CPCA)',
     partes: [
-      { rol: 'actor',    nombre: 'Suárez, Elena Beatriz', dni_cuit: '23.456.789', domicilio_real: 'Obispo Trejo 456, Córdoba' },
-      { rol: 'demandado',nombre: 'Provincia de Córdoba',  dni_cuit: '30-99999999-9', domicilio_real: 'Independencia 150, Córdoba' },
+      { rol: 'actor',     nombre: 'Suárez, Elena Beatriz', dni_cuit: '23.456.789',   domicilio_real: 'Obispo Trejo 456, Córdoba' },
+      { rol: 'demandado', nombre: 'Provincia de Córdoba',  dni_cuit: '30-99999999-9', domicilio_real: 'Independencia 150, Córdoba' },
+    ],
+  },
+  {
+    id: 'vf',
+    fuero: 'violencia_familiar',
+    numero: '3456789/2026',
+    caratula: 'P., ROSA MIRIAM s/ Denuncia Violencia Familiar — Ley 9283 — B., JUAN CARLOS',
+    partes: [
+      { rol: 'denunciante', nombre: 'P., Rosa Miriam',  dni_cuit: '32.445.678', domicilio_real: 'B.º Müller, Mza. 7, Córdoba' },
+      { rol: 'denunciado',  nombre: 'B., Juan Carlos',  dni_cuit: '29.876.543', domicilio_real: 'B.º Müller, Mza. 7, Córdoba' },
+    ],
+  },
+  {
+    id: 'ninez',
+    fuero: 'ninez',
+    numero: '7890123/2026',
+    caratula: 'N.N. (Ramírez Lucía, 8 años) s/ Medida de Protección Excepcional — Ley 9944',
+    partes: [
+      { rol: 'menor',      nombre: 'Ramírez, Lucía (8 años)',   dni_cuit: '—', domicilio_real: 'B.º Sagrada Familia, Córdoba' },
+      { rol: 'progenitor', nombre: 'Ramírez, Marcela Alejandra', dni_cuit: '31.234.567', domicilio_real: 'B.º Sagrada Familia, Córdoba' },
+    ],
+  },
+  {
+    id: 'concursal',
+    fuero: 'concursal',
+    numero: '9012345/2026',
+    caratula: 'TEXTILES DEL SUR SRL s/ Concurso Preventivo — Ley 24522',
+    partes: [
+      { rol: 'concursado', nombre: 'Textiles del Sur SRL', dni_cuit: '30-71234567-2', domicilio_real: 'Parque Industrial Córdoba, Lote 45' },
     ],
   },
 ]
@@ -289,35 +318,42 @@ export default function Wizard({ juzgado, onCambiarJuzgado, favoritos, toggleFav
         {paso === 1 && (
           <Paso titulo="Expediente" subtitulo="Datos de la causa">
 
-            {/* ── Panel de carga rápida de demo ─────────────────────────── */}
-            <div style={demoPanelStyle}>
-              <div style={{ fontSize: 11, fontWeight: 700, color: '#888', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 8 }}>
-                ▶ Cargar datos de un caso demo
-              </div>
-              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                {CASOS_DEMO.map(caso => (
-                  <button
-                    key={caso.id}
-                    onClick={() => {
-                      setFueroId(caso.fuero)
-                      setExpediente({ numero: caso.numero, caratula: caso.caratula, partes: caso.partes })
-                    }}
-                    style={{
-                      ...demoCasoBtn,
-                      borderColor: expediente.numero === caso.numero ? '#0047AB' : '#d0d0dc',
-                      background:  expediente.numero === caso.numero ? '#e8f0fe' : '#fafafa',
-                      fontWeight:  expediente.numero === caso.numero ? 700 : 500,
-                    }}
-                  >
-                    <span style={{ fontSize: 16 }}>{caso.icono}</span>
-                    <div style={{ textAlign: 'left' }}>
-                      <div style={{ fontSize: 11, fontWeight: 700, color: '#555' }}>{caso.label}</div>
-                      <div style={{ fontSize: 10, color: '#999', marginTop: 1 }}>{caso.sub}</div>
+            {/* ── Carga rápida de demo (solo para el fuero configurado) ── */}
+            {(() => {
+              const demosFuero = CASOS_DEMO.filter(c => c.fuero === fueroId)
+              if (demosFuero.length === 0) return null
+              const cargado = demosFuero.some(c => c.numero === expediente.numero)
+              return (
+                <div style={demoPanelStyle}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
+                    <span style={{ fontSize: 12, color: '#666' }}>
+                      {cargado
+                        ? '✓ Datos del caso demo cargados'
+                        : '¿Querés cargar datos de un caso demo para esta causa?'}
+                    </span>
+                    <div style={{ display: 'flex', gap: 8 }}>
+                      {demosFuero.map(caso => (
+                        <button
+                          key={caso.id}
+                          onClick={() => {
+                            setExpediente({ numero: caso.numero, caratula: caso.caratula, partes: caso.partes })
+                          }}
+                          style={{
+                            ...demoCasoBtn,
+                            borderColor: caso.numero === expediente.numero ? '#0047AB' : '#c5cae9',
+                            background:  caso.numero === expediente.numero ? '#e8f0fe' : '#fff',
+                            color:       caso.numero === expediente.numero ? '#0047AB' : '#444',
+                            fontWeight:  caso.numero === expediente.numero ? 700 : 500,
+                          }}
+                        >
+                          {caso.numero === expediente.numero ? '✓ Cargado' : '▶ Cargar caso demo'}
+                        </button>
+                      ))}
                     </div>
-                  </button>
-                ))}
-              </div>
-            </div>
+                  </div>
+                </div>
+              )
+            })()}
 
             <div style={gridStyle}>
               <Campo label="Número de expediente" placeholder="0012345/2026"
