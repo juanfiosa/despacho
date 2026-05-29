@@ -7,14 +7,18 @@
       "config": { "maxLambdaSize": "20mb" }
     },
     {
-      "src": "public/**",
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "dist" }
+    },
+    {
+      "src": "public/demos/**",
       "use": "@vercel/static"
     }
   ],
   "routes": [
-    { "src": "/api/(.*)",      "dest": "/api/index.py" },
-    { "src": "/assets/(.*)",   "dest": "/public/assets/$1" },
-    { "src": "/demos/(.*)",    "dest": "/public/demos/$1" },
-    { "src": "/(.*)",          "dest": "/public/index.html" }
+    { "src": "/api/(.*)",    "dest": "/api/index.py" },
+    { "src": "/demos/(.*)", "dest": "/public/demos/$1" },
+    { "src": "/(.*)",       "dest": "/index.html" }
   ]
 }

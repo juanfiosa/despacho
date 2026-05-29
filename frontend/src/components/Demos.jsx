@@ -1,12 +1,13 @@
 /**
- * Pestaña de demos — muestra 5 casos judiciales completos, uno por fuero,
- * con línea de tiempo cronológica. Cada paso del caso puede generar el
- * documento correspondiente llamando a la API de preview, y descargarlo
- * en formato DOCX.
+ * Pestaña de demos — muestra 5 casos judiciales completos (demos fijos)
+ * más la opción de crear un caso personalizado que siga la línea de
+ * tiempo completa de un proceso (laboral, civil, familia, penal, CA).
  */
 
 import { useState, useEffect } from 'react'
 import { previewDocumento, descargarDocx } from '../api.js'
+import NuevoCasoForm        from './NuevoCasoForm.jsx'
+import CasoCustomTimeline   from './CasoCustomTimeline.jsx'
 
 const FUERO_ICONS = {
   laboral:                    '⚖️',
@@ -41,6 +42,10 @@ function formatFecha(iso) {
 }
 
 export default function Demos({ juzgado }) {
+  // modo: 'demos' | 'form' | 'custom'
+  const [modo,        setModo]        = useState('demos')
+  const [casoCustom,  setCasoCustom]  = useState(null)
+
   const [indice,      setIndice]      = useState(null)
   const [casoId,      setCasoId]      = useState(null)
   const [casoData,    setCasoData]    = useState(null)
@@ -111,6 +116,47 @@ export default function Demos({ juzgado }) {
 
   // ── Renders de estado ───────────────────────────────────────────
 
+  // ── Modo formulario de nuevo caso ──────────────────────────────────────────
+  if (modo === 'form') {
+    return (
+      <div style={layoutStyle}>
+        <header style={headerStyle}>
+          <span style={logoStyle}>Despacho</span>
+          {juzgado && <span style={chipStyle}>{juzgado.nombre}{juzgado.secretaria ? ` — ${juzgado.secretaria}` : ''}</span>}
+          <div style={{ flex: 1 }} />
+          <span style={demosBadgeStyle}>🎬 DEMOS</span>
+          <span style={subheadStyle}>Casos de demostración por fuero</span>
+        </header>
+        <NuevoCasoForm
+          juzgado={juzgado}
+          onCrear={(caso) => { setCasoCustom(caso); setModo('custom') }}
+          onCancelar={() => setModo('demos')}
+        />
+      </div>
+    )
+  }
+
+  // ── Modo línea de tiempo caso personalizado ─────────────────────────────────
+  if (modo === 'custom' && casoCustom) {
+    return (
+      <div style={layoutStyle}>
+        <header style={headerStyle}>
+          <span style={logoStyle}>Despacho</span>
+          {juzgado && <span style={chipStyle}>{juzgado.nombre}{juzgado.secretaria ? ` — ${juzgado.secretaria}` : ''}</span>}
+          <div style={{ flex: 1 }} />
+          <span style={demosBadgeStyle}>🎬 DEMOS</span>
+          <span style={subheadStyle}>Casos de demostración por fuero</span>
+        </header>
+        <CasoCustomTimeline
+          caso={casoCustom}
+          juzgado={juzgado}
+          onVolver={() => setModo('demos')}
+        />
+      </div>
+    )
+  }
+
+  // ── Modo demos fijos ────────────────────────────────────────────────────────
   if (errorGlobal && !indice) return <div style={errorPanelStyle}>⚠️ {errorGlobal}</div>
   if (!indice) return <div style={loadingStyle}>Cargando demos…</div>
 
@@ -143,7 +189,7 @@ export default function Demos({ juzgado }) {
 
         {/* Sidebar — selección de caso */}
         <aside style={sidebarStyle}>
-          <div style={sidebarTitleStyle}>Caso demostrativo</div>
+          <div style={sidebarTitleStyle}>Casos demostrativos</div>
           {indice.casos.map(caso => {
             const activo = caso.id === casoId
             const c = FUERO_COLORS[caso.fuero] || '#555'
@@ -176,9 +222,28 @@ export default function Demos({ juzgado }) {
             )
           })}
 
+          {/* Divider */}
+          <div style={{ margin: '14px 16px 10px', borderTop: '1px solid #e8e8f0' }} />
+
+          {/* Botón nuevo caso */}
+          <button
+            onClick={() => setModo('form')}
+            style={sidebarNuevoCasoStyle}
+          >
+            <span style={{ fontSize: 18 }}>➕</span>
+            <div style={{ textAlign: 'left', flex: 1, minWidth: 0 }}>
+              <div style={{ fontSize: 12, fontWeight: 700, color: '#0047AB', lineHeight: 1.3 }}>
+                Nuevo caso
+              </div>
+              <div style={{ fontSize: 10, color: '#888', marginTop: 2, lineHeight: 1.3 }}>
+                Cargá tus datos y seguí la línea de tiempo
+              </div>
+            </div>
+          </button>
+
           {/* Nota de uso */}
           <div style={sidebarNotaStyle}>
-            Cada caso simula un expediente real pasando por todas sus etapas procesales. Generá los documentos de cada paso con un clic.
+            Los demos muestran casos ficticios. Con "Nuevo caso" podés ingresar datos reales y explorar todos los documentos disponibles en cada etapa.
           </div>
         </aside>
 
@@ -349,7 +414,8 @@ const bodyStyle         = { flex: 1, overflow: 'hidden', display: 'flex' }
 const sidebarStyle      = { width: 248, flexShrink: 0, background: '#fff', borderRight: '1px solid #e0e0e8', overflowY: 'auto', padding: '16px 0', display: 'flex', flexDirection: 'column' }
 const sidebarTitleStyle = { fontSize: 10, fontWeight: 700, color: '#aaa', textTransform: 'uppercase', letterSpacing: '0.08em', padding: '0 16px 12px' }
 const sidebarItemStyle  = { display: 'flex', alignItems: 'flex-start', width: '100%', padding: '12px 16px', border: 'none', cursor: 'pointer', borderRadius: 0, marginBottom: 2 }
-const sidebarNotaStyle  = { margin: '12px 16px 0', padding: '10px 12px', background: '#f7f8fa', borderRadius: 8, fontSize: 11, color: '#888', lineHeight: 1.55 }
+const sidebarNotaStyle      = { margin: '12px 16px 0', padding: '10px 12px', background: '#f7f8fa', borderRadius: 8, fontSize: 11, color: '#888', lineHeight: 1.55 }
+const sidebarNuevoCasoStyle = { display: 'flex', alignItems: 'center', width: '100%', padding: '12px 16px', border: '1px dashed #0047AB44', background: '#f0f4ff', cursor: 'pointer', borderRadius: 8, margin: '0 8px', width: 'calc(100% - 16px)', gap: 10 }
 
 const mainStyle         = { flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column', background: '#f4f5f7' }
 const timelineWrapStyle = { flex: 1, overflowY: 'auto', padding: '28px 32px' }

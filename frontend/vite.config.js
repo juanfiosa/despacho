@@ -8,7 +8,7 @@ export default defineConfig({
     proxy: { '/api': 'http://localhost:8001' },
   },
   build: {
-    outDir: '../public',
+    outDir: 'dist',
     emptyOutDir: true,
   },
 })
