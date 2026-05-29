@@ -18,6 +18,60 @@ import CamposDocumento from './CamposDocumento.jsx'
 
 const PASOS = ['Fuero', 'Expediente', 'Proceso', 'Etapa', 'Documento', 'Datos', 'Preview']
 
+// ─── Casos de demo para pre-rellenar el Wizard ────────────────────────────────
+const CASOS_DEMO = [
+  {
+    id: 'laboral', icono: '⚖️', label: 'Laboral', sub: 'González c/ ABC SA',
+    fuero: 'laboral',
+    numero: '1234567/2026',
+    caratula: 'GONZÁLEZ, ROBERTO H. c/ ABC SA — Ordinario Laboral',
+    partes: [
+      { rol: 'actor',    nombre: 'González, Roberto Hernán', dni_cuit: '25.678.901',   domicilio_real: 'Barrio Urca, Los Pinos 234, Córdoba' },
+      { rol: 'demandado',nombre: 'ABC SA',                   dni_cuit: '30-70123456-9', domicilio_real: 'Av. Colón 1234, Córdoba' },
+    ],
+  },
+  {
+    id: 'civil', icono: '📋', label: 'Civil', sub: 'Fernández c/ Rodríguez',
+    fuero: 'civil_comercial',
+    numero: '2345878/2026',
+    caratula: 'FERNÁNDEZ, CLAUDIA P. c/ RODRÍGUEZ, MARCOS A. — Daños y Perjuicios',
+    partes: [
+      { rol: 'actor',    nombre: 'Fernández, Claudia Patricia', dni_cuit: '28.456.789', domicilio_real: 'Bv. Chacabuco 890, Córdoba' },
+      { rol: 'demandado',nombre: 'Rodríguez, Marcos Alejandro', dni_cuit: '24.321.098', domicilio_real: 'Av. Vélez Sarsfield 543, Córdoba' },
+    ],
+  },
+  {
+    id: 'familia', icono: '👨‍👩‍👧', label: 'Familia', sub: 'Gómez / Torres',
+    fuero: 'familia',
+    numero: '6789012/2026',
+    caratula: 'GÓMEZ, SOFÍA L. c/ TORRES, DIEGO M. — Divorcio Vincular',
+    partes: [
+      { rol: 'actor',    nombre: 'Gómez, Sofía Laura',  dni_cuit: '30.123.456', domicilio_real: 'Rondeau 234, Córdoba' },
+      { rol: 'demandado',nombre: 'Torres, Diego Manuel', dni_cuit: '27.654.321', domicilio_real: 'Dean Funes 789, Córdoba' },
+    ],
+  },
+  {
+    id: 'penal', icono: '🔒', label: 'Penal', sub: 'Gómez, Pablo (Robo agravado)',
+    fuero: 'penal',
+    numero: '1234567/2026',
+    caratula: 'GÓMEZ, PABLO ARIEL s/ Robo Agravado (art. 166 inc. 2 CP)',
+    partes: [
+      { rol: 'imputado', nombre: 'Gómez, Pablo Ariel',    dni_cuit: '35.987.654', domicilio_real: 'Villa El Libertador, Mza. 12, Córdoba' },
+      { rol: 'victima',  nombre: 'Ramírez, Carlos Alberto', dni_cuit: '22.111.333', domicilio_real: 'Barrio General Paz, Córdoba' },
+    ],
+  },
+  {
+    id: 'ca', icono: '🏛️', label: 'Contencioso Adm.', sub: 'Suárez c/ Provincia',
+    fuero: 'contencioso_administrativo',
+    numero: '0012345/2026',
+    caratula: 'SUÁREZ, ELENA BEATRIZ c/ PROVINCIA DE CÓRDOBA — Plena Jurisdicción',
+    partes: [
+      { rol: 'actor',    nombre: 'Suárez, Elena Beatriz', dni_cuit: '23.456.789', domicilio_real: 'Obispo Trejo 456, Córdoba' },
+      { rol: 'demandado',nombre: 'Provincia de Córdoba',  dni_cuit: '30-99999999-9', domicilio_real: 'Independencia 150, Córdoba' },
+    ],
+  },
+]
+
 const PARTES_DEFAULT = {
   civil_comercial:           [{ rol: 'actor', nombre: '', dni_cuit: '', domicilio_real: '' }, { rol: 'demandado', nombre: '', dni_cuit: '', domicilio_real: '' }],
   laboral:                   [{ rol: 'actor', nombre: '', dni_cuit: '', domicilio_real: '' }, { rol: 'demandado', nombre: '', dni_cuit: '', domicilio_real: '' }],
@@ -234,6 +288,37 @@ export default function Wizard({ juzgado, onCambiarJuzgado, favoritos, toggleFav
         {/* PASO 1: Expediente */}
         {paso === 1 && (
           <Paso titulo="Expediente" subtitulo="Datos de la causa">
+
+            {/* ── Panel de carga rápida de demo ─────────────────────────── */}
+            <div style={demoPanelStyle}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: '#888', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 8 }}>
+                ▶ Cargar datos de un caso demo
+              </div>
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                {CASOS_DEMO.map(caso => (
+                  <button
+                    key={caso.id}
+                    onClick={() => {
+                      setFueroId(caso.fuero)
+                      setExpediente({ numero: caso.numero, caratula: caso.caratula, partes: caso.partes })
+                    }}
+                    style={{
+                      ...demoCasoBtn,
+                      borderColor: expediente.numero === caso.numero ? '#0047AB' : '#d0d0dc',
+                      background:  expediente.numero === caso.numero ? '#e8f0fe' : '#fafafa',
+                      fontWeight:  expediente.numero === caso.numero ? 700 : 500,
+                    }}
+                  >
+                    <span style={{ fontSize: 16 }}>{caso.icono}</span>
+                    <div style={{ textAlign: 'left' }}>
+                      <div style={{ fontSize: 11, fontWeight: 700, color: '#555' }}>{caso.label}</div>
+                      <div style={{ fontSize: 10, color: '#999', marginTop: 1 }}>{caso.sub}</div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <div style={gridStyle}>
               <Campo label="Número de expediente" placeholder="0012345/2026"
                 value={expediente.numero} onChange={v => setExpediente(e => ({...e, numero: v}))} />
@@ -1210,6 +1295,8 @@ const btnSecStyle       = { background: '#fff', color: '#0047AB', border: '1.5px
 const errorInlineStyle  = { color: '#c00', fontSize: 13, marginBottom: 8 }
 const errorPanelStyle   = { padding: 32, color: '#c00' }
 const loadingStyle      = { padding: 32, color: '#888' }
+const demoPanelStyle    = { background: '#f7f8fa', border: '1px solid #e0e0e8', borderRadius: 8, padding: '12px 14px', marginBottom: 18 }
+const demoCasoBtn       = { display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', border: '1px solid', borderRadius: 7, cursor: 'pointer', background: '#fafafa', transition: 'all 0.12s' }
 const previewWrapStyle  = { display: 'flex', flexDirection: 'column', height: '100%' }
 const previewHeaderStyle= { padding: '12px 24px', borderBottom: '1px solid #eee', background: '#fff', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0, flexWrap: 'wrap', gap: 8 }
 const preStyle          = { fontFamily: '"Courier New", monospace', fontSize: 13, lineHeight: 1.8, padding: 32, whiteSpace: 'pre-wrap', wordBreak: 'break-word', margin: 16, background: '#fff', borderRadius: 8, border: '1px solid #e0e0e8' }
