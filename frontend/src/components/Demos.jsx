@@ -41,7 +41,7 @@ function formatFecha(iso) {
   return `${parseInt(d)} ${MESES[parseInt(m) - 1]} ${y}`
 }
 
-export default function Demos({ juzgado }) {
+export default function Demos({ juzgado, onNuevoDocumento }) {
   // modo: 'demos' | 'form' | 'custom'
   const [modo,        setModo]        = useState('demos')
   const [casoCustom,  setCasoCustom]  = useState(null)
@@ -179,9 +179,13 @@ export default function Demos({ juzgado }) {
             {juzgado.nombre}{juzgado.secretaria ? ` — ${juzgado.secretaria}` : ''}
           </span>
         )}
+        <span style={subheadStyle}>Demos por fuero</span>
         <div style={{ flex: 1 }} />
-        <span style={demosBadgeStyle}>🎬 DEMOS</span>
-        <span style={subheadStyle}>Casos de demostración por fuero</span>
+        {onNuevoDocumento && (
+          <button onClick={onNuevoDocumento} style={btnNuevoDocStyle}>
+            📄 Generar documento →
+          </button>
+        )}
       </header>
 
       {/* ── Body ────────────────────────────────────────────────────────── */}
@@ -409,6 +413,7 @@ const logoStyle         = { fontSize: 20, fontWeight: 800, letterSpacing: '-0.02
 const chipStyle         = { fontSize: 12, background: 'rgba(255,255,255,0.2)', borderRadius: 20, padding: '3px 10px' }
 const demosBadgeStyle   = { fontSize: 12, background: 'rgba(255,215,0,0.25)', color: '#ffe066', borderRadius: 20, padding: '3px 10px', fontWeight: 700, letterSpacing: '0.05em' }
 const subheadStyle      = { fontSize: 12, color: 'rgba(255,255,255,0.65)' }
+const btnNuevoDocStyle  = { background: 'rgba(255,255,255,0.15)', color: '#fff', border: '1px solid rgba(255,255,255,0.35)', borderRadius: 7, padding: '6px 16px', fontSize: 12, fontWeight: 600, cursor: 'pointer' }
 const bodyStyle         = { flex: 1, overflow: 'hidden', display: 'flex' }
 
 const sidebarStyle      = { width: 248, flexShrink: 0, background: '#fff', borderRight: '1px solid #e0e0e8', overflowY: 'auto', padding: '16px 0', display: 'flex', flexDirection: 'column' }

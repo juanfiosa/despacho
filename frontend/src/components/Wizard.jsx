@@ -113,7 +113,7 @@ const PARTES_DEFAULT = {
 }
 const partesDefault = (fid) => (PARTES_DEFAULT[fid] || PARTES_DEFAULT.civil_comercial).map(p => ({...p}))
 
-export default function Wizard({ juzgado, onCambiarJuzgado, favoritos, toggleFavorito, esFavorito }) {
+export default function Wizard({ juzgado, onCambiarJuzgado, onVolverADemos, favoritos, toggleFavorito, esFavorito }) {
   const [paso,     setPaso]     = useState(0)
   const [catalogo, setCatalogo] = useState(null)
   const [error,    setError]    = useState(null)
@@ -277,6 +277,11 @@ export default function Wizard({ juzgado, onCambiarJuzgado, favoritos, toggleFav
             )}
           </div>
         </div>
+        {onVolverADemos && (
+          <button onClick={onVolverADemos} style={{ ...btnCambiarStyle, flexShrink: 0, marginRight: 4 }}>
+            ← Casos
+          </button>
+        )}
         <button onClick={onCambiarJuzgado} style={{ ...btnCambiarStyle, flexShrink: 0 }}>Cambiar juzgado</button>
       </header>
 
