@@ -3,19 +3,42 @@ import { useJuzgado } from './useJuzgado.js'
 import ConfigJuzgado from './components/ConfigJuzgado.jsx'
 import Wizard from './components/Wizard.jsx'
 import Calculadora from './components/Calculadora.jsx'
+import Landing from './components/Landing.jsx'
 
 export default function App() {
   const { juzgado, setJuzgado, limpiarJuzgado, favoritos, toggleFavorito, esFavorito } = useJuzgado()
-  const [tab, setTab] = useState('generador')
+
+  // La landing se muestra siempre al entrar si no hay juzgado configurado,
+  // o si el usuario vuelve al inicio. Si ya hay juzgado guardado, arranca
+  // directo en el Generador.
+  const [pantalla, setPantalla] = useState(juzgado ? 'app' : 'landing')
+  const [tab,      setTab]      = useState('generador')
 
   const TABS = [
     ['generador',   '📄 Generador'],
     ['calculadora', '🧮 Calculadora'],
   ]
 
+  // ── Landing ──────────────────────────────────────────────────────────────
+  if (pantalla === 'landing') {
+    return <Landing onIngresar={() => setPantalla('app')} />
+  }
+
+  // ── App ──────────────────────────────────────────────────────────────────
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
-      <div style={{ display: 'flex', background: '#003a8c', paddingLeft: 16, gap: 2, flexShrink: 0 }}>
+
+      {/* Tab bar */}
+      <div style={{ display: 'flex', background: '#003a8c', paddingLeft: 16, gap: 2, flexShrink: 0, alignItems: 'flex-end' }}>
+        {/* Logo */}
+        <button
+          onClick={() => setPantalla('landing')}
+          style={{ background: 'none', border: 'none', color: '#fff', fontWeight: 900, fontSize: 16, letterSpacing: '-0.02em', cursor: 'pointer', padding: '10px 16px 10px 4px', opacity: 0.9 }}
+          title="Inicio"
+        >
+          Despacho
+        </button>
+
         {TABS.map(([id, label]) => (
           <button
             key={id}
@@ -36,6 +59,7 @@ export default function App() {
         ))}
       </div>
 
+      {/* Contenido */}
       <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
 
         {tab === 'generador' && !juzgado && (
