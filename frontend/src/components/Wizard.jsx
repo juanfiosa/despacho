@@ -16,7 +16,8 @@ import { getCatalogo, previewDocumento, descargarDocx, buscarDocumentos } from '
 import PartesEditor from './PartesEditor.jsx'
 import CamposDocumento from './CamposDocumento.jsx'
 
-const PASOS = ['Fuero', 'Expediente', 'Proceso', 'Etapa', 'Documento', 'Datos', 'Preview']
+// "Fuero" no aparece en la barra — el usuario arranca en Expediente (paso 1)
+const PASOS = ['Expediente', 'Proceso', 'Etapa', 'Documento', 'Datos', 'Preview']
 
 // ─── Casos de demo — uno por fuero, se filtra según el juzgado configurado ───
 const CASOS_DEMO = [
@@ -204,7 +205,14 @@ export default function Wizard({ juzgado, onCambiarJuzgado, onVolverADemos, favo
     setCamposDoc({}); setPreview(null); setFechaRes('')
     setBusqueda(''); setResultados([])
     setExpediente({ numero: '', caratula: '', partes: partesDefault(fueroId) })
-    setPaso(1)  // volver al Expediente, no al Fuero (ya está configurado)
+    setPaso(1)
+  }
+
+  // Generar otro documento para el mismo expediente — mantiene partes y carátula
+  const otroDocumento = () => {
+    setProcesoId(null); setEtapaId(null); setTipoDoc(null)
+    setCamposDoc({}); setPreview(null); setFechaRes('')
+    setPaso(2)  // volver a Proceso, conservando el expediente cargado
   }
 
   // Búsqueda con debounce de 300 ms
@@ -287,7 +295,8 @@ export default function Wizard({ juzgado, onCambiarJuzgado, onVolverADemos, favo
       </header>
 
       {/* Barra de progreso */}
-      <BarraProgreso paso={paso} pasos={PASOS} />
+      {/* paso - 1 porque la barra empieza en Expediente (índice 0) pero paso=1 */}
+      <BarraProgreso paso={paso - 1} pasos={PASOS} />
 
       {/* Contenido del paso */}
       <div style={contenidoStyle}>
@@ -490,7 +499,12 @@ export default function Wizard({ juzgado, onCambiarJuzgado, onVolverADemos, favo
                 <button onClick={handleDocx} disabled={cargando} style={btnPrimStyle}>
                   {cargando ? 'Generando…' : '⬇ Descargar DOCX'}
                 </button>
-                <button onClick={reiniciar} style={btnSecStyle}>Nuevo documento</button>
+                <button onClick={otroDocumento} style={btnSecStyle} title="Mantiene el expediente cargado">
+                  + Otro documento
+                </button>
+                <button onClick={reiniciar} style={{ ...btnSecStyle, color: '#999', fontSize: 11 }}>
+                  Nuevo expediente
+                </button>
               </div>
             </div>
             {error && <p style={{ ...errorInlineStyle, margin: '8px 24px' }}>{error}</p>}
