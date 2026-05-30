@@ -114,7 +114,8 @@ const PARTES_DEFAULT = {
 const partesDefault = (fid) => (PARTES_DEFAULT[fid] || PARTES_DEFAULT.civil_comercial).map(p => ({...p}))
 
 export default function Wizard({ juzgado, onCambiarJuzgado, onVolverADemos, favoritos, toggleFavorito, esFavorito }) {
-  const [paso,     setPaso]     = useState(0)
+  // El juzgado ya tiene fuero configurado → empezar en paso 1 (Expediente)
+  const [paso,     setPaso]     = useState(1)
   const [catalogo, setCatalogo] = useState(null)
   const [error,    setError]    = useState(null)
 
@@ -203,7 +204,7 @@ export default function Wizard({ juzgado, onCambiarJuzgado, onVolverADemos, favo
     setCamposDoc({}); setPreview(null); setFechaRes('')
     setBusqueda(''); setResultados([])
     setExpediente({ numero: '', caratula: '', partes: partesDefault(fueroId) })
-    setPaso(0)
+    setPaso(1)  // volver al Expediente, no al Fuero (ya está configurado)
   }
 
   // Búsqueda con debounce de 300 ms
