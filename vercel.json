@@ -17,9 +17,11 @@
     }
   ],
   "routes": [
-    { "src": "/api/(.*)",      "dest": "/api/index.py" },
-    { "src": "/demos/(.*)",    "dest": "/public/demos/$1" },
-    { "src": "/assets/(.*)",   "dest": "/frontend/assets/$1" },
-    { "src": "/(.*)",          "dest": "/frontend/index.html" }
+    { "src": "/api/(.*)",              "dest": "/api/index.py" },
+    { "src": "/demos/(.*)",            "dest": "/public/demos/$1" },
+    { "src": "/assets/(.*)",           "dest": "/frontend/assets/$1" },
+    { "src": "/favicon\\.svg",         "dest": "/frontend/favicon.svg" },
+    { "src": "/(.*\\.(png|ico|webp))", "dest": "/frontend/$1" },
+    { "src": "/(.*)",                  "dest": "/frontend/index.html" }
   ]
 }
