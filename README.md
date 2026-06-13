@@ -15,5 +15,5 @@ civil_comercial | penal | familia | laboral | contencioso_administrativo | viole
 
 - Backend: FastAPI + Jinja2
 - Cálculos: Python puro (intereses, plazos procesales)
-- LLM: Gemini flash-lite (solo para campos de texto libre)
+- Sin LLM: rendering por templates a partir de datos estructurados (sin razonamiento)
 - Output: DOCX + vista previa HTML
