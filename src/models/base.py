@@ -91,5 +91,5 @@ class ExpedienteBase(BaseModel):
     partes: list[Parte] = Field(min_length=1, description="Al menos una parte")
     texto_libre: str | None = Field(
         default=None,
-        description="Observaciones del actuario (campo optativo, procesado por LLM si presente)",
+        description="Observaciones del actuario (campo optativo, se incluye tal cual en el documento)",
     )

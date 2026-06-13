@@ -220,6 +220,12 @@ _CIVIL_COMERCIAL = Fuero(
                             descripcion="Llama los autos para dictar sentencia",
                             norma="Art. 120 CPCC",
                         ),
+                        DocumentoDisponible(
+                            tipo="llamamiento_autos_civil",
+                            label="Llamamiento de autos (detallado)",
+                            descripcion="Llama los autos para sentencia definitiva o para resolver un incidente, dejando constancia del vencimiento de la prueba y la presentación de alegatos",
+                            norma="Arts. 121 / 493 / 498 CPCC",
+                        ),
                     ],
                 ),
             ],
@@ -352,7 +358,7 @@ _CIVIL_COMERCIAL = Fuero(
         Proceso(
             id="incidentes",
             label="Incidentes y Resoluciones",
-            descripcion="Incidentes procesales civiles: caducidad, peritos, cumplimiento de sentencia, desglose y conciliación",
+            descripcion="Incidentes procesales civiles: caducidad, peritos, cumplimiento de sentencia, desglose, vista, agregación y conciliación",
             etapas=[
                 Etapa(
                     id="caducidad",
@@ -416,6 +422,32 @@ _CIVIL_COMERCIAL = Fuero(
                             label="Decreto de citación a audiencia de conciliación",
                             descripcion="Cita a las partes a audiencia de conciliación en el proceso civil ordinario",
                             norma="Art. 58 CPCC",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="vista",
+                    label="Vista a la contraria",
+                    descripcion="Decreto que corre vista o traslado de una presentación a la parte contraria",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="decreto_vista",
+                            label="Decreto de vista a la contraria",
+                            descripcion="Corre vista de una pericia, informe, excepción u otra presentación a la parte contraria para que se pronuncie dentro de plazo",
+                            norma="Art. 107 CPCC",
+                        ),
+                    ],
+                ),
+                Etapa(
+                    id="agregacion",
+                    label="Agregación de escritos",
+                    descripcion="Providencia simple que tiene por presentado un escrito o documento y ordena su agregación al expediente",
+                    documentos=[
+                        DocumentoDisponible(
+                            tipo="providencia_agregacion",
+                            label="Providencia de agregación",
+                            descripcion="Tiene por presentado un escrito o documento y ordena su agregación al expediente",
+                            norma="Art. 107 CPCC",
                         ),
                     ],
                 ),
